@@ -308,7 +308,6 @@ button {
 }
 .pin {
   border-radius: 50%;
-  /* transition: translateX ease-in-out 2s; */
   box-shadow: inset -5px -5px 10px -5px rgba(255, 255, 255, 0.5),
     -5px -5px 10px -5px, 5px 5px 10px -5px rgba(0, 0, 0, 0.5),
     inset 5px 5px 10px -5px rgba(0, 0, 0, 0.5);
