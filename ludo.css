@@ -1,0 +1,400 @@
+* {
+  border: none;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+:root {
+  --txt-black-color: black;
+  --bg-color: white;
+  --board-bg-color: rgb(0, 0, 0);
+}
+bod.dark-mode {
+  --txt-black-color: rgb(255, 255, 255);
+  --bg-color: rgb(49, 49, 49);
+  --board-bg-color: rgb(247, 247, 247);
+}
+body {
+  height: 100dvh;
+  width: 100dvw;
+  background-color: #203240;
+}
+button {
+  background-color: turquoise;
+  box-shadow: inset 5px 5px 15px -5px;
+  color: rgb(0, 0, 0);
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  line-height: 1;
+  font-weight: 900;
+}
+.container {
+  background-color: #203240;
+  width: 90dvw;
+  padding: 2dvh 5dvw 7dvh 5dvw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* height: 86dvh; */
+}
+.player-game-info {
+  border: 1px solid black;
+  width: 90dvw;
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: space-around;
+}
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.single-player-info {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+.single-player-info input {
+  border: 1px solid turquoise;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background-color: transparent;
+  color: turquoise;
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 700;
+  outline: none;
+  width: 50%;
+}
+.player-info p {
+  padding: 0.5rem 1rem;
+  background-color: turquoise;
+  color: black;
+  box-shadow: inset 5px 5px 15px -5px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dice {
+  border-radius: 10px;
+  border: 4px solid black;
+  aspect-ratio: 1 / 1;
+  width: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 0 10px turquoise;
+}
+.pop-up-cover {
+  height: 100dvh;
+  width: 100dvw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+.pop-up {
+  width: 80dvw;
+  max-height: 80dvh;
+  padding: 1rem 5dvw;
+  background-color: #203240;
+  border-radius: 28px;
+  border: 15px solid #203240;
+  color: white;
+  box-shadow: inset 0 0 10px turquoise, 0 0 10px turquoise;
+}
+.color-pic {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.color-pic p {
+  text-align: center;
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+.colors {
+  display: flex;
+  justify-content: space-around;
+}
+.input-color {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.input-color label {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgb(0, 0, 0);
+}
+.input-color input {
+  height: 2rem;
+  aspect-ratio: 1/1;
+}
+.color-pic .controles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  padding: 1rem 0;
+}
+.back-btn {
+  font-weight: 900;
+  font-size: 1.8rem;
+}
+
+.score-info {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.score-info p {
+  font-size: 2rem;
+  font-weight: 900;
+  color: white;
+}
+.score {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+.board-bg {
+  background-color: #203240;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  max-height: 80dvh;
+}
+.board {
+  background-color: var(--board-bg-color);
+  width: 80dvh;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-rows: 2fr 1fr 2fr;
+  grid-template-columns: 2fr 1fr 2fr;
+  gap: 3px;
+  padding: 5px;
+  max-height: 80dvh;
+  box-shadow: 0 0 30px turquoise;
+}
+
+.green {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.yellow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.middle {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: conic-gradient(
+    rgb(218, 218, 0) 45deg,
+    blue 45deg,
+    blue 135deg,
+    rgb(224, 0, 0) 135deg,
+    rgb(224, 0, 0) 225deg,
+    green 225deg,
+    green 315deg,
+    rgb(218, 218, 0) 315deg
+  );
+}
+.red {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.blue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 3px;
+}
+.box {
+  background-color: rgb(255, 255, 255);
+  position: relative;
+}
+.middle-boxes {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 3px;
+}
+.yellow-bg {
+  background-color: rgb(218, 218, 0);
+}
+.yellow-bg-lighter {
+  background-color: rgb(255, 252, 102);
+}
+.yellow-bg-darker {
+  background-color: rgb(255, 255, 0);
+}
+.blue-bg {
+  background-color: blue;
+}
+.blue-bg-lighter {
+  background-color: rgb(106, 106, 255);
+}
+.red-bg {
+  background-color: rgb(224, 0, 0);
+}
+.red-bg-lighter {
+  background-color: rgb(255, 47, 47);
+}
+.green-bg {
+  background-color: green;
+}
+.green-bg-lighter {
+  background-color: rgb(0, 255, 0);
+}
+.pins {
+  display: flex;
+  gap: 10px;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  height: 60%;
+}
+.pin-in-parent-1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  /* transform: translateX(5px); */
+}
+.pin-in-parent-2 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+.pin-in-parent-3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+}
+.pin-in-parent-4 {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+}
+.pin {
+  border-radius: 50%;
+  /* transition: translateX ease-in-out 2s; */
+  box-shadow: inset -5px -5px 10px -5px rgba(255, 255, 255, 0.5),
+    -5px -5px 10px -5px, 5px 5px 10px -5px rgba(0, 0, 0, 0.5),
+    inset 5px 5px 10px -5px rgba(0, 0, 0, 0.5);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.397) 1%, rgba(255, 255, 255, 0));
+  
+}
+.hover-pin{
+  animation-name: hover;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+}
+@keyframes hover{
+  0%{
+    box-shadow: inset -5px -5px 10px -5px rgba(255, 255, 255, 0.5),
+    -5px -5px 10px -5px, 5px 5px 10px -5px rgba(0, 0, 0, 0.5),
+    inset 5px 5px 10px -5px rgba(0, 0, 0, 0.5);
+    scale: 1;
+  }
+  50%{
+    box-shadow: inset -5px -5px 10px -3px rgba(255, 255, 255, 0.5),
+    -5px -5px 10px -5px, 5px 5px 10px -3px rgba(0, 0, 0, 0.5),
+    inset 5px 5px 10px -3px rgba(0, 0, 0, 0.5);
+    scale: 1.15;
+  }
+  100%{
+    box-shadow: inset -5px -5px 10px -5px rgba(255, 255, 255, 0.5),
+    -5px -5px 10px -5px, 5px 5px 10px -5px rgba(0, 0, 0, 0.5),
+    inset 5px 5px 10px -5px rgba(0, 0, 0, 0.5);
+    scale: 1;
+  }
+}
+
+.pin_in_box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+}
+/* .controles {
+  border: 1px solid black;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+} */
+.players {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+/* .players input {
+  border: 1px solid black;
+  padding: 0.5rem;
+  outline: none;
+} */
+.players-num {
+  border: 1px solid black;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.players-num p {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+.options {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1rem;
+  font-weight: 900;
+}
+.options input {
+  height: 1rem;
+  aspect-ratio: 1/1;
+}
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

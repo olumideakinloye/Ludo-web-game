@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="ludo.css" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- <audio autoplay loop>
+      <source src="SINISTRA - Shonci x Hr.caf" type="audio/mpeg">
+    </audio> -->
+    <div class="container">
+      <div class="pop-up-cover">
+        <div class="pop-up" id="pop-up">
+          <div class="players">
+            <button onclick="displayColors()">Play with AI</button>
+            <button>Play with friends</button>
+          </div>
+        </div>
+      </div>
+      <div class="player-game-info">
+        <div class="player-info player-1-info">
+          <p></p>
+          <div class="dice player-1-dice" id="player-1-dice"></div>
+        </div>
+        <div class="score-info">
+          <div class="score player-1-score">0</div>
+          <p>&#8722;</p>
+          <div class="score player-2-score">0</div>
+        </div>
+        <div class="player-info player-2-info">
+          <div class="dice player-2-dice" id="player-2-dice"></div>
+          <p></p>
+        </div>
+      </div>
+      <div class="board-bg">
+        <div class="board">
+          <div class="green green-bg">
+            <div class="pins">
+              <div
+                class="pin green-bg-lighter green-pin-1 pin-in-parent-1"
+              ></div>
+              <div
+                class="pin green-bg-lighter green-pin-2 pin-in-parent-2"
+              ></div>
+              <div
+                class="pin green-bg-lighter green-pin-3 pin-in-parent-3"
+              ></div>
+              <div
+                class="pin green-bg-lighter green-pin-4 pin-in-parent-4"
+              ></div>
+            </div>
+          </div>
+          <div class="boxes">
+            <div
+              class="box white-box-1-1 step-1"
+              data-blue-step="37"
+              data-red-step="24"
+              data-yellow-step="50"
+              data-green-step="11"
+            ></div>
+            <div
+              class="box white-box-1-2 step-2"
+              data-blue-step="38"
+              data-red-step="25"
+              data-yellow-step="51"
+              data-green-step="12"
+              style="position: relative"
+            >
+              <p
+                style="
+                  position: absolute;
+                  font-size: 2.5rem;
+                  top: 0;
+                  bottom: 0;
+                  left: 0;
+                  right: 0;
+                  margin: auto;
+                  line-height: 1;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                &#129071;
+              </p>
+            </div>
+            <div
+              class="box white-box-1-3 step-3"
+              data-blue-step="39"
+              data-red-step="26"
+              data-yellow-step="52"
+              data-green-step="13"
+            ></div>
+            <div
+              class="box white-box-1-4 step-52"
+              data-blue-step="36"
+              data-red-step="23"
+              data-yellow-step="49"
+              data-green-step="10"
+            ></div>
+            <div class="box yellow-bg" data-yellow-step="53"></div>
+            <div
+              class="box yellow-bg step-4"
+              data-blue-step="40"
+              data-red-step="27"
+              data-yellow-step="1"
+              data-green-step="14"
+            ></div>
+            <div
+              class="box white-box-1-5 step-51"
+              data-blue-step="35"
+              data-red-step="22"
+              data-yellow-step="48"
+              data-green-step="9"
+            ></div>
+            <div class="box yellow-bg" data-yellow-step="54"></div>
+            <div
+              class="box white-box-1-6 step-5"
+              data-blue-step="41"
+              data-red-step="28"
+              data-yellow-step="2"
+              data-green-step="15"
+            ></div>
+            <div
+              class="box white-box-1-7 step-50"
+              data-blue-step="34"
+              data-red-step="21"
+              data-yellow-step="47"
+              data-green-step="8"
+            ></div>
+            <div class="box yellow-bg" data-yellow-step="55"></div>
+            <div
+              class="box white-box-1-8 step-6"
+              data-blue-step="42"
+              data-red-step="29"
+              data-yellow-step="3"
+              data-green-step="16"
+            ></div>
+            <div
+              class="box white-box-1-9 step-49"
+              data-blue-step="33"
+              data-red-step="20"
+              data-yellow-step="46"
+              data-green-step="7"
+            ></div>
+            <div class="box yellow-bg" data-yellow-step="56"></div>
+            <div
+              class="box white-box-1-10 step-7"
+              data-blue-step="43"
+              data-red-step="30"
+              data-yellow-step="4"
+              data-green-step="17"
+            ></div>
+            <div
+              class="box white-box-1-11 step-48"
+              data-blue-step="32"
+              data-red-step="19"
+              data-yellow-step="45"
+              data-green-step="6"
+            ></div>
+            <div class="box yellow-bg" data-yellow-step="57"></div>
+            <div
+              class="box white-box-1-12 step-8"
+              data-blue-step="44"
+              data-red-step="31"
+              data-yellow-step="5"
+              data-green-step="18"
+            ></div>
+          </div>
+          <div class="yellow yellow-bg">
+            <div class="pins">
+              <div
+                class="pin yellow-bg-lighter yellow-pin-1 pin-in-parent-1"
+              ></div>
+              <div
+                class="pin yellow-bg-lighter yellow-pin-2 pin-in-parent-2"
+              ></div>
+              <div
+                class="pin yellow-bg-lighter yellow-pin-3 pin-in-parent-3"
+              ></div>
+              <div
+                class="pin yellow-bg-lighter yellow-pin-4 pin-in-parent-4"
+              ></div>
+            </div>
+          </div>
+          <div class="middle-boxes 1">
+            <div
+              class="box white-box-2-1 step-42"
+              data-blue-step="26"
+              data-red-step="13"
+              data-yellow-step="39"
+              data-green-step="52"
+            ></div>
+            <div
+              class="box green-bg step-43 green-start"
+              data-blue-step="27"
+              data-red-step="14"
+              data-yellow-step="40"
+              data-green-step="1"
+            ></div>
+            <div
+              class="box white-box-2-2 step-44"
+              data-blue-step="28"
+              data-red-step="15"
+              data-yellow-step="41"
+              data-green-step="2"
+            ></div>
+            <div
+              class="box white-box-2-3 step-45"
+              data-blue-step="29"
+              data-red-step="16"
+              data-yellow-step="42"
+              data-green-step="3"
+            ></div>
+            <div
+              class="box white-box-2-4 step-46"
+              data-blue-step="30"
+              data-red-step="17"
+              data-yellow-step="43"
+              data-green-step="4"
+            ></div>
+            <div
+              class="box white-box-2-5 step-47"
+              data-blue-step="31"
+              data-red-step="18"
+              data-yellow-step="44"
+              data-green-step="5"
+            ></div>
+            <div
+              class="box white-box-2-6 step-41"
+              data-blue-step="25"
+              data-red-step="12"
+              data-yellow-step="38"
+              data-green-step="51"
+              style="position: relative"
+            >
+              <p
+                style="
+                  position: absolute;
+                  font-size: 2.5rem;
+                  top: 0;
+                  bottom: 0;
+                  margin: auto;
+                  line-height: 1;
+                "
+              >
+                &#129070;
+              </p>
+            </div>
+            <div class="box green-bg" data-green-step="53"></div>
+            <div class="box green-bg" data-green-step="54"></div>
+            <div class="box green-bg" data-green-step="55"></div>
+            <div class="box green-bg" data-green-step="56"></div>
+            <div class="box green-bg" data-green-step="57"></div>
+            <div
+              class="box white-box-2-7 step-40"
+              data-blue-step="24"
+              data-red-step="11"
+              data-yellow-step="37"
+              data-green-step="50"
+            ></div>
+            <div
+              class="box white-box-2-8 step-39"
+              data-blue-step="23"
+              data-red-step="10"
+              data-yellow-step="36"
+              data-green-step="49"
+            ></div>
+            <div
+              class="box white-box-2-9 step-38"
+              data-blue-step="22"
+              data-red-step="9"
+              data-yellow-step="35"
+              data-green-step="48"
+            ></div>
+            <div
+              class="box white-box-2-10 step-37"
+              data-blue-step="21"
+              data-red-step="8"
+              data-yellow-step="34"
+              data-green-step="47"
+            ></div>
+            <div
+              class="box white-box-2-11 step-36"
+              data-blue-step="20"
+              data-red-step="7"
+              data-yellow-step="33"
+              data-green-step="46"
+            ></div>
+            <div
+              class="box white-box-2-12 step-35"
+              data-blue-step="19"
+              data-red-step="6"
+              data-yellow-step="32"
+              data-green-step="45"
+            ></div>
+          </div>
+          <div class="middle"></div>
+          <div class="middle-boxes 2">
+            <div
+              class="box white-box-3-1 step-9"
+              data-blue-step="45"
+              data-red-step="32"
+              data-yellow-step="6"
+              data-green-step="19"
+            ></div>
+            <div
+              class="box white-box-3-2 step-10"
+              data-blue-step="46"
+              data-red-step="33"
+              data-yellow-step="7"
+              data-green-step="20"
+            ></div>
+            <div
+              class="box white-box-3-3 step-11"
+              data-blue-step="47"
+              data-red-step="34"
+              data-yellow-step="8"
+              data-green-step="21"
+            ></div>
+            <div
+              class="box white-box-3-4 step-12"
+              data-blue-step="48"
+              data-red-step="35"
+              data-yellow-step="9"
+              data-green-step="22"
+            ></div>
+            <div
+              class="box white-box-3-5 step-13"
+              data-blue-step="49"
+              data-red-step="36"
+              data-yellow-step="10"
+              data-green-step="23"
+            ></div>
+            <div
+              class="box white-box-3-6 step-14"
+              data-blue-step="50"
+              data-red-step="37"
+              data-yellow-step="11"
+              data-green-step="24"
+            ></div>
+            <div class="box blue-bg" data-blue-step="57"></div>
+            <div class="box blue-bg" data-blue-step="56"></div>
+            <div class="box blue-bg" data-blue-step="55"></div>
+            <div class="box blue-bg" data-blue-step="54"></div>
+            <div class="box blue-bg" data-blue-step="53"></div>
+            <div
+              class="box white-box-3-7 step-15"
+              data-blue-step="51"
+              data-red-step="38"
+              data-yellow-step="12"
+              data-green-step="25"
+              style="position: relative"
+            >
+              <p
+                style="
+                  position: absolute;
+                  font-size: 2.5rem;
+                  top: 0;
+                  bottom: 0;
+                  margin: auto;
+                  line-height: 1;
+                "
+              >
+                &#129068;
+              </p>
+            </div>
+            <div
+              class="box white-box-3-8 step-21"
+              data-blue-step="5"
+              data-red-step="44"
+              data-yellow-step="18"
+              data-green-step="31"
+            ></div>
+            <div
+              class="box white-box-3-9 step-20"
+              data-blue-step="4"
+              data-red-step="43"
+              data-yellow-step="17"
+              data-green-step="30"
+            ></div>
+            <div
+              class="box white-box-3-10 step-19"
+              data-blue-step="3"
+              data-red-step="42"
+              data-yellow-step="16"
+              data-green-step="29"
+            ></div>
+            <div
+              class="box white-box-3-11 step-18"
+              data-blue-step="2"
+              data-red-step="41"
+              data-yellow-step="15"
+              data-green-step="28"
+            ></div>
+            <div
+              class="box blue-bg step-17"
+              data-blue-step="1"
+              data-red-step="40"
+              data-yellow-step="14"
+              data-green-step="27"
+            ></div>
+            <div
+              class="box white-box-3-12 step-16"
+              data-blue-step="52"
+              data-red-step="39"
+              data-yellow-step="13"
+              data-green-step="26"
+            ></div>
+          </div>
+          <div class="red red-bg">
+            <div class="pins">
+              <div class="pin red-bg-lighter red-pin-1 pin-in-parent-1"></div>
+              <div class="pin red-bg-lighter red-pin-2 pin-in-parent-2"></div>
+              <div class="pin red-bg-lighter red-pin-3 pin-in-parent-3"></div>
+              <div class="pin red-bg-lighter red-pin-4 pin-in-parent-4"></div>
+            </div>
+          </div>
+          <div class="boxes">
+            <div
+              class="box white-box-4-1 step-34"
+              data-blue-step="18"
+              data-red-step="5"
+              data-yellow-step="31"
+              data-green-step="44"
+            ></div>
+            <div class="box red-bg" data-red-step="57"></div>
+            <div
+              class="box white-box-4-2 step-22"
+              data-blue-step="6"
+              data-red-step="45"
+              data-yellow-step="19"
+              data-green-step="32"
+            ></div>
+            <div
+              class="box white-box-4-3 step-33"
+              data-blue-step="17"
+              data-red-step="4"
+              data-yellow-step="30"
+              data-green-step="43"
+            ></div>
+            <div class="box red-bg" data-red-step="56"></div>
+            <div
+              class="box white-box-4-4 step-23"
+              data-blue-step="7"
+              data-red-step="46"
+              data-yellow-step="20"
+              data-green-step="33"
+            ></div>
+            <div
+              class="box white-box-4-5 step-32"
+              data-blue-step="16"
+              data-red-step="3"
+              data-yellow-step="29"
+              data-green-step="42"
+            ></div>
+            <div class="box red-bg" data-red-step="55"></div>
+            <div
+              class="box white-box-4-6 step-24"
+              data-blue-step="8"
+              data-red-step="47"
+              data-yellow-step="21"
+              data-green-step="34"
+            ></div>
+            <div
+              class="box white-box-4-7 step-31"
+              data-blue-step="15"
+              data-red-step="2"
+              data-yellow-step="28"
+              data-green-step="41"
+            ></div>
+            <div class="box red-bg" data-red-step="54"></div>
+            <div
+              class="box white-box-4-8 step-25"
+              data-blue-step="9"
+              data-red-step="48"
+              data-yellow-step="22"
+              data-green-step="35"
+            ></div>
+            <div
+              class="box red-bg step-30"
+              data-blue-step="14"
+              data-red-step="1"
+              data-yellow-step="27"
+              data-green-step="40"
+            ></div>
+            <div class="box red-bg" data-red-step="53"></div>
+            <div
+              class="box white-box-4-9 step-26"
+              data-blue-step="10"
+              data-red-step="49"
+              data-yellow-step="23"
+              data-green-step="36"
+            ></div>
+            <div
+              class="box white-box-4-10 step-29"
+              data-blue-step="13"
+              data-red-step="52"
+              data-yellow-step="26"
+              data-green-step="39"
+            ></div>
+            <div
+              class="box white-box-4-11 step-28"
+              data-blue-step="12"
+              data-red-step="51"
+              data-yellow-step="25"
+              data-green-step="38"
+              style="position: relative"
+            >
+              <p
+                style="
+                  position: absolute;
+                  font-size: 2.5rem;
+                  top: 0;
+                  bottom: 0;
+                  left: 0;
+                  right: 0;
+                  margin: auto;
+                  line-height: 1;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                &#129069;
+              </p>
+            </div>
+            <div
+              class="box white-box-4-12 step-27"
+              data-blue-step="11"
+              data-red-step="50"
+              data-yellow-step="24"
+              data-green-step="37"
+            ></div>
+          </div>
+          <div class="blue blue-bg">
+            <div class="pins">
+              <div class="pin blue-bg-lighter blue-pin-1 pin-in-parent-1"></div>
+              <div class="pin blue-bg-lighter blue-pin-2 pin-in-parent-2"></div>
+              <div class="pin blue-bg-lighter blue-pin-3 pin-in-parent-3"></div>
+              <div class="pin blue-bg-lighter blue-pin-4 pin-in-parent-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="controles">
+        <button>Play</button>
+        <button
+          onclick="roolDice('', 'player-1')"
+          data-turn="player-1"
+          id="rool-dice"
+        >
+          Rool dice
+        </button>
+      </div>
+
+      <div class="players-info players">
+        <div class="player-1">
+          <label for="player-1">Player 1: </label>
+          <input
+            type="text"
+            minlength="1"
+            maxlength="10"
+            placeholder="Enter name"
+            name="player-1"
+            id="player-1-AI"
+            required
+          />
+        </div>
+      </div>
+      <div class="players-info players">
+        <div class="player-1">
+          <label for="player-1">Player 1: </label>
+          <input
+            type="text"
+            minlength="1"
+            maxlength="10"
+            placeholder="Enter name"
+            name="player-1"
+            id="player-1"
+            required
+          />
+        </div>
+        <div class="player-2">
+          <label for="player-2">Player 1: </label>
+          <input
+            type="text"
+            minlength="1"
+            maxlength="10"
+            placeholder="Enter name"
+            name="player-2"
+            id="player-2"
+            required
+          />
+        </div>
+      </div>
+      <div class="players-num">
+        <p>Enter number of players</p>
+        <div class="options">
+          <div class="option">
+            <input
+              required
+              type="radio"
+              name="number-of-players"
+              id="2"
+              value="2"
+            />
+            <label for="2">2</label> <br />
+          </div>
+          <div class="option">
+            <input
+              required
+              type="radio"
+              name="number-of-players"
+              id="4"
+              value="4"
+            />
+            <label for="4">4</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let roolDiceTimer = 0;
+      let players = [];
+      let tracker = 0;
+      let addClickEvent;
+
+      function displayColors() {
+        document.getElementById("pop-up").innerHTML = `<div class="color-pic">
+              <p>Select your color</p>
+              <div class="colors">
+                <div class="input-color">
+                  <label style="color: blue" for="blue">Blue</label>
+                  <input
+                    type="radio"
+                    style="
+                      accent-color: blue;
+                      color: blue;
+                      background-color: blue;
+                    "
+                    required
+                    name="color"
+                    value="blue"
+                    id="blue"
+                  />
+                </div>
+                <div class="input-color">
+                  <label style="color: red" for="red">Red</label>
+                  <input
+                    type="radio"
+                    style="accent-color: red; color: red; background-color: red"
+                    required
+                    name="color"
+                    value="red"
+                    id="red"
+                  />
+                </div>
+                <div class="input-color">
+                  <label style="color: yellow" for="yellow">Yellow</label>
+                  <input
+                    type="radio"
+                    style="
+                      accent-color: yellow;
+                      color: yellow;
+                      background-color: yellow;
+                    "
+                    required
+                    name="color"
+                    value="yellow"
+                    id="yellow"
+                  />
+                </div>
+                <div class="input-color">
+                  <label style="color: green" for="green">Green</label>
+                  <input
+                    type="radio"
+                    style="
+                      accent-color: green;
+                      color: green;
+                      background-color: green;
+                    "
+                    required
+                    name="color"
+                    value="green"
+                    id="green"
+                  />
+                </div>
+              </div>
+              <div class="controles">
+                <button class="back-btn" onclick="backToPlayOption()">&#11148;</button>
+                <button onclick='setPlayerColor(document.querySelector(".colors input[name=${"color"}]:checked").value)'>Next</button>
+              </div>
+            </div>`;
+      }
+
+      function backToPlayOption() {
+        document.getElementById("pop-up").innerHTML = `<div class="players">
+              <button onclick="displayColors()">Play with AI</button>
+              <button>Play with friends</button>
+            </div>`;
+      }
+      function nextToPlayerNames() {
+        document.getElementById(
+          "pop-up"
+        ).innerHTML = `<div class='players-info players'>
+        <div class='single-player-info player-1'>
+          <input type='text' minlength='1' maxlength='23' placeholder='Enter your name' name='player-1' id='single-player-name'
+            required />
+            <button class="back-btn" onclick="displayColors()">&#11148;</button>
+            <button onclick="startSinglePlay(document.getElementById('single-player-name').value)">Enter</button>
+        </div>
+      </div>`;
+      }
+      document.querySelectorAll(".pin").forEach((element) => {
+        element.style.height = `${
+          document.querySelector(".box").clientHeight
+        }px`;
+        element.style.width = `${
+          document.querySelector(".box").clientWidth - 3
+        }px`;
+      });
+      let number2;
+      function startSinglePlay(playerName) {
+        setPlayerName(playerName);
+        document.querySelector(".player-1-info p").innerText = playerName;
+        document.querySelector(".player-2-info p").innerText = "AI";
+        removeMenu();
+        randomStarter("with-AI");
+      }
+      function setPlayerName(name) {
+        players["name"] = name;
+        console.log(players);
+      }
+      function setPlayerColor(color) {
+        players["color"] = color;
+        nextToPlayerNames();
+      }
+      function randomStarter(players) {
+        let random = Math.random();
+        if (players == "with-AI" || players == "2") {
+          if (random < 0.5 && players != "with-AI") {
+            turns("player-1");
+          } else if (players == "with-AI" && random >= 0.5) {
+            turns("player-2", "with-AI");
+          } else if (players == "with-AI" && random < 0.5) {
+            turns("player-1", "with-AI");
+          } else {
+            turns("player-2");
+          }
+        } else if (players == "4") {
+          switch (true) {
+            case number < 0.225:
+              turns("player-1");
+              break;
+            case number >= 0.225 && number < 0.45:
+              turns("player-2");
+              break;
+            case number >= 0.45 && number < 0.675:
+              turns("player-3");
+              break;
+            case number >= 0.675:
+              turns("player-4");
+              break;
+            default:
+              break;
+          }
+        }
+      }
+      function turns(currentPlayer, playingWith) {
+        if (currentPlayer) {
+          if (playingWith == "with-AI") {
+            if (currentPlayer == "player-1") {
+              alert("Your turn");
+              document
+                .getElementById("rool-dice")
+                .setAttribute("data-turn", "player-1");
+            } else if (currentPlayer == "player-2") {
+              alert("AI turn");
+              document.getElementById("rool-dice").removeAttribute("data-turn");
+              aiMove();
+            }
+          }
+        }
+      }
+      function removeMenu() {
+        document.querySelector(".pop-up-cover").style.display = "none";
+      }
+      function aiMove() {
+        if (players["color"] == "red") {
+          roolDice("yellow", "ai-move");
+        } else if (players["color"] == "blue") {
+          roolDice("green", "ai-move");
+        } else if (players["color"] == "green") {
+          roolDice("blue", "ai-move");
+        } else if (players["color"] == "yellow") {
+          roolDice("red", "ai-move");
+        }
+      }
+      function amountOfPins(color) {
+        let amountOfPins = 0;
+        let boxes = document.querySelectorAll(".box");
+        for (let i = 0; i < boxes.length; i++) {
+          if (
+            boxes[i].querySelector(".pin") &&
+            boxes[i]
+              .querySelector(".pin")
+              .classList.contains(`${color}-bg-lighter`)
+          ) {
+            amountOfPins += 1;
+          }
+        }
+        if (amountOfPins > 1) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      function movePin(number, color, turn) {
+        let pausedMove = false;
+        let boxes = document.querySelectorAll(".box");
+        let start;
+
+        if (amountOfPins(color) && number < 6) {
+          pausedMove = true;
+          addClickEvent = (event) => {
+            pickedPin(event.currentTarget, color, number, turn, event);
+          };
+          document
+            .querySelectorAll(`.box .${color}-bg-lighter`)
+            .forEach((element) => {
+              element.classList.add("hover-pin");
+              element.addEventListener("click", addClickEvent, {
+                once: true,
+              });
+            });
+        } else {
+          if (number != 6) {
+            // docume
+            tracker = 0;
+            for (let i = 0; i < boxes.length; i++) {
+              const element = boxes[i];
+              // let elementPin = elementPin;
+              if (element.querySelector(".pin")) {
+                if (
+                  element
+                    .querySelector(".pin")
+                    .classList.contains(`${color}-bg-lighter`)
+                ) {
+                  start = false;
+                  let pin = element.querySelector(".pin");
+
+                  let parent = element.parentElement;
+                  // let startBoxName = element.classList[3];
+                  if (
+                    element.classList.contains(`${color}-bg`) ||
+                    element.hasAttribute(`data-${color}-step`) ||
+                    pin.classList.contains(`${color}-bg-lighter`)
+                  ) {
+                    if (element.getAttribute(`data-${color}-step`) == "1") {
+                      if (
+                        document
+                          .querySelector(
+                            `.box[data-${color}-step="${number + 1}"]`
+                          )
+                          .querySelector(".pin") &&
+                        document
+                          .querySelector(
+                            `.box[data-${color}-step="${number + 1}"]`
+                          )
+                          .querySelector(".pin").classList[2] !=
+                          `${color}-bg-lighter`
+                      ) {
+                        let opponentColor = document
+                          .querySelector(
+                            `.box[data-${color}-step="${number + 1}"]`
+                          )
+                          .querySelector(".pin")
+                          .classList[2].split("-")[0];
+                        document
+                          .querySelector(`.${opponentColor}`)
+                          .append(
+                            document
+                              .querySelector(
+                                `.box[data-${color}-step="${number + 1}"]`
+                              )
+                              .querySelector(".pin")
+                          );
+                      }
+                      document
+                        .querySelector(
+                          `.box[data-${color}-step="${number + 1}"]`
+                        )
+                        .append(pin);
+                    } else {
+                      let currentColorStep = parseInt(
+                        element.getAttribute(`data-${color}-step`)
+                      );
+                      // alert(currentColorStep + number);
+                      document
+                        .querySelector(
+                          `.box[data-${color}-step="${
+                            currentColorStep + number
+                          }"]`
+                        )
+                        .append(pin);
+                    }
+                  }
+                  break;
+                }
+                // break;
+              } else {
+                start = true;
+              }
+            }
+          } else {
+            tracker += 1;
+            for (let i = 0; i < boxes.length; i++) {
+              const element = boxes[i];
+              if (element.querySelector(".pin")) {
+                alert("good");
+                if (
+                  element
+                    .querySelector(".pin")
+                    .classList.contains(`${color}-bg-lighter`)
+                ) {
+                  alert("good2");
+                  pausedMove = true;
+                  addClickEvent = (event) => {
+                    pickedPin(event.currentTarget, color, number, turn, event);
+                  };
+                  document
+                    .querySelectorAll(`.${color}-bg-lighter`)
+                    .forEach((element2) => {
+                      element2.classList.add("hover-pin");
+                      element2.addEventListener("click", addClickEvent, {
+                        once: true,
+                      });
+                    });
+                  return;
+                }
+              }
+            }
+            if (turn && turn == "ai-move") {
+              let pin = document.querySelector(`.${color}-pin-1`);
+              alert("ai");
+              if (!pin.parentElement.getAttribute(`data-${color}-step`)) {
+                pin.classList.add("pin_in_box");
+                document
+                  .querySelector(`.box[data-${color}-step="1"]`)
+                  .appendChild(pin);
+              }
+            } else {
+              let pin = document.querySelector(`.${players["color"]}-pin-1`);
+              if (
+                number == 6 &&
+                (parseInt(
+                  pin.parentElement.getAttribute(`data-${color}-step`)
+                ) < 2 ||
+                
+                  !pin.parentElement.getAttribute(`data-${color}-step`))
+              ) {
+                pin.classList.add("pin_in_box");
+                document
+                  .querySelector(`.box[data-${players["color"]}-step="1"]`)
+                  .appendChild(pin);
+              }
+              // alert("player");
+            }
+          }
+        }
+        if (pausedMove == false) {
+          if (turn && turn == "ai-move") {
+            if (tracker > 0) {
+              setTimeout(() => {
+                turns("player-2", "with-AI");
+              }, 2000);
+            } else {
+              setTimeout(() => {
+                turns("player-1", "with-AI");
+              }, 2000);
+            }
+          } else {
+            if (tracker > 0) {
+              setTimeout(() => {
+                turns("player-1", "with-AI");
+              }, 2000);
+            } else {
+              setTimeout(() => {
+                turns("player-2", "with-AI");
+              }, 2000);
+            }
+          }
+        }
+      }
+      function pickedPin(element, color, number, currentTurn, e) {
+        console.log(element);
+
+        e.stopPropagation();
+        document.querySelectorAll(`.${color}-bg-lighter`).forEach((element) => {
+          element.classList.remove("hover-pin");
+          element.removeEventListener("click", addClickEvent, { once: true });
+        });
+        if (number == 6) {
+          alert(`${currentTurn} rools dice again`);
+          tracker += 1;
+          if (element.classList[2]) {
+            console.log(element.parentElement);
+            if (!element.parentElement.getAttribute(`data-${color}-step`)) {
+              document
+                .querySelector(`.box[data-${color}-step="1"]`)
+                .appendChild(element);
+              if (tracker > 0 && currentTurn == "player-1") {
+                nextTurn("ai-move");
+              } else if (tracker > 0 && currentTurn == "ai-move") {
+                nextTurn("player-2");
+              }
+            } else {
+              let currentColorStep = parseInt(
+                element.parentElement.getAttribute(`data-${color}-step`)
+              );
+              console.log(
+                "current Color Step: " + currentColorStep + ", color: " + color
+              );
+              document
+                .querySelector(
+                  `.box[data-${color}-step="${currentColorStep + number}"]`
+                )
+                .append(element);
+              if (tracker > 0 && currentTurn == "player-1") {
+                nextTurn("ai-move");
+              } else if (tracker > 0 && currentTurn == "ai-move") {
+                nextTurn("player-2");
+              }
+            }
+          }
+        } else {
+          let currentColorStep = parseInt(
+            element.parentElement.getAttribute(`data-${color}-step`)
+          );
+          console.log(
+            "current Color Step: " + currentColorStep + ", color: " + color
+          );
+          document
+            .querySelector(
+              `.box[data-${color}-step="${currentColorStep + number}"]`
+            )
+            .append(element);
+          nextTurn("player-2");
+        }
+      }
+      function nextTurn(turn) {
+        if (turn && turn == "ai-move") {
+          setTimeout(() => {
+            turns("player-1", "with-AI");
+          }, 2000);
+        } else {
+          setTimeout(() => {
+            turns("player-2", "with-AI");
+          }, 2000);
+        }
+      }
+      function roolDice(color, turn) {
+        const now = Date.now();
+        if (now - roolDiceTimer < 2000) {
+          return;
+        }
+        roolDiceTimer = now;
+        let start = false;
+        let number = Math.floor(Math.random() * 6) + 1;
+        if (
+          document.getElementById("rool-dice").getAttribute("data-turn") ==
+          "player-1"
+        ) {
+          document.getElementById("player-1-dice").innerText = number;
+          movePin(number, players["color"], "player-1");
+          document
+            .getElementById("rool-dice")
+            .setAttribute("data-turn", "ai-move");
+        } else {
+          if (
+            turn == "ai-move" ||
+            document.getElementById("rool-dice").getAttribute("data-turn") ==
+              "ai-move"
+          ) {
+            document.getElementById("player-2-dice").innerText = number;
+            movePin(number, color, turn);
+          }
+        }
+        // alert(document.getElementById("rool-dice").getAttribute("data-turn") )
+        // alert(turn)
+      }
+    </script>
+  </body>
+</html>
