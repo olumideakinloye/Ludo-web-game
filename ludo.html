@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="ludo.css" />
+    <link rel="stylesheet" href="Dice.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <title>Ludo</title>
   </head>
 
@@ -15,27 +20,42 @@
       <div class="pop-up-cover">
         <div class="pop-up" id="pop-up">
           <div class="players">
-            <button onclick="displayColors()">Play with AI</button>
+            <button onclick="NumberOfPlayers()">Play with AI</button>
             <button>Play with friends</button>
           </div>
         </div>
       </div>
-      <div class="player-game-info">
-        <div class="player-info player-1-info">
-          <p></p>
-          <div class="dice player-1-dice" id="player-1-dice"></div>
-        </div>
-        <div class="score-info">
-          <div class="score player-1-score">0</div>
-          <p>&#8722;</p>
-          <div class="score player-2-score">0</div>
-        </div>
-        <div class="player-info player-2-info">
-          <div class="dice player-2-dice" id="player-2-dice"></div>
-          <p></p>
-        </div>
-      </div>
       <div class="board-bg">
+        <div class="player-game-info">
+          <div class="player player-1-info">
+            <div class="player-info">
+              <p></p>
+            </div>
+            <div class="winning-pins">
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+            </div>
+          </div>
+          <div class="alert-player">
+            <div class="alert-box" id="alert">
+              <p></p>
+            </div>
+          </div>
+          <div class="player player-2-info">
+            <div class="player-info">
+              <p></p>
+            </div>
+            <div class="winning-pins">
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+            </div>
+          </div>
+        </div>
+
         <div class="board">
           <div class="green green-bg">
             <div class="pins">
@@ -68,7 +88,12 @@
               data-yellow-step="51"
               data-green-step="12"
               style="position: relative"
-            ></div>
+            >
+              <i
+                class="fa-solid fa-turn-down arrow-icon"
+                style="margin-bottom: -100%"
+              ></i>
+            </div>
             <div
               class="box white-box-1-3 step-3"
               data-blue-step="39"
@@ -175,7 +200,7 @@
               data-yellow-step="39"
             ></div>
             <div
-              class="box green-bg step-43 green-start"
+              class="box green-bg step-43 green-startGame"
               data-blue-step="27"
               data-red-step="14"
               data-yellow-step="40"
@@ -216,7 +241,12 @@
               data-yellow-step="38"
               data-green-step="51"
               style="position: relative"
-            ></div>
+            >
+              <i
+                class="fa-solid fa-turn-down arrow-icon"
+                style="margin-right: -100%; transform: rotateZ(-90deg)"
+              ></i>
+            </div>
             <div class="box green-bg" data-green-step="52"></div>
             <div class="box green-bg" data-green-step="53"></div>
             <div class="box green-bg" data-green-step="54"></div>
@@ -265,7 +295,43 @@
               data-green-step="45"
             ></div>
           </div>
-          <div class="middle"></div>
+          <div class="middle">
+            <div class="dice-box" id="rool-dice" data-turn="">
+              <div class="dice face-1">
+                <div class="one dice-num"></div>
+              </div>
+              <div class="dice face-2">
+                <div class="two dice-num"></div>
+                <div class="two dice-num"></div>
+              </div>
+              <div class="dice face-3">
+                <div class="three dice-num"></div>
+                <div class="three dice-num"></div>
+                <div class="three dice-num"></div>
+              </div>
+              <div class="dice face-4">
+                <div class="four dice-num"></div>
+                <div class="four dice-num"></div>
+                <div class="four dice-num"></div>
+                <div class="four dice-num"></div>
+              </div>
+              <div class="dice face-5">
+                <div class="five dice-num"></div>
+                <div class="five dice-num"></div>
+                <div class="five dice-num"></div>
+                <div class="five dice-num"></div>
+                <div class="five dice-num"></div>
+              </div>
+              <div class="dice face-6">
+                <div class="six dice-num"></div>
+                <div class="six dice-num"></div>
+                <div class="six dice-num"></div>
+                <div class="six dice-num"></div>
+                <div class="six dice-num"></div>
+                <div class="six dice-num"></div>
+              </div>
+            </div>
+          </div>
           <div class="middle-boxes 2">
             <div
               class="box white-box-3-1 step-9"
@@ -321,7 +387,12 @@
               data-yellow-step="12"
               data-green-step="25"
               style="position: relative"
-            ></div>
+            >
+              <i
+                class="fa-solid fa-turn-down arrow-icon"
+                style="margin-left: -100%; transform: rotateZ(90deg)"
+              ></i>
+            </div>
             <div
               class="box white-box-3-8 step-21"
               data-blue-step="5"
@@ -461,7 +532,12 @@
               data-yellow-step="25"
               data-green-step="38"
               style="position: relative"
-            ></div>
+            >
+              <i
+                class="fa-solid fa-turn-up arrow-icon"
+                style="margin-top: -100%; transform: rotateY(180deg)"
+              ></i>
+            </div>
             <div
               class="box white-box-4-12 step-27"
               data-blue-step="11"
@@ -479,8 +555,32 @@
             </div>
           </div>
         </div>
+        <div class="player-game-info">
+          <div class="player player-3-info">
+            <div class="winning-pins">
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+            </div>
+            <div class="player-info">
+              <p></p>
+            </div>
+          </div>
+          <div class="player player-4-info">
+            <div class="winning-pins">
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+              <div class="win-pin pin"></div>
+            </div>
+            <div class="player-info">
+              <p></p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="controles">
+      <!-- <div class="controles">
         <button>Play</button>
         <button
           onclick="roolDice('', 'player-1')"
@@ -530,8 +630,8 @@
             required
           />
         </div>
-      </div>
-      <div class="players-num">
+      </div> -->
+      <!-- <div class="players-num">
         <p>Enter number of players</p>
         <div class="options">
           <div class="option">
@@ -555,23 +655,35 @@
             <label for="4">4</label>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <script>
+      let gameInfo = [];
       let roolDiceTimer = 0;
+      let playerName = "";
+      let playerColor = "";
+      let numberOfPlayers = "";
       let pausedMove = false;
       let players = [];
       let tracker = 0;
       let addClickEvent;
       let operating = false;
+      let resetTransformation = 0;
+      const colorToPlayerNumber = [
+        { color: "green", number: 1 },
+        { color: "yellow", number: 2 },
+        { color: "red", number: 3 },
+        { color: "blue", number: 4 },
+      ];
 
       function displayColors() {
         document.getElementById("pop-up").innerHTML = `<div class="color-pic">
-              <p>Select your color</p>
+              <p class="headers">Select your color</p>
               <div class="colors">
                 <div class="input-color">
                   <label style="color: blue" for="blue">Blue</label>
                   <input
+                  class="radio"
                     type="radio"
                     style="
                       accent-color: blue;
@@ -587,6 +699,7 @@
                 <div class="input-color">
                   <label style="color: red" for="red">Red</label>
                   <input
+                  class="radio"
                     type="radio"
                     style="accent-color: red; color: red; background-color: red"
                     required
@@ -598,6 +711,7 @@
                 <div class="input-color">
                   <label style="color: yellow" for="yellow">Yellow</label>
                   <input
+                  class="radio"
                     type="radio"
                     style="
                       accent-color: yellow;
@@ -613,6 +727,7 @@
                 <div class="input-color">
                   <label style="color: green" for="green">Green</label>
                   <input
+                  class="radio"
                     type="radio"
                     style="
                       accent-color: green;
@@ -627,7 +742,7 @@
                 </div>
               </div>
               <div class="controles">
-                <button class="back-btn" onclick="backToPlayOption()">&#11148;</button>
+                <button class="back-btn" onclick="NumberOfPlayers()"><i class="fa-solid fa-turn-up arrow-icon-2" style=" transform: rotateZ(-90deg);"></i></button>
                 <button onclick='setPlayerColor(document.querySelector(".colors input[name=${"color"}]:checked").value)'>Next</button>
               </div>
             </div>`;
@@ -635,7 +750,7 @@
 
       function backToPlayOption() {
         document.getElementById("pop-up").innerHTML = `<div class="players">
-              <button onclick="displayColors()">Play with AI</button>
+              <button onclick="NumberOfPlayers()">Play with AI</button>
               <button>Play with friends</button>
             </div>`;
       }
@@ -647,11 +762,50 @@
           <input type='text' minlength='1' maxlength='23' placeholder='Enter your name' name='player-1' id='single-player-name'
             required />
             <div class='single-player-info-buttons'>
-            <button class="back-btn" onclick="displayColors()">&#11148;</button>
-            <button onclick="startSinglePlay(document.getElementById('single-player-name').value)">Enter</button>
+            <button class="back-btn" onclick="displayColors()"><i class="fa-solid fa-turn-up arrow-icon-2" style=" transform: rotateZ(-90deg);"></i></button>
+            <button onclick="displayStart(document.getElementById('single-player-name').value)">Enter</button>
             </div>
         </div>
       </div>`;
+      }
+      function NumberOfPlayers() {
+        document.getElementById("pop-up").innerHTML = `<div class="players-num">
+        <p class="headers">Select players</p>
+        <div class="options">
+          <div class="option">
+            <input
+            class="radio"
+              required
+              type="radio"
+              name="number-of-players"
+              id="2"
+              value="2"
+            />
+            <label for="2">2 Players</label>
+          </div>
+          <div class="option">
+            <input
+            class="radio"
+              required
+              type="radio"
+              name="number-of-players"
+              id="4"
+              value="4"
+            />
+            <label for="4">4 Players</label>
+          </div>
+        </div>
+        <div class='single-player-info-buttons'>
+            <button class="back-btn" onclick="backToPlayOption()"><i class="fa-solid fa-turn-up arrow-icon-2" style=" transform: rotateZ(-90deg);"></i></button>
+            <button onclick='setPlayerNumber(document.querySelector(".options input[name=${"number-of-players"}]:checked").value)'>Enter</button>            
+        </div>
+      </div>`;
+      }
+      function displayStart(playerName) {
+        setPlayerName(playerName);
+        document.getElementById("pop-up").innerHTML = `<div class="players">
+              <button onclick="startGame('${playerName}')">Start</button>
+            </div>`;
       }
       window.addEventListener("resize", () => {
         document.querySelectorAll(".pin").forEach((element) => {
@@ -674,82 +828,202 @@
         });
       });
       let number2;
-      function startSinglePlay(playerName) {
-        setPlayerName(playerName);
-        document.querySelector(".player-1-info p").innerText = playerName;
-        document.querySelector(".player-2-info p").innerText = "AI";
-        removeMenu();
-        randomStarter("with-AI");
+      function assignPlayers(A, B) {
+        const map = { 1: 4, 4: 1, 2: 3, 3: 2 };
+
+        if (A != null) return map[A];
+        else if (B != null) return map[B];
       }
-      function setPlayerName(name) {
-        players["name"] = name;
-        console.log(players);
-      }
-      function setPlayerColor(color) {
-        players["color"] = color;
-        nextToPlayerNames();
-      }
-      function randomStarter(players) {
-        let random = Math.random();
-        if (players == "with-AI" || players == "2") {
-          if (random < 0.5 && players != "with-AI") {
-            turns("player-1");
-          } else if (players == "with-AI" && random >= 0.5) {
-            turns("player-2", "with-AI");
-          } else if (players == "with-AI" && random < 0.5) {
-            turns("player-1", "with-AI");
-          } else {
-            turns("player-2");
+      function startGame(playerName) {
+        if (numberOfPlayers == 2) {
+          let playerANumber = 0;
+          for (let i = 0; i < colorToPlayerNumber.length; i++) {
+            const element = colorToPlayerNumber[i];
+            if (element.color == playerColor) {
+              players.push({
+                name: playerName,
+                color: element.color,
+                number: element.number,
+              });
+              document.querySelector(
+                `.player-${element.number}-info p`
+              ).innerText = playerName;
+              playerANumber = element.number;
+              let playerBNumber = assignPlayers(element.number, null);
+
+              players.push({
+                name: `Bot`,
+                color: colorToPlayerNumber[playerBNumber - 1].color,
+                number: playerBNumber,
+              });
+              document.querySelector(
+                `.player-${playerBNumber}-info p`
+              ).innerText = "Bot";
+              break;
+            }
           }
-        } else if (players == "4") {
-          switch (true) {
-            case number < 0.225:
-              turns("player-1");
-              break;
-            case number >= 0.225 && number < 0.45:
-              turns("player-2");
-              break;
-            case number >= 0.45 && number < 0.675:
-              turns("player-3");
-              break;
-            case number >= 0.675:
-              turns("player-4");
-              break;
-            default:
-              break;
+          if (playerANumber != 0) {
+            if (playerANumber == 2 || playerANumber == 3) {
+              document.querySelector(".player-1-info").style.display = "none";
+              document.querySelector(".player-1-info").innerText = "";
+              document.querySelector(".player-4-info").style.display = "none";
+              document.querySelector(".player-4-info").innerText = "";
+            } else if (playerANumber == 1 || playerANumber == 4) {
+              document.querySelector(".player-2-info").style.display = "none";
+              document.querySelector(".player-2-info").innerText = "";
+              document.querySelector(".player-3-info").style.display = "none";
+              document.querySelector(".player-3-info").innerText = "";
+            }
+          }
+        } else if (numberOfPlayers == 4) {
+          let botNumber = 0;
+          for (let i = 0; i < colorToPlayerNumber.length; i++) {
+            const element = colorToPlayerNumber[i];
+            if (element.color == playerColor) {
+              players.push({
+                name: playerName,
+                color: element.color,
+                number: element.number,
+              });
+              document.querySelector(
+                `.player-${element.number}-info p`
+              ).innerText = playerName;
+            } else {
+              botNumber += 1;
+              players.push({
+                name: `Bot${botNumber}`,
+                color: element.color,
+                number: element.number,
+              });
+              document.querySelector(
+                `.player-${element.number}-info p`
+              ).innerText = `Bot${botNumber}`;
+            }
           }
         }
+        removeMenu();
+        randomStartGame("with-AI", numberOfPlayers);
       }
-      function turns(currentPlayer, playingWith) {
-        if (currentPlayer) {
-          if (playingWith == "with-AI") {
-            if (currentPlayer == "player-1") {
-              alert("Your turn");
+      function setPlayerName(name) {
+        playerName = name;
+      }
+      function setPlayerColor(color) {
+        playerColor = color;
+        nextToPlayerNames();
+      }
+      function setPlayerNumber(amount) {
+        numberOfPlayers = amount;
+        displayColors();
+      }
+      function randomStartGame(playering, amount) {
+        gameInfo["currentTurn"] = Math.floor(Math.random() * players.length);
+        const randomStarter = players[gameInfo["currentTurn"]];
+        if (randomStarter.name == playerName) {
+          operating = false;
+          let message = `You're is starting the game`;
+          const timeOut = message.length * 100;
+          alertPlayer("block", message);
+          setTimeout(() => {
+            roolDice(randomStarter.color, randomStarter);
+            operating = true;
+            document
+              .getElementById("rool-dice")
+              .addEventListener("click", () => {
+                roolDice(randomStarter.color, randomStarter);
+              });
+          }, timeOut);
+
+          console.log(`You're is starting the game`);
+        } else {
+          operating = true;
+          let message = `${randomStarter.name} is starting the game`;
+          const timeOut = message.length * 100;
+          alertPlayer("block", message);
+          setTimeout(() => {
+            roolDice(randomStarter.color, randomStarter);
+            document
+              .getElementById("rool-dice")
+              .addEventListener("click", () => {
+                roolDice(playerInfo.color, playerInfo);
+              });
+          }, timeOut);
+          const playerInfo = players.find(
+            (player) => player.name === playerName
+          );
+          console.log(`${playerInfo.name} is starting the game`);
+        }
+      }
+      function switchTurns(currentTurn, playAgain = false) {
+        let currentPlayerInfo = "";
+        let nextPlayerInfo = "";
+        if (players.length == 2) {
+          if (gameInfo["currentTurn"] == 1) {
+            currentPlayerInfo = players[1];
+            nextPlayerInfo = players[0];
+            gameInfo["currentTurn"] = 0;
+          } else if (gameInfo["currentTurn"] == 0) {
+            currentPlayerInfo = players[0];
+            nextPlayerInfo = players[1];
+            gameInfo["currentTurn"] = 1;
+          }
+          if(currentPlayerInfo != "" && nextPlayerInfo != ""){
+            if (currentPlayerInfo.name == playerName) {
+              operating = true;
+              document.getElementById("rool-dice").removeAttribute("data-turn");
+              let message = `${nextPlayerInfo.name}'s turn`;
+              const timeOut = message.length * 100;
+              alertPlayer("block", message);
+              setTimeout(() => {
+                aiMove(nextPlayerInfo);
+              }, timeOut);
+            } else {
               document
                 .getElementById("rool-dice")
-                .setAttribute("data-turn", "player-1");
-            } else if (currentPlayer == "player-2") {
-              alert("AI turn");
-              document.getElementById("rool-dice").removeAttribute("data-turn");
-              aiMove();
+                .setAttribute("data-turn", nextPlayerInfo.name);
+              let message = "Your turn";
+              const timeOut = message.length * 100;
+              alertPlayer("block", message);
+              setTimeout(() => {
+                operating = false;
+              }, timeOut);
             }
           }
         }
       }
+      // function turns(currentPlayer, playingWith) {
+      //   if (currentPlayer) {
+      //     if (playingWith == "with-AI") {
+      //       if (currentPlayer == "player-1") {
+      //         alert("Your turn");
+      //         document
+      //           .getElementById("rool-dice")
+      //           .setAttribute("data-turn", "player-1");
+      //       } else if (currentPlayer == "player-2") {
+      //         alert("Bot turn");
+      //         document.getElementById("rool-dice").removeAttribute("data-turn");
+      //         aiMove();
+      //       }
+      //     } else if (playingWith == "with-4-AI") {
+      //       if (currentPlayer == "player-1") {
+      //         alert("Your turn");
+      //         document
+      //           .getElementById("rool-dice")
+      //           .setAttribute("data-turn", "player-1");
+      //       } else if (currentPlayer == "player-2") {
+      //         alert("Bot turn");
+      //         document.getElementById("rool-dice").removeAttribute("data-turn");
+      //         aiMove();
+      //       }
+      //     }
+      //   } else {
+      //   }
+      // }
       function removeMenu() {
         document.querySelector(".pop-up-cover").style.display = "none";
       }
-      function aiMove() {
+      function aiMove(bot) {
         operating = true;
-        if (players["color"] == "red") {
-          roolDice("yellow", "ai-move");
-        } else if (players["color"] == "blue") {
-          roolDice("green", "ai-move");
-        } else if (players["color"] == "green") {
-          roolDice("blue", "ai-move");
-        } else if (players["color"] == "yellow") {
-          roolDice("red", "ai-move");
-        }
+        roolDice(bot.color, bot);
       }
       function CheakBoxesLeft(color, number, pin) {
         if (pin.parentElement.hasAttribute(`data-${color}-step`)) {
@@ -816,77 +1090,71 @@
           if (!pinPlayed(color)) {
             if (number == 6) {
               tracker += 1;
-              if (turn && turn == "ai-move") {
+              if (turn && turn.name != playerName) {
                 pausedMove = false;
                 let randomPin = pickRandomPin(color);
                 if (randomPin) {
-                  movePinHome(color, 0, turn, randomPin);
-                  randomPin.classList.add("pin-in-box");
-                  document
-                    .querySelector(`.box[data-${color}-step="1"]`)
-                    .append(randomPin);
+                  if (!pathBlocked(color, null, randomPin, number)) {
+                    movePinHome(color, 0, turn, randomPin);
+                    randomPin.classList.add("pin-in-box");
+                    document
+                      .querySelector(`.box[data-${color}-step="1"]`)
+                      .append(randomPin);
+                  }
                 }
-                setTimeout(() => {
-                  turns("player-2", "with-AI");
-                  operating = true;
-                }, 2000);
+                switchTurns(turn, true);
+                operating = true;
               } else {
-                let pin = document.querySelector(`.${players["color"]}-pin-1`);
+                let pin = document.querySelector(`.${color}-pin-1`);
                 if (!pin.parentElement.getAttribute(`data-${color}-step`)) {
-                  pin.classList.add("pin-in-box");
-                  movePinHome(players["color"], 0, turn, pin);
-                  document
-                    .querySelector(`.box[data-${players["color"]}-step="1"]`)
-                    .append(pin);
+                  if (!pathBlocked(color, null, pin, number)) {
+                    pin.classList.add("pin-in-box");
+                    movePinHome(color, 0, turn, pin);
+                    document
+                      .querySelector(`.box[data-${color}-step="1"]`)
+                      .append(pin);
+                  }
                 }
-                setTimeout(() => {
-                  turns("player-1", "with-AI");
-                  operating = false;
-                }, 2000);
+                switchTurns(turn, true);
+                operating = false;
               }
             } else if (number < 6) {
-              if (turn && turn == "ai-move") {
-                setTimeout(() => {
-                  turns("player-1", "with-AI");
-                  operating = false;
-                }, 2000);
+              if (turn && turn.name != playerName) {
+                switchTurns(turn, false);
+                operating = false;
               } else {
-                setTimeout(() => {
-                  turns("player-2", "with-AI");
-                  operating = true;
-                }, 2000);
+                switchTurns(turn, false);
+                operating = true;
               }
             }
           } else if (pinPlayed(color)) {
             if (number == 6) {
               tracker += 1;
-              if (turn && turn == "ai-move") {
+              if (turn && turn.name != playerName) {
                 let randomPin = pickRandomPin(color);
                 if (randomPin) {
-                  movePinHome(color, 0, turn, randomPin);
-                  adjustPinSize(
-                    color,
-                    "",
-                    document.querySelector(`.box[data-${color}-step="1"]`),
-                    randomPin
-                  );
-                  randomPin.classList.add("pin-in-box");
-                  document
-                    .querySelector(`.box[data-${color}-step="1"]`)
-                    .append(randomPin);
-                  setTimeout(() => {
-                    turns("player-2", "with-AI");
-                    operating = true;
-                  }, 2000);
+                  if (!pathBlocked(color, null, randomPin, number)) {
+                    movePinHome(color, 0, turn, randomPin);
+                    adjustPinSize(
+                      color,
+                      null,
+                      document.querySelector(`.box[data-${color}-step="1"]`),
+                      randomPin
+                    );
+                    randomPin.classList.add("pin-in-box");
+                    document
+                      .querySelector(`.box[data-${color}-step="1"]`)
+                      .append(randomPin);
+                  }
+
+                  switchTurns(turn, true);
+                  operating = true;
                 } else {
                   pausedMove = false;
                   console.log("two pins 1 box");
-
                   aiAlgorithm(number, color, turn);
-                  setTimeout(() => {
-                    turns("player-2", "with-AI");
-                    operating = true;
-                  }, 2000);
+                  switchTurns(turn, true);
+                  operating = true;
                 }
               } else {
                 pausedMove = true;
@@ -903,15 +1171,13 @@
                   });
               }
             } else if (number < 6) {
-              if (turn && turn == "ai-move") {
+              if (turn && turn.name != playerName) {
                 pausedMove = false;
                 console.log("two pins 1 box");
 
                 aiAlgorithm(number, color, turn);
-                setTimeout(() => {
-                  turns("player-1", "with-AI");
-                  operating = false;
-                }, 2000);
+                switchTurns(turn, false);
+                operating = false;
               } else {
                 if (pinPlayed(color, 1)) {
                   let box = getPlayedPin(color);
@@ -919,16 +1185,23 @@
                     box.getAttribute(`data-${color}-step`)
                   );
                   let pin = box.querySelector(".pin");
-                  movePinHome(color, currentColorStep + number - 1, turn, pin);
-                  document
-                    .querySelector(
-                      `.box[data-${color}-step="${currentColorStep + number}"]`
-                    )
-                    .append(pin);
-                  setTimeout(() => {
-                    turns("player-2", "with-AI");
-                    operating = true;
-                  }, 2000);
+                  if (!pathBlocked(color, box, pin, number)) {
+                    movePinHome(
+                      color,
+                      currentColorStep + number - 1,
+                      turn,
+                      pin
+                    );
+                    document
+                      .querySelector(
+                        `.box[data-${color}-step="${
+                          currentColorStep + number
+                        }"]`
+                      )
+                      .append(pin);
+                  }
+                  switchTurns(turn, false);
+                  operating = true;
                 } else {
                   pausedMove = true;
                   addClickEvent = (event) => {
@@ -968,7 +1241,7 @@
         });
         if (CheakBoxesLeft(color, number, element) == true) {
           if (number == 6) {
-            alert(`${currentTurn} rools dice again`);
+            alertPlayer("block", `${currentTurn.name} rools dice again`);
             tracker += 1;
             console.log(tracker);
             if (element.classList[2]) {
@@ -977,18 +1250,14 @@
                 movePinHome(color, 0, currentTurn, element);
                 adjustPinSize(
                   color,
-                  "",
+                  null,
                   document.querySelector(`.box[data-${color}-step="1"]`),
                   element
                 );
                 document
                   .querySelector(`.box[data-${color}-step="1"]`)
                   .appendChild(element);
-                if (tracker > 0 && currentTurn == "player-1") {
-                  nextTurn("ai-move");
-                } else if (tracker > 0 && currentTurn == "ai-move") {
-                  nextTurn("player-2");
-                }
+                switchTurns(currentTurn, true);
               } else {
                 let currentColorStep = parseInt(
                   element.parentElement.getAttribute(`data-${color}-step`)
@@ -999,32 +1268,39 @@
                     ", color: " +
                     color
                 );
-                movePinHome(
-                  color,
-                  currentColorStep + number - 1,
-                  currentTurn,
-                  element
-                );
-                adjustPinSize(
-                  color,
-                  document.querySelector(
-                    `.box[data-${color}-step="${currentColorStep}"]`
-                  ),
-                  document.querySelector(
-                    `.box[data-${color}-step="${currentColorStep + number}"]`
-                  ),
-                  element
-                );
-                document
-                  .querySelector(
-                    `.box[data-${color}-step="${currentColorStep + number}"]`
+                if (
+                  !pathBlocked(
+                    color,
+                    document.querySelector(
+                      `.box[data-${color}-step="${currentColorStep}"]`
+                    ),
+                    element,
+                    number
                   )
-                  .append(element);
-                if (tracker > 0 && currentTurn == "player-1") {
-                  nextTurn("ai-move");
-                } else if (tracker > 0 && currentTurn == "ai-move") {
-                  nextTurn("player-2");
+                ) {
+                  movePinHome(
+                    color,
+                    currentColorStep + number - 1,
+                    currentTurn,
+                    element
+                  );
+                  adjustPinSize(
+                    color,
+                    document.querySelector(
+                      `.box[data-${color}-step="${currentColorStep}"]`
+                    ),
+                    document.querySelector(
+                      `.box[data-${color}-step="${currentColorStep + number}"]`
+                    ),
+                    element
+                  );
+                  document
+                    .querySelector(
+                      `.box[data-${color}-step="${currentColorStep + number}"]`
+                    )
+                    .append(element);
                 }
+                switchTurns(currentTurn, true);
               }
             }
           } else {
@@ -1036,42 +1312,42 @@
             console.log(
               "current Color Step: " + currentColorStep + ", color: " + color
             );
-            movePinHome(
-              color,
-              currentColorStep + number - 1,
-              currentTurn,
-              element
-            );
-            adjustPinSize(
-              color,
-              document.querySelector(
-                `.box[data-${color}-step="${currentColorStep}"]`
-              ),
-              document.querySelector(
-                `.box[data-${color}-step="${currentColorStep + number}"]`
-              ),
-              element
-            );
-            document
-              .querySelector(
-                `.box[data-${color}-step="${currentColorStep + number}"]`
+            if (
+              !pathBlocked(
+                color,
+                document.querySelector(
+                  `.box[data-${color}-step="${currentColorStep}"]`
+                ),
+                element,
+                number
               )
-              .append(element);
-            if ((tracker == 0 || number < 6) && currentTurn == "player-1") {
-              nextTurn("player-1");
-            } else if (
-              (tracker == 0 || number < 6) &&
-              currentTurn == "ai-move"
             ) {
-              nextTurn("ai-move");
+              movePinHome(
+                color,
+                currentColorStep + number - 1,
+                currentTurn,
+                element
+              );
+              adjustPinSize(
+                color,
+                document.querySelector(
+                  `.box[data-${color}-step="${currentColorStep}"]`
+                ),
+                document.querySelector(
+                  `.box[data-${color}-step="${currentColorStep + number}"]`
+                ),
+                element
+              );
+              document
+                .querySelector(
+                  `.box[data-${color}-step="${currentColorStep + number}"]`
+                )
+                .append(element);
             }
+            switchTurns(currentTurn, false);
           }
         } else if (CheakBoxesLeft(color, number, element) == false) {
-          if (currentTurn == "player-1") {
-            nextTurn("player-1");
-          } else if (currentTurn == "ai-move") {
-            nextTurn("ai-move");
-          }
+          switchTurns(currentTurn, false);
         } else if (CheakBoxesLeft(color, number, element) == "Goal") {
           resizePinForGoal(element, color, number);
         }
@@ -1130,6 +1406,32 @@
           }
         }
       }
+      function pathBlocked(color, currentBox, playedPin, number) {
+        let betweenBoxes = [];
+        let isBlocked = false;
+        if (currentBox) {
+          let currentColorStep = parseInt(
+            currentBox.getAttribute(`data-${color}-step`)
+          );
+          for (let i = 1; i <= number; i++) {
+            let box = document.querySelector(
+              `.box[data-${color}-step="${currentColorStep + i}"]`
+            );
+            if (
+              box.querySelector(".pin") &&
+              box.querySelectorAll(".pin").length > 1
+            ) {
+              alert("Path blocked because of wall");
+              return true;
+            } else {
+              isBlocked = false;
+            }
+          }
+        } else {
+          isBlocked = false;
+        }
+        return isBlocked;
+      }
       function adjustPinSize(color, currentBox, entryBox, playedPin) {
         if (entryBox) {
           if (currentBox) {
@@ -1144,15 +1446,8 @@
                 } else if (index == 1) {
                   pin = currentBox.querySelectorAll(".pin")[0];
                 } else {
-                  console.log(index);
+                  // console.log(index);
                 }
-                console.log(currentBox.querySelectorAll(".pin")[1]);
-                console.log(currentBox.querySelectorAll(".pin")[0]);
-
-                console.log(index);
-
-                console.log(pin);
-
                 pin.style.width = `${currentBox.clientWidth}px`;
                 pin.style.height = `${currentBox.clientHeight}px`;
                 console.log("1 pin in current box");
@@ -1164,12 +1459,13 @@
               }
             }
           }
-          if (
-            entryBox.querySelector(".pin")
-          ) {
+          if (entryBox.querySelector(".pin")) {
             let pins = entryBox.querySelectorAll(".pin");
             if (pins.length - 1 == 0) {
-              if(entryBox.querySelector(".pin").classList[1] == `${color}-bg-lighter`){
+              if (
+                entryBox.querySelector(".pin").classList[1] ==
+                `${color}-bg-lighter`
+              ) {
                 console.log("pin number:");
                 pins[0].classList.add(`pin-in-box-1`);
                 pins[0].style.width = `${entryBox.clientWidth / 2}px`;
@@ -1183,25 +1479,25 @@
               if (pins[pins.length - 1].classList.contains("pin-in-box-2")) {
                 for (let i = 0; i < pins.length; i++) {
                   let pin = pins[i];
-                  pin.style.width = `${(entryBox.clientWidth / 2) - 1.5}px`;
-                  pin.style.height = `${(entryBox.clientHeight / 2) - 1.5}px`;
+                  pin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
+                  pin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
                 }
                 // playedPin.classList.remove("pin-in-box");
                 playedPin.classList.add(`pin-in-box-3`);
-                playedPin.style.width = `${(entryBox.clientWidth / 2) - 1.5}px`;
-                playedPin.style.height = `${(entryBox.clientHeight / 2) - 1.5}px`;
+                playedPin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
+                playedPin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
               } else if (
                 pins[pins.length - 1].classList.contains("pin-in-box-3")
               ) {
                 for (let i = 0; i < pins.length; i++) {
                   let pin = pins[i];
-                  pin.style.width = `${(entryBox.clientWidth / 2) - 1.5}px`;
-                  pin.style.height = `${(entryBox.clientHeight / 2) - 1.5}px`;
+                  pin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
+                  pin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
                 }
                 // playedPin.classList.remove("pin-in-box");
                 playedPin.classList.add(`pin-in-box-4`);
-                playedPin.style.width = `${(entryBox.clientWidth / 2) - 1.5}px`;
-                playedPin.style.height = `${(entryBox.clientHeight / 2) - 1.5}px`;
+                playedPin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
+                playedPin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
               }
             } else {
               console.log("0 pin in current box");
@@ -1257,24 +1553,6 @@
                   );
                 }
               }
-            } else {
-              let entryBoxPins = entryBox.querySelectorAll(".pin");
-              let allOpponentPin = false;
-              for (let i = 0; i < entryBoxPins.length; i++) {
-                let entryBoxPin = entryBoxPins[i];
-                if (entryBoxPin.classList[1] != `${color}-bg-lighter`) {
-                  allOpponentPin = true;
-                } else {
-                  allOpponentPin = false;
-                  break;
-                }
-              }
-              if (allOpponentPin === true) {
-                let opponentColor = entryBox
-                  .querySelector(".pin")
-                  .classList[1].split("-")[0];
-                adjustPinSize(opponentColor, "", entryBox, playedPin);
-              }
             }
           }
         }
@@ -1295,33 +1573,35 @@
           return false;
         }
       }
-      function nextTurn(turn) {
-        if (turn && turn == "ai-move") {
-          setTimeout(() => {
-            turns("player-1", "with-AI");
-            operating = false;
-          }, 2000);
-        } else {
-          setTimeout(() => {
-            turns("player-2", "with-AI");
-            operating = true;
-          }, 2000);
-        }
-      }
+      // function nextTurn(turn) {
+      //   if (turn && turn == "ai-move") {
+      //     setTimeout(() => {
+      //       turns("player-1", "with-AI");
+      //       operating = false;
+      //     }, 2000);
+      //   } else {
+      //     setTimeout(() => {
+      //       turns("player-2", "with-AI");
+      //       operating = true;
+      //     }, 2000);
+      //   }
+      // }
       function aiAlgorithm(number, color, turn) {
         let pinBoxes = [];
         let randomPick = false;
         let boxes = document.querySelectorAll(`.box[data-${color}-step]`);
         for (let i = 0; i < boxes.length; i++) {
           let box = boxes[i];
-          if (
-            box.querySelector(".pin")
-          ) {
+          if (box.querySelector(".pin")) {
             if (
               box.querySelectorAll(".pin").length < 2 &&
               box.querySelectorAll(".pin").length > 0
             ) {
-              if(box.querySelector(".pin").classList.contains(`${color}-bg-lighter`)){
+              if (
+                box
+                  .querySelector(".pin")
+                  .classList.contains(`${color}-bg-lighter`)
+              ) {
                 const boxPin = box.querySelector(".pin");
                 if (CheakBoxesLeft(color, number, boxPin)) {
                   pinBoxes.push(box);
@@ -1333,8 +1613,15 @@
                   `.box[data-${color}-step="${currentColorStep + number}"]`
                 );
                 if (checkOpponentPin(color, entryBox, box)) {
-                  movePinHome(color, currentColorStep + number - 1, turn, boxPin);
-                  entryBox.append(boxPin);
+                  if (!pathBlocked(color, box, boxPin, number)) {
+                    movePinHome(
+                      color,
+                      currentColorStep + number - 1,
+                      turn,
+                      boxPin
+                    );
+                    entryBox.append(boxPin);
+                  }
                   return;
                 } else {
                   randomPick = true;
@@ -1343,7 +1630,7 @@
             } else if (box.querySelectorAll(".pin").length >= 2) {
               randomPick = true;
               box.querySelectorAll(".pin").forEach((pin) => {
-                if(pin.classList.contains(`${color}-bg-lighter`)){
+                if (pin.classList.contains(`${color}-bg-lighter`)) {
                   pinBoxes.push(box);
                 }
               });
@@ -1361,56 +1648,157 @@
         const randomBoxColorStep = parseInt(
           randomBox.getAttribute(`data-${color}-step`)
         );
-        if((randomBoxColorStep + number) <= 56){
-          adjustPinSize(
-            color,
-            randomBox,
-            document.querySelector(
-              `.box[data-${color}-step="${randomBoxColorStep + number}"]`
-            ),
-            randomBox.querySelector(`.${color}-bg-lighter`)
-          );
-          movePinHome(
-            color,
-            randomBoxColorStep + number - 1,
-            (turn = 0),
-            randomBox.querySelector(`.${color}-bg-lighter`)
-          );
-          document
-            .querySelector(
-              `.box[data-${color}-step="${randomBoxColorStep + number}"]`
+        if (randomBoxColorStep + number <= 56) {
+          if (
+            !pathBlocked(
+              color,
+              randomBox,
+              randomBox.querySelector(`.${color}-bg-lighter`),
+              number
             )
-            .append(randomBox.querySelector(`.${color}-bg-lighter`));
+          ) {
+            adjustPinSize(
+              color,
+              randomBox,
+              document.querySelector(
+                `.box[data-${color}-step="${randomBoxColorStep + number}"]`
+              ),
+              randomBox.querySelector(`.${color}-bg-lighter`)
+            );
+            movePinHome(
+              color,
+              randomBoxColorStep + number - 1,
+              (turn = 0),
+              randomBox.querySelector(`.${color}-bg-lighter`)
+            );
+            document
+              .querySelector(
+                `.box[data-${color}-step="${randomBoxColorStep + number}"]`
+              )
+              .append(randomBox.querySelector(`.${color}-bg-lighter`));
+          }
+        }
+      }
+      function toggleDisplayDice() {
+        const cube = document.getElementById("rool-dice");
+        alert(cube.style.display);
+        if (cube.style.display == "none" || !cube.style.display) {
+          cube.style.display = "block";
+        } else {
+          cube.style.display = "none";
+        }
+      }
+      function diceAnimation(cube, number) {
+        if (number == 1) {
+          cube.classList.add("scale-dice");
+          cube.style.transform = `rotateX(${
+            resetTransformation + 0
+          }deg) rotateY(${resetTransformation + 0}deg)`;
+          setTimeout(() => {
+            cube.classList.remove("scale-dice");
+          }, 1700);
+        } else if (number == 2) {
+          cube.classList.add("scale-dice");
+          cube.style.transform = `rotateX(${
+            resetTransformation + 0
+          }deg) rotateY(${resetTransformation - 90}deg)`;
+          setTimeout(() => {
+            cube.classList.remove("scale-dice");
+          }, 1700);
+        } else if (number == 3) {
+          cube.classList.add("scale-dice");
+          cube.style.transform = `rotateX(${
+            resetTransformation - 90
+          }deg) rotateY(${resetTransformation + 0}deg)`;
+          setTimeout(() => {
+            cube.classList.remove("scale-dice");
+          }, 1700);
+        } else if (number == 4) {
+          cube.classList.add("scale-dice");
+          cube.style.transform = `rotateX(${
+            resetTransformation + 90
+          }deg) rotateY(${resetTransformation + 0}deg)`;
+          setTimeout(() => {
+            cube.classList.remove("scale-dice");
+          }, 1700);
+        } else if (number == 5) {
+          cube.classList.add("scale-dice");
+          cube.style.transform = `rotateX(${
+            resetTransformation + 0
+          }deg) rotateY(${resetTransformation + 90}deg)`;
+          setTimeout(() => {
+            cube.classList.remove("scale-dice");
+          }, 1700);
+        } else if (number == 6) {
+          cube.classList.add("scale-dice");
+          cube.style.transform = `rotateX(${
+            resetTransformation + 0
+          }deg) rotateY(${resetTransformation + 180}deg)`;
+          setTimeout(() => {
+            cube.classList.remove("scale-dice");
+          }, 1700);
         }
       }
       function roolDice(color, turn) {
         if (
-          (operating == false && turn != "ai-move") ||
-          (operating == true && turn == "ai-move")
+          (operating == false && turn.name == playerName) ||
+          (operating == true && turn.name != playerName)
         ) {
-          operating = true;
-          let number = Math.floor(Math.random() * 6) + 1;
-          if (
-            document.getElementById("rool-dice").getAttribute("data-turn") ==
-            "player-1"
-          ) {
-            document.getElementById("player-1-dice").innerText = number;
-            gameAlgorithm(number, players["color"], "player-1");
-            document
-              .getElementById("rool-dice")
-              .setAttribute("data-turn", "ai-move");
-          } else {
-            if (
-              turn == "ai-move" ||
-              document.getElementById("rool-dice").getAttribute("data-turn") ==
-                "ai-move"
-            ) {
-              document.getElementById("player-2-dice").innerText = number;
-              gameAlgorithm(number, color, turn);
-            }
+          console.log("good");
+
+          const cube = document.getElementById("rool-dice");
+          if (cube.style.display == "none" || !cube.style.display) {
+            cube.style.display = "block";
           }
+          operating = true;
+          if (resetTransformation == 0) {
+            resetTransformation = 360 * 4;
+          } else {
+            resetTransformation = 0;
+          }
+          let number = Math.floor(Math.random() * 6) + 1;
+          setTimeout(() => {
+            diceAnimation(cube, number);
+          }, 100);
+          setTimeout(() => {
+            if (
+              document.getElementById("rool-dice").getAttribute("data-turn") ==
+              turn.name
+            ) {
+              gameAlgorithm(number, turn.color, turn.name);
+              document
+                .getElementById("rool-dice")
+                .setAttribute("data-turn", turn.name);
+            } else {
+              if (
+                turn.name != playerName ||
+                document
+                  .getElementById("rool-dice")
+                  .getAttribute("data-turn") != playerName
+              ) {
+                gameAlgorithm(number, color, turn);
+              }
+            }
+          }, 1700);
         } else {
+          console.log("bad");
+
           return;
+        }
+      }
+      function alertPlayer(display, message) {
+        const alert = document.getElementById("alert");
+        if (message) {
+          alert.querySelector("p").innerText = message;
+          alert.style.paddingBottom = "2.7rem";
+          const timeOut = message.length * 100;
+          setTimeout(() => {
+            alert.style.paddingBottom = "0";
+            alert.querySelector("p").innerText = "";
+          }, timeOut);
+        } else {
+          alert.style.paddingBottom = "0";
+          alert.querySelector("p").innerText = "";
         }
       }
     </script>
