@@ -23,7 +23,7 @@ body {
   background-color: #203240;
 }
 button {
-  background-color: turquoise;
+  background-color: #40e0d0;
   box-shadow: inset 5px 5px 15px -5px;
   color: rgb(0, 0, 0);
   padding: clamp(0.2rem, 1dvw + 0.2rem, 0.5rem);
@@ -85,7 +85,8 @@ label {
 }
 .alert-box p{
   overflow-wrap: break-word;
-  font-size: clamp(0.1rem, 1dvw + 0.2rem, 0.5rem);
+  font-size: clamp(0.4rem, 3dvw + 0.4rem, 0.8rem);
+  text-align: center;
 }
 .player-game-info {
   width: calc(97% - 10px);
@@ -127,7 +128,7 @@ label {
   align-items: center;
   gap: 0.5rem;
 }
-.player:nth-of-type(2) {
+.player-game-info .player:nth-of-type(2) {
   margin-left: auto;
 }
 .player-info p {
@@ -437,6 +438,19 @@ label {
     rgba(255, 255, 255, 0)
   );
 }
+ .flash{
+  animation-name: flash;
+  animation-duration: 0.7s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+ }
+ @keyframes flash{
+  0%{opacity: 1;}
+  50%{opacity: 0.6}
+  100%{opacity: 1}
+ }
 .hover-pin {
   animation-name: hover-pin;
   animation-duration: 1s;

@@ -38,11 +38,6 @@
               <div class="win-pin pin"></div>
             </div>
           </div>
-          <div class="alert-player">
-            <div class="alert-box" id="alert">
-              <p></p>
-            </div>
-          </div>
           <div class="player player-2-info">
             <div class="player-info">
               <p></p>
@@ -54,10 +49,15 @@
               <div class="win-pin pin"></div>
             </div>
           </div>
+          <div class="alert-player">
+            <div class="alert-box" id="alert">
+              <p></p>
+            </div>
+          </div>
         </div>
 
         <div class="board">
-          <div class="green green-bg">
+          <div class="green green-bg home">
             <div class="pins">
               <div
                 class="pin green-bg-lighter green-pin-1 pin-in-parent-1"
@@ -116,7 +116,7 @@
               data-green-step="14"
             ></div>
             <div
-              class="box white-box-1-5 step-51"
+              class="box white-box-1-5 step-51 grid"
               data-blue-step="35"
               data-red-step="22"
               data-yellow-step="48"
@@ -176,7 +176,7 @@
               data-green-step="18"
             ></div>
           </div>
-          <div class="yellow yellow-bg">
+          <div class="yellow yellow-bg home">
             <div class="pins">
               <div
                 class="pin yellow-bg-lighter yellow-pin-1 pin-in-parent-1"
@@ -435,7 +435,7 @@
               data-green-step="26"
             ></div>
           </div>
-          <div class="red red-bg">
+          <div class="red red-bg home">
             <div class="pins">
               <div class="pin red-bg-lighter red-pin-1 pin-in-parent-1"></div>
               <div class="pin red-bg-lighter red-pin-2 pin-in-parent-2"></div>
@@ -546,7 +546,7 @@
               data-green-step="37"
             ></div>
           </div>
-          <div class="blue blue-bg">
+          <div class="blue blue-bg home">
             <div class="pins">
               <div class="pin blue-bg-lighter blue-pin-1 pin-in-parent-1"></div>
               <div class="pin blue-bg-lighter blue-pin-2 pin-in-parent-2"></div>
@@ -580,82 +580,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="controles">
-        <button>Play</button>
-        <button
-          onclick="roolDice('', 'player-1')"
-          data-turn="player-1"
-          id="rool-dice"
-        >
-          Rool dice
-        </button>
-      </div>
-
-      <div class="players-info players">
-        <div class="player-1">
-          <label for="player-1">Player 1: </label>
-          <input
-            type="text"
-            minlength="1"
-            maxlength="10"
-            placeholder="Enter name"
-            name="player-1"
-            id="player-1-AI"
-            required
-          />
-        </div>
-      </div>
-      <div class="players-info players">
-        <div class="player-1">
-          <label for="player-1">Player 1: </label>
-          <input
-            type="text"
-            minlength="1"
-            maxlength="10"
-            placeholder="Enter name"
-            name="player-1"
-            id="player-1"
-            required
-          />
-        </div>
-        <div class="player-2">
-          <label for="player-2">Player 1: </label>
-          <input
-            type="text"
-            minlength="1"
-            maxlength="10"
-            placeholder="Enter name"
-            name="player-2"
-            id="player-2"
-            required
-          />
-        </div>
-      </div> -->
-      <!-- <div class="players-num">
-        <p>Enter number of players</p>
-        <div class="options">
-          <div class="option">
-            <input
-              required
-              type="radio"
-              name="number-of-players"
-              id="2"
-              value="2"
-            />
-            <label for="2">2</label> <br />
-          </div>
-          <div class="option">
-            <input
-              required
-              type="radio"
-              name="number-of-players"
-              id="4"
-              value="4"
-            />
-            <label for="4">4</label>
-          </div>
-        </div>
-      </div> -->
     </div>
     <script>
       let gameInfo = [];
@@ -918,9 +842,13 @@
       function randomStartGame(playering, amount) {
         gameInfo["currentTurn"] = Math.floor(Math.random() * players.length);
         const randomStarter = players[gameInfo["currentTurn"]];
+        document
+          .querySelector(`.${randomStarter.color}`)
+          .classList.add("flash");
+
         if (randomStarter.name == playerName) {
           operating = false;
-          let message = `You're is starting the game`;
+          let message = `You're starting the game`;
           const timeOut = message.length * 100;
           alertPlayer("block", message);
           setTimeout(() => {
@@ -933,12 +861,16 @@
               });
           }, timeOut);
 
-          console.log(`You're is starting the game`);
+          console.log(`You're starting the game`);
+          console.log(randomStarter);
         } else {
           operating = true;
           let message = `${randomStarter.name} is starting the game`;
           const timeOut = message.length * 100;
           alertPlayer("block", message);
+          const playerInfo = players.find(
+            (player) => player.name === playerName
+          );
           setTimeout(() => {
             roolDice(randomStarter.color, randomStarter);
             document
@@ -947,10 +879,8 @@
                 roolDice(playerInfo.color, playerInfo);
               });
           }, timeOut);
-          const playerInfo = players.find(
-            (player) => player.name === playerName
-          );
-          console.log(`${playerInfo.name} is starting the game`);
+
+          console.log(playerInfo);
         }
       }
       function switchTurns(currentTurn, playAgain = false) {
@@ -958,19 +888,48 @@
         let nextPlayerInfo = "";
         if (players.length == 2) {
           if (gameInfo["currentTurn"] == 1) {
-            currentPlayerInfo = players[1];
-            nextPlayerInfo = players[0];
-            gameInfo["currentTurn"] = 0;
+            if (playAgain == true) {
+              currentPlayerInfo = players[0];
+              nextPlayerInfo = players[1];
+            } else {
+              currentPlayerInfo = players[1];
+              nextPlayerInfo = players[0];
+              gameInfo["currentTurn"] = 0;
+            }
           } else if (gameInfo["currentTurn"] == 0) {
-            currentPlayerInfo = players[0];
-            nextPlayerInfo = players[1];
-            gameInfo["currentTurn"] = 1;
+            if (playAgain == true) {
+              currentPlayerInfo = players[1];
+              nextPlayerInfo = players[0];
+            } else {
+              currentPlayerInfo = players[0];
+              nextPlayerInfo = players[1];
+              gameInfo["currentTurn"] = 1;
+            }
           }
-          if(currentPlayerInfo != "" && nextPlayerInfo != ""){
+          if (currentPlayerInfo != "" && nextPlayerInfo != "") {
+            if (
+              document
+                .querySelector(`.${currentPlayerInfo.color}`)
+                .classList.contains("flash")
+            ) {
+              document
+                .querySelector(`.${currentPlayerInfo.color}`)
+                .classList.remove("flash");
+              document
+                .querySelector(`.${nextPlayerInfo.color}`)
+                .classList.add("flash");
+            } else {
+              document
+                .querySelector(`.${nextPlayerInfo.color}`)
+                .classList.add("flash");
+            }
             if (currentPlayerInfo.name == playerName) {
               operating = true;
               document.getElementById("rool-dice").removeAttribute("data-turn");
               let message = `${nextPlayerInfo.name}'s turn`;
+              if (playAgain === true) {
+                message = `${nextPlayerInfo.name} rools dice again`;
+              }
               const timeOut = message.length * 100;
               alertPlayer("block", message);
               setTimeout(() => {
@@ -981,6 +940,9 @@
                 .getElementById("rool-dice")
                 .setAttribute("data-turn", nextPlayerInfo.name);
               let message = "Your turn";
+              if (playAgain === true) {
+                message = `Rool dice again`;
+              }
               const timeOut = message.length * 100;
               alertPlayer("block", message);
               setTimeout(() => {
@@ -990,34 +952,6 @@
           }
         }
       }
-      // function turns(currentPlayer, playingWith) {
-      //   if (currentPlayer) {
-      //     if (playingWith == "with-AI") {
-      //       if (currentPlayer == "player-1") {
-      //         alert("Your turn");
-      //         document
-      //           .getElementById("rool-dice")
-      //           .setAttribute("data-turn", "player-1");
-      //       } else if (currentPlayer == "player-2") {
-      //         alert("Bot turn");
-      //         document.getElementById("rool-dice").removeAttribute("data-turn");
-      //         aiMove();
-      //       }
-      //     } else if (playingWith == "with-4-AI") {
-      //       if (currentPlayer == "player-1") {
-      //         alert("Your turn");
-      //         document
-      //           .getElementById("rool-dice")
-      //           .setAttribute("data-turn", "player-1");
-      //       } else if (currentPlayer == "player-2") {
-      //         alert("Bot turn");
-      //         document.getElementById("rool-dice").removeAttribute("data-turn");
-      //         aiMove();
-      //       }
-      //     }
-      //   } else {
-      //   }
-      // }
       function removeMenu() {
         document.querySelector(".pop-up-cover").style.display = "none";
       }
@@ -1030,7 +964,7 @@
           let currentStep = parseInt(
             pin.parentElement.getAttribute(`data-${color}-step`)
           );
-          if (currentStep + number > 56) {
+          if (currentStep + number > 57) {
             return false;
           } else if (currentStep + number == 57) {
             return "Goal";
@@ -1102,8 +1036,8 @@
                       .append(randomPin);
                   }
                 }
-                switchTurns(turn, true);
                 operating = true;
+                switchTurns(turn, true);
               } else {
                 let pin = document.querySelector(`.${color}-pin-1`);
                 if (!pin.parentElement.getAttribute(`data-${color}-step`)) {
@@ -1115,69 +1049,68 @@
                       .append(pin);
                   }
                 }
+                operating = true;
                 switchTurns(turn, true);
-                operating = false;
               }
             } else if (number < 6) {
               if (turn && turn.name != playerName) {
+                // operating = false;
                 switchTurns(turn, false);
-                operating = false;
               } else {
-                switchTurns(turn, false);
                 operating = true;
+                switchTurns(turn, false);
               }
             }
           } else if (pinPlayed(color)) {
             if (number == 6) {
               tracker += 1;
-              if (turn && turn.name != playerName) {
-                let randomPin = pickRandomPin(color);
-                if (randomPin) {
-                  if (!pathBlocked(color, null, randomPin, number)) {
-                    movePinHome(color, 0, turn, randomPin);
-                    adjustPinSize(
-                      color,
-                      null,
-                      document.querySelector(`.box[data-${color}-step="1"]`),
-                      randomPin
-                    );
-                    randomPin.classList.add("pin-in-box");
-                    document
-                      .querySelector(`.box[data-${color}-step="1"]`)
-                      .append(randomPin);
+              if (turn) {
+                if (turn.name != playerName) {
+                  let randomPin = pickRandomPin(color);
+                  if (randomPin) {
+                    if (!pathBlocked(color, null, randomPin, number)) {
+                      movePinHome(color, 0, turn, randomPin);
+                      adjustPinSize(
+                        color,
+                        null,
+                        document.querySelector(`.box[data-${color}-step="1"]`),
+                        randomPin
+                      );
+                      randomPin.classList.add("pin-in-box");
+                      document
+                        .querySelector(`.box[data-${color}-step="1"]`)
+                        .append(randomPin);
+                    }
+                    operating = true;
+                    switchTurns(turn, true);
+                  } else {
+                    pausedMove = false;
+                    aiAlgorithm(number, color, turn);
+                    operating = true;
+                    switchTurns(turn, true);
                   }
-
-                  switchTurns(turn, true);
-                  operating = true;
                 } else {
-                  pausedMove = false;
-                  console.log("two pins 1 box");
-                  aiAlgorithm(number, color, turn);
-                  switchTurns(turn, true);
+                  pausedMove = true;
                   operating = true;
-                }
-              } else {
-                pausedMove = true;
-                addClickEvent = (event) => {
-                  pickedPin(event.currentTarget, color, number, turn, event);
-                };
-                document
-                  .querySelectorAll(`.${color}-bg-lighter`)
-                  .forEach((element2) => {
-                    element2.classList.add("hover-pin");
-                    element2.addEventListener("click", addClickEvent, {
-                      once: true,
+                  addClickEvent = (event) => {
+                    pickedPin(event.currentTarget, color, number, turn, event);
+                  };
+                  document
+                    .querySelectorAll(`.${color}-bg-lighter`)
+                    .forEach((element2) => {
+                      element2.classList.add("hover-pin");
+                      element2.addEventListener("click", addClickEvent, {
+                        once: true,
+                      });
                     });
-                  });
+                }
               }
             } else if (number < 6) {
               if (turn && turn.name != playerName) {
                 pausedMove = false;
-                console.log("two pins 1 box");
-
                 aiAlgorithm(number, color, turn);
+                // operating = false;
                 switchTurns(turn, false);
-                operating = false;
               } else {
                 if (pinPlayed(color, 1)) {
                   let box = getPlayedPin(color);
@@ -1186,24 +1119,29 @@
                   );
                   let pin = box.querySelector(".pin");
                   if (!pathBlocked(color, box, pin, number)) {
-                    movePinHome(
-                      color,
-                      currentColorStep + number - 1,
-                      turn,
-                      pin
-                    );
-                    document
-                      .querySelector(
-                        `.box[data-${color}-step="${
-                          currentColorStep + number
-                        }"]`
-                      )
-                      .append(pin);
+                    if (CheakBoxesLeft(color, number, pin) === true) {
+                      movePinHome(
+                        color,
+                        currentColorStep + number - 1,
+                        turn,
+                        pin
+                      );
+                      document
+                        .querySelector(
+                          `.box[data-${color}-step="${
+                            currentColorStep + number
+                          }"]`
+                        )
+                        .append(pin);
+                    } else if (CheakBoxesLeft(color, number, pin) == "Goal") {
+                      resizePinForGoal(pin, color, number, turn);
+                    }
                   }
-                  switchTurns(turn, false);
                   operating = true;
+                  switchTurns(turn, false);
                 } else {
                   pausedMove = true;
+                  operating = true;
                   addClickEvent = (event) => {
                     pickedPin(event.currentTarget, color, number, turn, event);
                   };
@@ -1231,7 +1169,7 @@
         }
       }
       function pickedPin(element, color, number, currentTurn, e) {
-        console.log(element);
+        operating = true;
         pausedMove = false;
         e.stopPropagation();
         document.querySelectorAll(`.${color}-bg-lighter`).forEach((element) => {
@@ -1257,6 +1195,7 @@
                 document
                   .querySelector(`.box[data-${color}-step="1"]`)
                   .appendChild(element);
+                operating = true;
                 switchTurns(currentTurn, true);
               } else {
                 let currentColorStep = parseInt(
@@ -1300,6 +1239,7 @@
                     )
                     .append(element);
                 }
+                operating = true;
                 switchTurns(currentTurn, true);
               }
             }
@@ -1344,38 +1284,43 @@
                 )
                 .append(element);
             }
+            operating = true;
             switchTurns(currentTurn, false);
           }
         } else if (CheakBoxesLeft(color, number, element) == false) {
+          operating = true;
           switchTurns(currentTurn, false);
         } else if (CheakBoxesLeft(color, number, element) == "Goal") {
-          resizePinForGoal(element, color, number);
+          resizePinForGoal(element, color, number, currentTurn);
+          operating = true;
+          switchTurns(currentTurn, false);
         }
       }
-      function resizePinForGoal(element, color, number) {
-        console.log("fuck");
-
-        let goalWidth = document.querySelector("middle").clientWidth;
-        if (
-          document.querySelector("middle").querySelector(`.${color}-bg-lighter`)
-        ) {
-          if (
-            document
-              .querySelector("middle")
-              .querySelectorAll(`.${color}-bg-lighter`).length < 1
-          )
-            if (color == "red") {
-              // if (element.classList.contains("pin-in-box")) {
-              //   element.classList.remove("pin-in-box");
-              // }
+      function resizePinForGoal(element, color, number, turn) {
+        const winningPins = document.querySelectorAll(
+          `.player-${turn.number}-info .winning-pins .pin`
+        );
+        const losingPins = document.querySelectorAll(
+          `.player-${turn.number}-info .winning-pins .pin:not(.${color}-bg)`
+        );
+        if (turn.number == 2 || turn.number == 4) {
+          losingPins[losingPins.length - 1].classList.add(`${color}-bg`);
+        } else {
+          for (let i = 0; i < winningPins.length; i++) {
+            const element = winningPins[i];
+            if (!element.classList.contains(`${color}-bg`)) {
+              element.classList.add(`${color}-bg`);
+              break;
             }
+          }
         }
+        element.remove();
       }
       function resetPinSizes(color, currentBox, entryBox, playedPin) {
         if (!entryBox.querySelector(".pin")) {
-          if (playedPin.classList.length > 3) {
+          if (playedPin.classList.length > 4) {
             Array.from(playedPin.classList).forEach((cls, i) => {
-              if (i > 3) {
+              if (i > 4) {
                 playedPin.classList.remove(cls);
               }
             });
@@ -1418,11 +1363,16 @@
               `.box[data-${color}-step="${currentColorStep + i}"]`
             );
             if (
+              box &&
               box.querySelector(".pin") &&
               box.querySelectorAll(".pin").length > 1
             ) {
-              alert("Path blocked because of wall");
-              return true;
+              let message = "Path blocked because of stacked pins";
+              let timeOut = message.length * 500;
+              alertPlayer("block", message);
+              setTimeout(() => {
+                return true;
+              }, timeOut);
             } else {
               isBlocked = false;
             }
@@ -1446,7 +1396,6 @@
                 } else if (index == 1) {
                   pin = currentBox.querySelectorAll(".pin")[0];
                 } else {
-                  // console.log(index);
                 }
                 pin.style.width = `${currentBox.clientWidth}px`;
                 pin.style.height = `${currentBox.clientHeight}px`;
@@ -1455,6 +1404,11 @@
                 resetPinSizes(color, currentBox, entryBox, playedPin);
                 console.log("1 pin in current box 2");
               } else {
+                Array.from(playedPin.classList).forEach((cls, i) => {
+                  if (i > 3) {
+                    playedPin.classList.remove(cls);
+                  }
+                });
                 console.log(currentBox.querySelectorAll(".pin").length);
               }
             }
@@ -1462,6 +1416,20 @@
           if (entryBox.querySelector(".pin")) {
             let pins = entryBox.querySelectorAll(".pin");
             if (pins.length - 1 == 0) {
+              if (playedPin.classList.length > 4) {
+                Array.from(playedPin.classList).forEach((cls, i) => {
+                  if (i > 3) {
+                    playedPin.classList.remove(cls);
+                  }
+                });
+              }
+              if (pins[0].classList.length > 4) {
+                Array.from(pins[0].classList).forEach((cls, i) => {
+                  if (i > 3) {
+                    pins[0].classList.remove(cls);
+                  }
+                });
+              }
               if (
                 entryBox.querySelector(".pin").classList[1] ==
                 `${color}-bg-lighter`
@@ -1470,7 +1438,6 @@
                 pins[0].classList.add(`pin-in-box-1`);
                 pins[0].style.width = `${entryBox.clientWidth / 2}px`;
                 pins[0].style.height = `${entryBox.clientHeight / 2}px`;
-                // playedPin.classList.remove("pin-in-box");
                 playedPin.classList.add(`pin-in-box-2`);
                 playedPin.style.width = `${entryBox.clientWidth / 2}px`;
                 playedPin.style.height = `${entryBox.clientHeight / 2}px`;
@@ -1482,7 +1449,6 @@
                   pin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
                   pin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
                 }
-                // playedPin.classList.remove("pin-in-box");
                 playedPin.classList.add(`pin-in-box-3`);
                 playedPin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
                 playedPin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
@@ -1494,7 +1460,6 @@
                   pin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
                   pin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
                 }
-                // playedPin.classList.remove("pin-in-box");
                 playedPin.classList.add(`pin-in-box-4`);
                 playedPin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
                 playedPin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
@@ -1603,17 +1568,17 @@
                   .classList.contains(`${color}-bg-lighter`)
               ) {
                 const boxPin = box.querySelector(".pin");
-                if (CheakBoxesLeft(color, number, boxPin)) {
-                  pinBoxes.push(box);
-                }
                 const currentColorStep = parseInt(
                   box.getAttribute(`data-${color}-step`)
                 );
                 const entryBox = document.querySelector(
                   `.box[data-${color}-step="${currentColorStep + number}"]`
                 );
-                if (checkOpponentPin(color, entryBox, box)) {
-                  if (!pathBlocked(color, box, boxPin, number)) {
+                if (CheakBoxesLeft(color, number, boxPin) == true) {
+                  if (
+                    checkOpponentPin(color, entryBox, box) &&
+                    !pathBlocked(color, box, boxPin, number)
+                  ) {
                     movePinHome(
                       color,
                       currentColorStep + number - 1,
@@ -1621,10 +1586,19 @@
                       boxPin
                     );
                     entryBox.append(boxPin);
+                    randomPick = false;
+                    return;
+                  } else if (
+                    !pathBlocked(color, box, boxPin, number) &&
+                    !checkOpponentPin(color, entryBox, box)
+                  ) {
+                    pinBoxes.push(box);
+                    randomPick = true;
                   }
+                } else if (CheakBoxesLeft(color, number, boxPin) == "Goal") {
+                  resizePinForGoal(boxPin, color, number, turn);
+                  randomPick = false;
                   return;
-                } else {
-                  randomPick = true;
                 }
               }
             } else if (box.querySelectorAll(".pin").length >= 2) {
@@ -1740,6 +1714,8 @@
         }
       }
       function roolDice(color, turn) {
+        console.log(turn);
+
         if (
           (operating == false && turn.name == playerName) ||
           (operating == true && turn.name != playerName)
@@ -1765,7 +1741,7 @@
               document.getElementById("rool-dice").getAttribute("data-turn") ==
               turn.name
             ) {
-              gameAlgorithm(number, turn.color, turn.name);
+              gameAlgorithm(number, turn.color, turn);
               document
                 .getElementById("rool-dice")
                 .setAttribute("data-turn", turn.name);

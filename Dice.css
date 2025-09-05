@@ -166,3 +166,16 @@
   place-items: center;
   transform: rotateY(180deg) translateZ(1.25rem);
 }
+/*//////////////////////////////Test////////////////////////////////////*/
+/* .pin-test{
+  height: 12.5px !important;
+  width: 12.5px !important;
+  background-color: aqua;
+  position: relative !important;
+}
+.grid{
+  background-color: aqua !important;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, 12.5px) !important;
+  overflow: visible !important;
+} */
