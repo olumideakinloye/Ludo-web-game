@@ -29,6 +29,14 @@
   transition: all 1.5s ease-in-out;
   display: none;
 }
+.scale-dice-face{
+  scale: 1;
+  animation-name: scale-dice;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-timing-function: ease-in-out;
+}
 .scale-dice {
   scale: 0.8;
   animation-name: roll-dice;
@@ -48,6 +56,17 @@
     scale: 0.8;
   }
 }
+@keyframes scale-dice {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.2;
+  }
+  100% {
+    scale: 1;
+  }
+}
 .dice {
   z-index: 5;
   position: absolute;
@@ -57,19 +76,19 @@
   top: 0;
   margin: auto;
   border-radius: 10px;
-  height: 40%;
-  width: 40%;
+  height: calc(2rem + 1dvw);
+  width: calc(2rem + 1dvw);
   padding: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: white;
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.35);
-  border: 3px solid rgba(0, 0, 0, 0.35);
+  /* border: 1px solid rgba(0, 0, 0, 0.35); */
 }
 .dice-num {
   aspect-ratio: 1 / 1;
-  height: 80%;
+  width: 80%;
   background-color: black;
   border-radius: 50%;
   display: inline-block;
@@ -77,6 +96,7 @@
 .dice .one {
   aspect-ratio: 1 / 1;
   height: 50%;
+  width: auto;
   background-color: black;
   border-radius: 50%;
 }
@@ -84,13 +104,13 @@
   justify-self: center;
 }
 .face-1 {
-  transform: translateZ(1.25rem);
+  transform: translateZ(calc(1rem + 1dvw));
 }
 .face-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  transform: rotateY(90deg) translateZ(1.25rem);
+  transform: rotateY(90deg) translateZ(calc(1rem + 1dvw));
 }
 .dice .two:nth-of-type(2) {
   grid-row-start: 2;
@@ -116,14 +136,14 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  transform: rotateX(90deg) translateZ(1.25rem);
+  transform: rotateX(90deg) translateZ(calc(1rem + 1dvw));
 }
 .face-4 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   place-items: center;
-  transform: rotateX(-90deg) translateZ(1.25rem);
+  transform: rotateX(-90deg) translateZ(calc(1rem + 1dvw));
 }
 .dice .five {
   justify-self: end;
@@ -157,14 +177,14 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  transform: rotateY(-90deg) translateZ(1.25rem);
+  transform: rotateY(-90deg) translateZ(calc(1rem + 1dvw));
 }
 .face-6 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
   place-items: center;
-  transform: rotateY(180deg) translateZ(1.25rem);
+  transform: rotateY(180deg) translateZ(calc(1rem + 1dvw));
 }
 /*//////////////////////////////Test////////////////////////////////////*/
 /* .pin-test{

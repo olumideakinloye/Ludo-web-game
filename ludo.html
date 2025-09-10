@@ -32,10 +32,10 @@
               <p></p>
             </div>
             <div class="winning-pins">
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
+              <div class="win-pin win-green-pin pin"></div>
+              <div class="win-pin win-green-pin pin"></div>
+              <div class="win-pin win-green-pin pin"></div>
+              <div class="win-pin win-green-pin pin"></div>
             </div>
           </div>
           <div class="player player-2-info">
@@ -43,10 +43,10 @@
               <p></p>
             </div>
             <div class="winning-pins">
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
+              <div class="win-pin win-yellow-pin pin"></div>
+              <div class="win-pin win-yellow-pin pin"></div>
+              <div class="win-pin win-yellow-pin pin"></div>
+              <div class="win-pin win-yellow-pin pin"></div>
             </div>
           </div>
           <div class="alert-player">
@@ -558,10 +558,10 @@
         <div class="player-game-info">
           <div class="player player-3-info">
             <div class="winning-pins">
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
+              <div class="win-pin win-red-pin pin"></div>
+              <div class="win-pin win-red-pin pin"></div>
+              <div class="win-pin win-red-pin pin"></div>
+              <div class="win-pin win-red-pin pin"></div>
             </div>
             <div class="player-info">
               <p></p>
@@ -569,10 +569,10 @@
           </div>
           <div class="player player-4-info">
             <div class="winning-pins">
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
-              <div class="win-pin pin"></div>
+              <div class="win-pin win-blue-pin pin"></div>
+              <div class="win-pin win-blue-pin pin"></div>
+              <div class="win-pin win-blue-pin pin"></div>
+              <div class="win-pin win-blue-pin pin"></div>
             </div>
             <div class="player-info">
               <p></p>
@@ -721,7 +721,7 @@
         </div>
         <div class='single-player-info-buttons'>
             <button class="back-btn" onclick="backToPlayOption()"><i class="fa-solid fa-turn-up arrow-icon-2" style=" transform: rotateZ(-90deg);"></i></button>
-            <button onclick='setPlayerNumber(document.querySelector(".options input[name=${"number-of-players"}]:checked").value)'>Enter</button>            
+            <button onclick='setPlayerNumber(document.querySelector(".options input[name=${"number-of-players"}]:checked").value)'>Enter</button>
         </div>
       </div>`;
       }
@@ -753,10 +753,10 @@
       });
       let number2;
       function assignPlayers(A, B) {
-        const map = { 1: 4, 4: 1, 2: 3, 3: 2 };
-
-        if (A != null) return map[A];
-        else if (B != null) return map[B];
+        const opposition = { 1: 4, 4: 1, 2: 3, 3: 2 };
+        const opponent = { 1: 2, 2: 1, 3: 4, 4: 3 };
+        if (A != null) return opposition[A];
+        else if (B != null) return opponent[B];
       }
       function startGame(playerName) {
         if (numberOfPlayers == 2) {
@@ -766,39 +766,51 @@
             if (element.color == playerColor) {
               players.push({
                 name: playerName,
-                color: element.color,
+                color1: element.color,
+                color2:
+                  colorToPlayerNumber[assignPlayers(element.number, null) - 1]
+                    .color,
                 number: element.number,
               });
               document.querySelector(
                 `.player-${element.number}-info p`
               ).innerText = playerName;
+              document.querySelector(
+                `.player-${assignPlayers(element.number, null)}-info p`
+              ).innerText = playerName;
               playerANumber = element.number;
-              let playerBNumber = assignPlayers(element.number, null);
+              let playerBNumber = assignPlayers(null, element.number);
 
               players.push({
                 name: `Bot`,
-                color: colorToPlayerNumber[playerBNumber - 1].color,
+                color1: colorToPlayerNumber[playerBNumber - 1].color,
+                color2:
+                  colorToPlayerNumber[assignPlayers(playerBNumber, null) - 1]
+                    .color,
                 number: playerBNumber,
               });
               document.querySelector(
                 `.player-${playerBNumber}-info p`
               ).innerText = "Bot";
+              document.querySelector(
+                `.player-${assignPlayers(playerBNumber, null)}-info p`
+              ).innerText = "Bot";
               break;
             }
           }
-          if (playerANumber != 0) {
-            if (playerANumber == 2 || playerANumber == 3) {
-              document.querySelector(".player-1-info").style.display = "none";
-              document.querySelector(".player-1-info").innerText = "";
-              document.querySelector(".player-4-info").style.display = "none";
-              document.querySelector(".player-4-info").innerText = "";
-            } else if (playerANumber == 1 || playerANumber == 4) {
-              document.querySelector(".player-2-info").style.display = "none";
-              document.querySelector(".player-2-info").innerText = "";
-              document.querySelector(".player-3-info").style.display = "none";
-              document.querySelector(".player-3-info").innerText = "";
-            }
-          }
+          // if (playerANumber != 0) {
+          //   if (playerANumber == 2 || playerANumber == 3) {
+          //     document.querySelector(".player-1-info").style.display = "none";
+          //     document.querySelector(".player-1-info").innerText = "";
+          //     document.querySelector(".player-4-info").style.display = "none";
+          //     document.querySelector(".player-4-info").innerText = "";
+          //   } else if (playerANumber == 1 || playerANumber == 4) {
+          //     document.querySelector(".player-2-info").style.display = "none";
+          //     document.querySelector(".player-2-info").innerText = "";
+          //     document.querySelector(".player-3-info").style.display = "none";
+          //     document.querySelector(".player-3-info").innerText = "";
+          //   }
+          // }
         } else if (numberOfPlayers == 4) {
           let botNumber = 0;
           for (let i = 0; i < colorToPlayerNumber.length; i++) {
@@ -840,11 +852,22 @@
         displayColors();
       }
       function randomStartGame(playering, amount) {
+        console.log(players);
+
         gameInfo["currentTurn"] = Math.floor(Math.random() * players.length);
         const randomStarter = players[gameInfo["currentTurn"]];
-        document
-          .querySelector(`.${randomStarter.color}`)
-          .classList.add("flash");
+        if (randomStarter.color1) {
+          document
+            .querySelector(`.${randomStarter.color1}`)
+            .classList.add("flash");
+          document
+            .querySelector(`.${randomStarter.color2}`)
+            .classList.add("flash");
+        } else {
+          document
+            .querySelector(`.${randomStarter.color}`)
+            .classList.add("flash");
+        }
 
         if (randomStarter.name == playerName) {
           operating = false;
@@ -852,12 +875,12 @@
           const timeOut = message.length * 100;
           alertPlayer("block", message);
           setTimeout(() => {
-            roolDice(randomStarter.color, randomStarter);
+            roolDice(randomStarter);
             operating = true;
             document
               .getElementById("rool-dice")
               .addEventListener("click", () => {
-                roolDice(randomStarter.color, randomStarter);
+                roolDice(randomStarter);
               });
           }, timeOut);
 
@@ -872,11 +895,11 @@
             (player) => player.name === playerName
           );
           setTimeout(() => {
-            roolDice(randomStarter.color, randomStarter);
+            roolDice(randomStarter);
             document
               .getElementById("rool-dice")
               .addEventListener("click", () => {
-                roolDice(playerInfo.color, playerInfo);
+                roolDice(playerInfo);
               });
           }, timeOut);
 
@@ -907,21 +930,35 @@
             }
           }
           if (currentPlayerInfo != "" && nextPlayerInfo != "") {
-            if (
-              document
-                .querySelector(`.${currentPlayerInfo.color}`)
-                .classList.contains("flash")
-            ) {
-              document
-                .querySelector(`.${currentPlayerInfo.color}`)
-                .classList.remove("flash");
-              document
-                .querySelector(`.${nextPlayerInfo.color}`)
-                .classList.add("flash");
-            } else {
-              document
-                .querySelector(`.${nextPlayerInfo.color}`)
-                .classList.add("flash");
+            if (currentPlayerInfo.color1) {
+              if (
+                document
+                  .querySelector(`.${currentPlayerInfo.color1}`)
+                  .classList.contains("flash") &&
+                document
+                  .querySelector(`.${currentPlayerInfo.color2}`)
+                  .classList.contains("flash")
+              ) {
+                document
+                  .querySelector(`.${currentPlayerInfo.color1}`)
+                  .classList.remove("flash");
+                document
+                  .querySelector(`.${currentPlayerInfo.color2}`)
+                  .classList.remove("flash");
+                document
+                  .querySelector(`.${nextPlayerInfo.color1}`)
+                  .classList.add("flash");
+                document
+                  .querySelector(`.${nextPlayerInfo.color2}`)
+                  .classList.add("flash");
+              } else {
+                document
+                  .querySelector(`.${nextPlayerInfo.color1}`)
+                  .classList.add("flash");
+                document
+                  .querySelector(`.${nextPlayerInfo.color2}`)
+                  .classList.add("flash");
+              }
             }
             if (currentPlayerInfo.name == playerName) {
               operating = true;
@@ -957,12 +994,13 @@
       }
       function aiMove(bot) {
         operating = true;
-        roolDice(bot.color, bot);
+        roolDice(bot);
       }
       function CheakBoxesLeft(color, number, pin) {
-        if (pin.parentElement.hasAttribute(`data-${color}-step`)) {
+        const pinColor = pin.classList[1].split("-")[0];
+        if (pin.parentElement.hasAttribute(`data-${pinColor}-step`)) {
           let currentStep = parseInt(
-            pin.parentElement.getAttribute(`data-${color}-step`)
+            pin.parentElement.getAttribute(`data-${pinColor}-step`)
           );
           if (currentStep + number > 57) {
             return false;
@@ -976,32 +1014,74 @@
         }
       }
       function getPlayedPin(color) {
-        let boxes = document.querySelectorAll(`.box[data-${color}-step]`);
-        for (let i = 0; i < boxes.length; i++) {
-          if (
-            boxes[i].querySelector(".pin") &&
-            boxes[i]
-              .querySelector(".pin")
-              .classList.contains(`${color}-bg-lighter`)
-          ) {
-            return boxes[i];
+        if (Array.isArray(color)) {
+          let boxes1 = document.querySelectorAll(`.box[data-${color[0]}-step]`);
+          for (let i = 0; i < boxes1.length; i++) {
+            if (
+              boxes1[i].querySelector(".pin") &&
+              boxes1[i]
+                .querySelector(".pin")
+                .classList.contains(`${color[0]}-bg-lighter`)
+            ) {
+              return boxes1[i];
+            }
+          }
+          let boxes2 = document.querySelectorAll(`.box[data-${color[1]}-step]`);
+          for (let i = 0; i < boxes2.length; i++) {
+            if (
+              boxes2[i].querySelector(".pin") &&
+              boxes2[i]
+                .querySelector(".pin")
+                .classList.contains(`${color[1]}-bg-lighter`)
+            ) {
+              return boxes2[i];
+            }
+          }
+        } else {
+          let boxes = document.querySelectorAll(`.box[data-${color}-step]`);
+          for (let i = 0; i < boxes.length; i++) {
+            if (
+              boxes[i].querySelector(".pin") &&
+              boxes[i]
+                .querySelector(".pin")
+                .classList.contains(`${color}-bg-lighter`)
+            ) {
+              return boxes[i];
+            }
           }
         }
       }
       function pinPlayed(color, alowedNumber = "") {
         let amountOfPins = 0;
-        let boxes = document.querySelectorAll(`.box[data-${color}-step]`);
-        for (let i = 0; i < boxes.length; i++) {
-          if (
-            boxes[i].querySelector(".pin") &&
-            boxes[i]
-              .querySelector(".pin")
-              .classList.contains(`${color}-bg-lighter`)
-          ) {
-            if (boxes[i].querySelectorAll(".pin").length > 1) {
-              amountOfPins += boxes[i].querySelectorAll(".pin").length;
-            } else {
-              amountOfPins += 1;
+        if (Array.isArray(color)) {
+          let boxes1 = document.querySelectorAll(`.box[data-${color[0]}-step]`);
+          let boxes2 = document.querySelectorAll(`.box[data-${color[1]}-step]`);
+          for (let i = 0; i < boxes1.length; i++) {
+            if (
+              boxes1[i].querySelector(".pin") &&
+              boxes1[i]
+                .querySelector(".pin")
+                .classList.contains(`${color[0]}-bg-lighter`)
+            ) {
+              if (boxes1[i].querySelectorAll(".pin").length > 1) {
+                amountOfPins += boxes1[i].querySelectorAll(".pin").length;
+              } else {
+                amountOfPins += 1;
+              }
+            }
+          }
+          for (let i = 0; i < boxes2.length; i++) {
+            if (
+              boxes2[i].querySelector(".pin") &&
+              boxes2[i]
+                .querySelector(".pin")
+                .classList.contains(`${color[1]}-bg-lighter`)
+            ) {
+              if (boxes2[i].querySelectorAll(".pin").length > 1) {
+                amountOfPins += boxes2[i].querySelectorAll(".pin").length;
+              } else {
+                amountOfPins += 1;
+              }
             }
           }
         }
@@ -1019,6 +1099,31 @@
           }
         }
       }
+      function morePinsLeftHome(color) {
+        if (Array.isArray(color)) {
+          const pins1 = document.querySelectorAll(
+            `.${color[0]} .pins .${color[0]}-bg-lighter`
+          );
+                    const pins2 = document.querySelectorAll(
+            `.${color[1]} .pins .${color[1]}-bg-lighter`
+          );
+
+          if (pins1.length > 0 || pins2.length > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          const pins = document.querySelectorAll(
+            `.${color} .pins .${color}-bg-lighter`
+          );
+          if (pins.length > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
       function gameAlgorithm(number, color, turn) {
         if (operating == true) {
           if (!pinPlayed(color)) {
@@ -1028,29 +1133,91 @@
                 pausedMove = false;
                 let randomPin = pickRandomPin(color);
                 if (randomPin) {
-                  if (!pathBlocked(color, null, randomPin, number)) {
-                    movePinHome(color, 0, turn, randomPin);
+                  if (
+                    checkOpponentPin(
+                      color,
+                      document.querySelector(
+                        `.box[data-${
+                          randomPin.classList[1].split("-")[0]
+                        }-step="1"]`
+                      ),
+                      false
+                    )
+                  ) {
+                    let eliminatingColor = checkOpponentPin(
+                      color,
+                      document.querySelector(
+                        `.box[data-${
+                          randomPin.classList[1].split("-")[0]
+                        }-step="1"]`
+                      ),
+                      false
+                    );
+                    resizePinForGoal(randomPin, eliminatingColor, number, turn);
+                    movePinHome(eliminatingColor, 0, turn, randomPin);
+                  } else {
+                    console.log("new entry");
+
                     randomPin.classList.add("pin-in-box");
                     document
-                      .querySelector(`.box[data-${color}-step="1"]`)
+                      .querySelector(
+                        `.box[data-${
+                          randomPin.classList[1].split("-")[0]
+                        }-step="1"]`
+                      )
                       .append(randomPin);
                   }
                 }
                 operating = true;
                 switchTurns(turn, true);
               } else {
-                let pin = document.querySelector(`.${color}-pin-1`);
-                if (!pin.parentElement.getAttribute(`data-${color}-step`)) {
-                  if (!pathBlocked(color, null, pin, number)) {
-                    pin.classList.add("pin-in-box");
-                    movePinHome(color, 0, turn, pin);
-                    document
-                      .querySelector(`.box[data-${color}-step="1"]`)
-                      .append(pin);
-                  }
-                }
+                pausedMove = true;
                 operating = true;
-                switchTurns(turn, true);
+                addClickEvent = (event) => {
+                  pickedPin(event.currentTarget, color, number, turn, event);
+                };
+                if (Array.isArray(color)) {
+                  document
+                    .querySelectorAll(`.${color[0]}-bg-lighter`)
+                    .forEach((element) => {
+                      element.classList.add("hover-pin");
+                      element.addEventListener("click", addClickEvent, {
+                        once: true,
+                      });
+                    });
+                  document
+                    .querySelectorAll(`.${color[1]}-bg-lighter`)
+                    .forEach((element) => {
+                      element.classList.add("hover-pin");
+                      element.addEventListener("click", addClickEvent, {
+                        once: true,
+                      });
+                    });
+                } else {
+                  console.log("no color array");
+
+                  let pin = pickRandomPin(color);
+                  if (!pin.parentElement.getAttribute(`data-${color}-step`)) {
+                    if (
+                      checkOpponentPin(
+                        color,
+                        document.querySelector(`.box[data-${color}-step="1"]`),
+                        false
+                      )
+                    ) {
+                      resizePinForGoal(pin, color, number, turn);
+                      movePinHome(color, 0, turn, pin);
+                    } else {
+                      pin.classList.add("pin-in-box");
+                      movePinHome(color, 0, turn, pin);
+                      document
+                        .querySelector(`.box[data-${color}-step="1"]`)
+                        .append(pin);
+                    }
+                  }
+                  operating = true;
+                  switchTurns(turn, true);
+                }
               }
             } else if (number < 6) {
               if (turn && turn.name != playerName) {
@@ -1068,17 +1235,38 @@
                 if (turn.name != playerName) {
                   let randomPin = pickRandomPin(color);
                   if (randomPin) {
-                    if (!pathBlocked(color, null, randomPin, number)) {
-                      movePinHome(color, 0, turn, randomPin);
-                      adjustPinSize(
+                    if (
+                      checkOpponentPin(
                         color,
+                        document.querySelector(
+                          `.box[data-${
+                            randomPin.classList[1].split("-")[0]
+                          }-step="1"]`
+                        ),
+                        false
+                      )
+                    ) {
+                      resizePinForGoal(randomPin, color, number, turn);
+                      movePinHome(color, 0, turn, randomPin);
+                    } else {
+                      // movePinHome(color, 0, turn, randomPin);
+                      adjustPinSize(
+                        randomPin.classList[1].split("-")[0],
                         null,
-                        document.querySelector(`.box[data-${color}-step="1"]`),
+                        document.querySelector(
+                          `.box[data-${
+                            randomPin.classList[1].split("-")[0]
+                          }-step="1"]`
+                        ),
                         randomPin
                       );
                       randomPin.classList.add("pin-in-box");
                       document
-                        .querySelector(`.box[data-${color}-step="1"]`)
+                        .querySelector(
+                          `.box[data-${
+                            randomPin.classList[1].split("-")[0]
+                          }-step="1"]`
+                        )
                         .append(randomPin);
                     }
                     operating = true;
@@ -1090,50 +1278,138 @@
                     switchTurns(turn, true);
                   }
                 } else {
-                  pausedMove = true;
-                  operating = true;
-                  addClickEvent = (event) => {
-                    pickedPin(event.currentTarget, color, number, turn, event);
-                  };
-                  document
-                    .querySelectorAll(`.${color}-bg-lighter`)
-                    .forEach((element2) => {
-                      element2.classList.add("hover-pin");
-                      element2.addEventListener("click", addClickEvent, {
-                        once: true,
-                      });
-                    });
+                  if (!morePinsLeftHome(color) && pinPlayed(color, 1)) {
+                    const lastBox = getPlayedPin(color);
+                    let lastPin = lastBox.querySelector(".pin");
+                    let currentColorStep = parseInt(
+                      lastBox.getAttribute(
+                        `data-${lastPin.classList[1].split("-")[0]}-step`
+                      )
+                    );
+                    // if(Array.isArray(color)){
+                    //   currentColorStep
+                    // }
+                    if (CheakBoxesLeft(color, number, lastPin) === true) {
+                      if (
+                        checkOpponentPin(
+                          color,
+                          document.querySelector(
+                            `.box[data-${
+                              lastPin.classList[1].split("-")[0]
+                            }-step="${currentColorStep + number}"]`
+                          ),
+                          false
+                        )
+                      ) {
+                        resizePinForGoal(lastPin, color, number, turn);
+                        movePinHome(
+                          color,
+                          currentColorStep + number - 1,
+                          turn,
+                          lastPin
+                        );
+                      } else {
+                        document
+                          .querySelector(
+                            `.box[data-${
+                              lastPin.classList[1].split("-")[0]
+                            }-step="${currentColorStep + number}"]`
+                          )
+                          .append(lastPin);
+                        operating = false;
+                      }
+                    } else if (
+                      CheakBoxesLeft(color, number, lastPin) === "Goal"
+                    ) {
+                      resizePinForGoal(lastPin, color, number, turn);
+                    }
+                  } else {
+                    pausedMove = true;
+                    operating = true;
+                    addClickEvent = (event) => {
+                      pickedPin(
+                        event.currentTarget,
+                        color,
+                        number,
+                        turn,
+                        event
+                      );
+                    };
+                    if (Array.isArray(color)) {
+                      document
+                        .querySelectorAll(`.${color[0]}-bg-lighter`)
+                        .forEach((element) => {
+                          element.classList.add("hover-pin");
+                          element.addEventListener("click", addClickEvent, {
+                            once: true,
+                          });
+                        });
+                      document
+                        .querySelectorAll(`.${color[1]}-bg-lighter`)
+                        .forEach((element) => {
+                          element.classList.add("hover-pin");
+                          element.addEventListener("click", addClickEvent, {
+                            once: true,
+                          });
+                        });
+                    } else {
+                      document
+                        .querySelectorAll(`.${color}-bg-lighter`)
+                        .forEach((element2) => {
+                          element2.classList.add("hover-pin");
+                          element2.addEventListener("click", addClickEvent, {
+                            once: true,
+                          });
+                        });
+                    }
+                  }
+                  switchTurns(turn, true);
                 }
               }
             } else if (number < 6) {
               if (turn && turn.name != playerName) {
                 pausedMove = false;
                 aiAlgorithm(number, color, turn);
-                // operating = false;
                 switchTurns(turn, false);
               } else {
                 if (pinPlayed(color, 1)) {
                   let box = getPlayedPin(color);
-                  let currentColorStep = parseInt(
-                    box.getAttribute(`data-${color}-step`)
-                  );
+                  console.log(box);
+
                   let pin = box.querySelector(".pin");
-                  if (!pathBlocked(color, box, pin, number)) {
+                  let currentColorStep = parseInt(
+                    box.getAttribute(
+                      `data-${pin.classList[1].split("-")[0]}-step`
+                    )
+                  );
+                  if (
+                    checkOpponentPin(
+                      color,
+                      document.querySelector(
+                        `.box[data-${pin.classList[1].split("-")[0]}-step="${
+                          currentColorStep + number
+                        }"]`
+                      ),
+                      false
+                    )
+                  ) {
+                    resizePinForGoal(pin, color, number, turn);
+                    movePinHome(
+                      color,
+                      currentColorStep + number - 1,
+                      turn,
+                      pin
+                    );
+                  } else {
                     if (CheakBoxesLeft(color, number, pin) === true) {
-                      movePinHome(
-                        color,
-                        currentColorStep + number - 1,
-                        turn,
-                        pin
-                      );
                       document
                         .querySelector(
-                          `.box[data-${color}-step="${
+                          `.box[data-${pin.classList[1].split("-")[0]}-step="${
                             currentColorStep + number
                           }"]`
                         )
                         .append(pin);
-                    } else if (CheakBoxesLeft(color, number, pin) == "Goal") {
+                    } else if (CheakBoxesLeft(color, number, pin) === "Goal") {
                       resizePinForGoal(pin, color, number, turn);
                     }
                   }
@@ -1145,14 +1421,34 @@
                   addClickEvent = (event) => {
                     pickedPin(event.currentTarget, color, number, turn, event);
                   };
-                  document
-                    .querySelectorAll(`.box .${color}-bg-lighter`)
-                    .forEach((element) => {
-                      element.classList.add("hover-pin");
-                      element.addEventListener("click", addClickEvent, {
-                        once: true,
+                  if (Array.isArray(color)) {
+                    document
+                      .querySelectorAll(`.box .${color[0]}-bg-lighter`)
+                      .forEach((element) => {
+                        element.classList.add("hover-pin");
+                        element.addEventListener("click", addClickEvent, {
+                          once: true,
+                        });
                       });
-                    });
+
+                    document
+                      .querySelectorAll(`.box .${color[1]}-bg-lighter`)
+                      .forEach((element) => {
+                        element.classList.add("hover-pin");
+                        element.addEventListener("click", addClickEvent, {
+                          once: true,
+                        });
+                      });
+                  } else {
+                    document
+                      .querySelectorAll(`.box .${color}-bg-lighter`)
+                      .forEach((element) => {
+                        element.classList.add("hover-pin");
+                        element.addEventListener("click", addClickEvent, {
+                          once: true,
+                        });
+                      });
+                  }
                 }
               }
             }
@@ -1160,7 +1456,21 @@
         }
       }
       function pickRandomPin(color) {
-        let pins = document.querySelectorAll(`.${color} .pins .pin`);
+        let pins = [];
+        if (Array.isArray(color)) {
+          document
+            .querySelectorAll(`.${color[0]} .pins .pin`)
+            .forEach((pin) => {
+              pins.push(pin);
+            });
+          document
+            .querySelectorAll(`.${color[1]} .pins .pin`)
+            .forEach((pin) => {
+              pins.push(pin);
+            });
+        } else {
+          pins = document.querySelectorAll(`.${color} .pins .pin`);
+        }
         if (pins.length > 0) {
           const randomPin = pins[Math.floor(Math.random() * pins.length)];
           return randomPin;
@@ -1168,16 +1478,42 @@
           return false;
         }
       }
-      function pickedPin(element, color, number, currentTurn, e) {
+      function pickedPin(element, pickedColor, number, currentTurn, e) {
         operating = true;
         pausedMove = false;
         e.stopPropagation();
-        document.querySelectorAll(`.${color}-bg-lighter`).forEach((element) => {
-          element.classList.remove("hover-pin");
-          element.removeEventListener("click", addClickEvent, { once: true });
-          console.log("removed Event listeener and hover pin class");
-        });
-        if (CheakBoxesLeft(color, number, element) == true) {
+        const color = element.classList[1].split("-")[0];
+        if (Array.isArray(pickedColor)) {
+          document
+            .querySelectorAll(`.${pickedColor[0]}-bg-lighter`)
+            .forEach((element) => {
+              element.classList.remove("hover-pin");
+              element.removeEventListener("click", addClickEvent, {
+                once: true,
+              });
+              console.log("removed Event listeener and hover pin class");
+            });
+          document
+            .querySelectorAll(`.${pickedColor[1]}-bg-lighter`)
+            .forEach((element) => {
+              element.classList.remove("hover-pin");
+              element.removeEventListener("click", addClickEvent, {
+                once: true,
+              });
+              console.log("removed Event listeener and hover pin class");
+            });
+        } else {
+          document
+            .querySelectorAll(`.${color}-bg-lighter`)
+            .forEach((element) => {
+              element.classList.remove("hover-pin");
+              element.removeEventListener("click", addClickEvent, {
+                once: true,
+              });
+              console.log("removed Event listeener and hover pin class");
+            });
+        }
+        if (CheakBoxesLeft(pickedColor, number, element) == true) {
           if (number == 6) {
             alertPlayer("block", `${currentTurn.name} rools dice again`);
             tracker += 1;
@@ -1185,16 +1521,26 @@
             if (element.classList[2]) {
               console.log(element.parentElement);
               if (!element.parentElement.getAttribute(`data-${color}-step`)) {
-                movePinHome(color, 0, currentTurn, element);
-                adjustPinSize(
-                  color,
-                  null,
-                  document.querySelector(`.box[data-${color}-step="1"]`),
-                  element
-                );
-                document
-                  .querySelector(`.box[data-${color}-step="1"]`)
-                  .appendChild(element);
+                if (
+                  checkOpponentPin(
+                    pickedColor,
+                    document.querySelector(`.box[data-${color}-step="1"]`),
+                    false
+                  )
+                ) {
+                  resizePinForGoal(element, pickedColor, number, currentTurn);
+                  movePinHome(pickedColor, 0, currentTurn, element);
+                } else {
+                  adjustPinSize(
+                    pickedColor,
+                    null,
+                    document.querySelector(`.box[data-${color}-step="1"]`),
+                    element
+                  );
+                  document
+                    .querySelector(`.box[data-${color}-step="1"]`)
+                    .appendChild(element);
+                }
                 operating = true;
                 switchTurns(currentTurn, true);
               } else {
@@ -1208,23 +1554,24 @@
                     color
                 );
                 if (
-                  !pathBlocked(
-                    color,
+                  checkOpponentPin(
+                    pickedColor,
                     document.querySelector(
-                      `.box[data-${color}-step="${currentColorStep}"]`
+                      `.box[data-${color}-step="${currentColorStep + number}"]`
                     ),
-                    element,
-                    number
+                    false
                   )
                 ) {
+                  resizePinForGoal(element, pickedColor, number, currentTurn);
                   movePinHome(
-                    color,
+                    pickedColor,
                     currentColorStep + number - 1,
                     currentTurn,
                     element
                   );
+                } else {
                   adjustPinSize(
-                    color,
+                    pickedColor,
                     document.querySelector(
                       `.box[data-${color}-step="${currentColorStep}"]`
                     ),
@@ -1253,23 +1600,24 @@
               "current Color Step: " + currentColorStep + ", color: " + color
             );
             if (
-              !pathBlocked(
-                color,
+              checkOpponentPin(
+                pickedColor,
                 document.querySelector(
-                  `.box[data-${color}-step="${currentColorStep}"]`
+                  `.box[data-${color}-step="${currentColorStep + number}"]`
                 ),
-                element,
-                number
+                false
               )
             ) {
+              resizePinForGoal(element, pickedColor, number, currentTurn);
               movePinHome(
-                color,
+                pickedColor,
                 currentColorStep + number - 1,
                 currentTurn,
                 element
               );
+            } else {
               adjustPinSize(
-                color,
+                pickedColor,
                 document.querySelector(
                   `.box[data-${color}-step="${currentColorStep}"]`
                 ),
@@ -1287,29 +1635,34 @@
             operating = true;
             switchTurns(currentTurn, false);
           }
-        } else if (CheakBoxesLeft(color, number, element) == false) {
+        } else if (CheakBoxesLeft(pickedColor, number, element) == false) {
           operating = true;
           switchTurns(currentTurn, false);
-        } else if (CheakBoxesLeft(color, number, element) == "Goal") {
-          resizePinForGoal(element, color, number, currentTurn);
+        } else if (CheakBoxesLeft(pickedColor, number, element) == "Goal") {
+          resizePinForGoal(element, pickedColor, number, currentTurn);
           operating = true;
           switchTurns(currentTurn, false);
         }
       }
       function resizePinForGoal(element, color, number, turn) {
+        let box = element.parentElement;
+        if(box.querySelectorAll(".pin").length > 1){
+          resetPinSizes(color, box, null, element);
+        }
+        const playedColor = element.classList[1].split("-")[0];
         const winningPins = document.querySelectorAll(
-          `.player-${turn.number}-info .winning-pins .pin`
+          `.winning-pins .win-${playedColor}-pin`
         );
         const losingPins = document.querySelectorAll(
-          `.player-${turn.number}-info .winning-pins .pin:not(.${color}-bg)`
+          `.winning-pins .win-${playedColor}-pin:not(.${playedColor}-bg)`
         );
-        if (turn.number == 2 || turn.number == 4) {
-          losingPins[losingPins.length - 1].classList.add(`${color}-bg`);
+        if (playedColor == "yellow" || playedColor == "blue") {
+          losingPins[losingPins.length - 1].classList.add(`${playedColor}-bg`);
         } else {
           for (let i = 0; i < winningPins.length; i++) {
             const element = winningPins[i];
-            if (!element.classList.contains(`${color}-bg`)) {
-              element.classList.add(`${color}-bg`);
+            if (!element.classList.contains(`${playedColor}-bg`)) {
+              element.classList.add(`${playedColor}-bg`);
               break;
             }
           }
@@ -1382,7 +1735,17 @@
         }
         return isBlocked;
       }
-      function adjustPinSize(color, currentBox, entryBox, playedPin) {
+      function adjustPinSize(colorArray, currentBox, entryBox, playedPin) {
+        let color;
+        let color2;
+        console.log(color);
+        if (Array.isArray(colorArray)) {
+          color = colorArray[0];
+          color2 = colorArray[1];
+        } else {
+          color = colorArray;
+          color2 = "";
+        }
         if (entryBox) {
           if (currentBox) {
             if (currentBox.querySelector(".pin")) {
@@ -1431,8 +1794,12 @@
                 });
               }
               if (
-                entryBox.querySelector(".pin").classList[1] ==
-                `${color}-bg-lighter`
+                entryBox
+                  .querySelector(".pin")
+                  .classList.contains(`${color}-bg-lighter`) ||
+                entryBox
+                  .querySelector(".pin")
+                  .classList.contains(`${color2}-bg-lighter`)
               ) {
                 console.log("pin number:");
                 pins[0].classList.add(`pin-in-box-1`);
@@ -1491,14 +1858,26 @@
         }
       }
       function movePinHome(color, number, currentTurn, playedPin) {
+        let pinColor;
+        let pinColor2;
+        if (Array.isArray(color)) {
+          pinColor = color[0];
+          pinColor2 = color[1];
+        } else {
+          pinColor = playedPin.classList[1].split("-")[0];
+          pinColor2 = "";
+        }
         let entryBox = document.querySelector(
-          `.box[data-${color}-step="${number + 1}"]`
+          `.box[data-${playedPin.classList[1].split("-")[0]}-step="${number + 1}"]`
         );
         if (entryBox) {
           if (entryBox.querySelector(".pin")) {
             if (entryBox.querySelectorAll(".pin").length < 2) {
               let entryBoxPin = entryBox.querySelector(".pin");
-              if (entryBoxPin.classList[1] != `${color}-bg-lighter`) {
+              if (
+                entryBoxPin.classList[1] != `${pinColor}-bg-lighter` &&
+                entryBoxPin.classList[1] != `${pinColor2}-bg-lighter`
+              ) {
                 let opponentColor = entryBoxPin.classList[1].split("-")[0];
                 document
                   .querySelector(`.${opponentColor} .pins`)
@@ -1518,6 +1897,38 @@
                   );
                 }
               }
+            } else {
+              let pins = entryBox.querySelectorAll(".pin");
+              for (let i = 0; i < pins.length; i++) {
+                let pin = pins[i];
+                if (
+                  pin.classList[1] != `${pinColor}-bg-lighter` &&
+                  pin.classList[1] != `${pinColor2}-bg-lighter`
+                ) {
+                  let movingPin = pin;
+                  Array.from(movingPin.classList).forEach((cls, i) => {
+                    if (i > 3) {
+                      movingPin.classList.remove(cls);
+                    }
+                  });
+                  if (
+                    movingPin.classList.contains(
+                      `pin-in-box-${movingPin.classList[2].split("-")[2]}`
+                    )
+                  ) {
+                    movingPin.classList.remove(
+                      `pin-in-box-${movingPin.classList[2].split("-")[2]}`
+                    );
+                  }
+                  let opponentColor = movingPin.classList[1].split("-")[0];
+                  document
+                    .querySelector(`.${opponentColor} .pins`)
+                    .append(movingPin);
+                  resetPinSizes(color, entryBox, null, playedPin)
+                  return
+                }
+              }
+
             }
           }
         }
@@ -1525,11 +1936,41 @@
       function checkOpponentPin(color, entryBox, currentBox) {
         if (entryBox) {
           if (entryBox.querySelector(".pin")) {
-            let entryBoxPin = entryBox.querySelector(".pin");
-            if (entryBoxPin.classList[1] != `${color}-bg-lighter`) {
-              return true;
+            if (entryBox.querySelectorAll(".pin").length > 1) {
+              let pins = entryBox.querySelectorAll(".pin");
+              for (let i = 0; i < pins.length; i++) {
+                let pin = pins[i];
+                if (Array.isArray(color)) {
+                  if (
+                    pin.classList[1] != `${color[0]}-bg-lighter` &&
+                    pin.classList[1] != `${color[1]}-bg-lighter`
+                  ) {
+                    return true;
+                  } else {
+                    if (i == pins.length - 1) {
+                      return false;
+                    }
+                  }
+                }
+              }
             } else {
-              return false;
+              let entryBoxPin = entryBox.querySelector(".pin");
+              if (Array.isArray(color)) {
+                if (
+                  entryBoxPin.classList[1] != `${color[0]}-bg-lighter` &&
+                  entryBoxPin.classList[1] != `${color[1]}-bg-lighter`
+                ) {
+                  return true;
+                } else {
+                  return false;
+                }
+              } else {
+                if (entryBoxPin.classList[1] != `${color}-bg-lighter`) {
+                  return true;
+                } else {
+                  return false;
+                }
+              }
             }
           } else {
             return false;
@@ -1554,44 +1995,58 @@
       function aiAlgorithm(number, color, turn) {
         let pinBoxes = [];
         let randomPick = false;
-        let boxes = document.querySelectorAll(`.box[data-${color}-step]`);
+        const pins = [];
+        const boxes = document.querySelectorAll(`.box`);
         for (let i = 0; i < boxes.length; i++) {
           let box = boxes[i];
-          if (box.querySelector(".pin")) {
-            if (
-              box.querySelectorAll(".pin").length < 2 &&
-              box.querySelectorAll(".pin").length > 0
-            ) {
+          if (
+            box.querySelectorAll(".pin").length < 2 &&
+            box.querySelectorAll(".pin").length > 0
+          ) {
+            let pin = box.querySelector(".pin");
+            if (Array.isArray(color)) {
               if (
-                box
-                  .querySelector(".pin")
-                  .classList.contains(`${color}-bg-lighter`)
+                pin.classList.contains(`${color[0]}-bg-lighter`) ||
+                pin.classList.contains(`${color[1]}-bg-lighter`)
               ) {
+                let currentColorStep;
+                let pinColor;
+                if (
+                  pin.classList.contains(`${color[0]}-bg-lighter`) &&
+                  !pin.classList.contains(`${color[1]}-bg-lighter`)
+                ) {
+                  pinColor = color[0];
+                  currentColorStep = parseInt(
+                    box.getAttribute(`data-${color[0]}-step`)
+                  );
+                } else if (
+                  !pin.classList.contains(`${color[0]}-bg-lighter`) &&
+                  pin.classList.contains(`${color[1]}-bg-lighter`)
+                ) {
+                  pinColor = color[1];
+
+                  currentColorStep = parseInt(
+                    box.getAttribute(`data-${color[1]}-step`)
+                  );
+                } else {
+                  currentColorStep = 0;
+                }
                 const boxPin = box.querySelector(".pin");
-                const currentColorStep = parseInt(
-                  box.getAttribute(`data-${color}-step`)
-                );
                 const entryBox = document.querySelector(
-                  `.box[data-${color}-step="${currentColorStep + number}"]`
+                  `.box[data-${pinColor}-step="${currentColorStep + number}"]`
                 );
                 if (CheakBoxesLeft(color, number, boxPin) == true) {
-                  if (
-                    checkOpponentPin(color, entryBox, box) &&
-                    !pathBlocked(color, box, boxPin, number)
-                  ) {
+                  if (checkOpponentPin(color, entryBox, false)) {
+                    resizePinForGoal(boxPin, color, number, turn);
                     movePinHome(
                       color,
                       currentColorStep + number - 1,
                       turn,
                       boxPin
                     );
-                    entryBox.append(boxPin);
                     randomPick = false;
                     return;
-                  } else if (
-                    !pathBlocked(color, box, boxPin, number) &&
-                    !checkOpponentPin(color, entryBox, box)
-                  ) {
+                  } else {
                     pinBoxes.push(box);
                     randomPick = true;
                   }
@@ -1601,55 +2056,141 @@
                   return;
                 }
               }
-            } else if (box.querySelectorAll(".pin").length >= 2) {
-              randomPick = true;
-              box.querySelectorAll(".pin").forEach((pin) => {
+            } else {
+              if (pin.classList.contains(`${color}-bg-lighter`)) {
+                const boxPin = box.querySelector(".pin");
+                const currentColorStep = parseInt(
+                  box.getAttribute(`data-${color}-step`)
+                );
+                const entryBox = document.querySelector(
+                  `.box[data-${color}-step="${currentColorStep + number}"]`
+                );
+                if (CheakBoxesLeft(color, number, boxPin) == true) {
+                  if (checkOpponentPin(color, entryBox, false)) {
+                    resizePinForGoal(boxPin, color, number, turn);
+                    movePinHome(
+                      color,
+                      currentColorStep + number - 1,
+                      turn,
+                      boxPin
+                    );
+                    randomPick = false;
+                    return;
+                  } else {
+                    pinBoxes.push(box);
+                    randomPick = true;
+                  }
+                } else if (CheakBoxesLeft(color, number, boxPin) == "Goal") {
+                  resizePinForGoal(boxPin, color, number, turn);
+                  randomPick = false;
+                  return;
+                }
+              }
+            }
+          } else if (box.querySelectorAll(".pin").length >= 2) {
+            randomPick = true;
+            const pins = box.querySelectorAll(".pin");
+            for (let i = 0; i < pins.length; i++) {
+              let pin = pins[i];
+              if (Array.isArray(color)) {
+                if (
+                  pin.classList.contains(`${color[0]}-bg-lighter`) ||
+                  pin.classList.contains(`${color[1]}-bg-lighter`)
+                ) {
+                  pinBoxes.push(box);
+                }
+              } else {
                 if (pin.classList.contains(`${color}-bg-lighter`)) {
                   pinBoxes.push(box);
                 }
-              });
-              console.log(pinBoxes);
+              }
             }
+            console.log(pinBoxes);
           }
         }
         if (randomPick && pinBoxes.length > 0) {
-          randomPinPick(color, number, pinBoxes);
+          randomPinPick(color, number, pinBoxes, turn);
         }
       }
-      function randomPinPick(color, number, pinBoxes) {
+      function randomPinPick(color, number, pinBoxes, turn) {
         console.log(pinBoxes);
         const randomBox = pinBoxes[Math.floor(Math.random() * pinBoxes.length)];
-        const randomBoxColorStep = parseInt(
-          randomBox.getAttribute(`data-${color}-step`)
-        );
+        let randomBoxColorStep;
+        let randomPinColor;
+        if (Array.isArray(color)) {
+          if (
+            randomBox
+              .querySelector(".pin")
+              .classList.contains(`${color[0]}-bg-lighter`) &&
+            !randomBox
+              .querySelector(".pin")
+              .classList.contains(`${color[1]}-bg-lighter`)
+          ) {
+            randomBoxColorStep = parseInt(
+              randomBox.getAttribute(`data-${color[0]}-step`)
+            );
+            randomPinColor = color[0];
+          } else if (
+            !randomBox
+              .querySelector(".pin")
+              .classList.contains(`${color[0]}-bg-lighter`) &&
+            randomBox
+              .querySelector(".pin")
+              .classList.contains(`${color[1]}-bg-lighter`)
+          ) {
+            randomBoxColorStep = parseInt(
+              randomBox.getAttribute(`data-${color[1]}-step`)
+            );
+            randomPinColor = color[1];
+          }
+        } else {
+          randomBoxColorStep = parseInt(
+            randomBox.getAttribute(`data-${color}-step`)
+          );
+          randomPinColor = color;
+        }
         if (randomBoxColorStep + number <= 56) {
           if (
-            !pathBlocked(
+            checkOpponentPin(
               color,
-              randomBox,
-              randomBox.querySelector(`.${color}-bg-lighter`),
-              number
+              document.querySelector(
+                `.box[data-${randomPinColor}-step="${
+                  randomBoxColorStep + number
+                }"]`
+              ),
+              false
             )
           ) {
-            adjustPinSize(
+            resizePinForGoal(
+              randomBox.querySelector(`.${randomPinColor}-bg-lighter`),
               color,
-              randomBox,
-              document.querySelector(
-                `.box[data-${color}-step="${randomBoxColorStep + number}"]`
-              ),
-              randomBox.querySelector(`.${color}-bg-lighter`)
+              number,
+              turn
             );
             movePinHome(
               color,
               randomBoxColorStep + number - 1,
-              (turn = 0),
-              randomBox.querySelector(`.${color}-bg-lighter`)
+              turn,
+              randomBox.querySelector(`.${randomPinColor}-bg-lighter`)
+            );
+          } else {
+            adjustPinSize(
+              randomPinColor,
+              randomBox,
+              document.querySelector(
+                `.box[data-${randomPinColor}-step="${
+                  randomBoxColorStep + number
+                }"]`
+              ),
+              randomBox.querySelector(`.${randomPinColor}-bg-lighter`)
             );
             document
               .querySelector(
-                `.box[data-${color}-step="${randomBoxColorStep + number}"]`
+                `.box[data-${randomPinColor}-step="${
+                  randomBoxColorStep + number
+                }"]`
               )
-              .append(randomBox.querySelector(`.${color}-bg-lighter`));
+              .append(randomBox.querySelector(`.${randomPinColor}-bg-lighter`));
           }
         }
       }
@@ -1665,11 +2206,13 @@
       function diceAnimation(cube, number) {
         if (number == 1) {
           cube.classList.add("scale-dice");
+          cube.querySelector(".dice").classList.add("scale-dice-face");
           cube.style.transform = `rotateX(${
             resetTransformation + 0
           }deg) rotateY(${resetTransformation + 0}deg)`;
           setTimeout(() => {
             cube.classList.remove("scale-dice");
+            cube.querySelector(".dice").classList.remove("scale-dice-face");
           }, 1700);
         } else if (number == 2) {
           cube.classList.add("scale-dice");
@@ -1678,6 +2221,7 @@
           }deg) rotateY(${resetTransformation - 90}deg)`;
           setTimeout(() => {
             cube.classList.remove("scale-dice");
+            cube.querySelector(".dice").classList.remove("scale-dice-face");
           }, 1700);
         } else if (number == 3) {
           cube.classList.add("scale-dice");
@@ -1686,6 +2230,7 @@
           }deg) rotateY(${resetTransformation + 0}deg)`;
           setTimeout(() => {
             cube.classList.remove("scale-dice");
+            cube.querySelector(".dice").classList.remove("scale-dice-face");
           }, 1700);
         } else if (number == 4) {
           cube.classList.add("scale-dice");
@@ -1694,6 +2239,7 @@
           }deg) rotateY(${resetTransformation + 0}deg)`;
           setTimeout(() => {
             cube.classList.remove("scale-dice");
+            cube.querySelector(".dice").classList.remove("scale-dice-face");
           }, 1700);
         } else if (number == 5) {
           cube.classList.add("scale-dice");
@@ -1702,6 +2248,7 @@
           }deg) rotateY(${resetTransformation + 90}deg)`;
           setTimeout(() => {
             cube.classList.remove("scale-dice");
+            cube.querySelector(".dice").classList.remove("scale-dice-face");
           }, 1700);
         } else if (number == 6) {
           cube.classList.add("scale-dice");
@@ -1710,10 +2257,19 @@
           }deg) rotateY(${resetTransformation + 180}deg)`;
           setTimeout(() => {
             cube.classList.remove("scale-dice");
+            cube.querySelector(".dice").classList.remove("scale-dice-face");
           }, 1700);
         }
       }
-      function roolDice(color, turn) {
+      function roolDice(turn) {
+        let color;
+        console.log(turn);
+
+        if (turn.hasOwnProperty("color1")) {
+          color = [turn.color1, turn.color2];
+        } else {
+          color = turn.color;
+        }
         console.log(turn);
 
         if (
@@ -1741,7 +2297,7 @@
               document.getElementById("rool-dice").getAttribute("data-turn") ==
               turn.name
             ) {
-              gameAlgorithm(number, turn.color, turn);
+              gameAlgorithm(number, color, turn);
               document
                 .getElementById("rool-dice")
                 .setAttribute("data-turn", turn.name);
