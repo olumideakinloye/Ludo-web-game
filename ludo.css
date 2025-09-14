@@ -24,7 +24,7 @@ body {
 }
 button {
   background-color: #40e0d0;
-  box-shadow: inset 5px 5px 15px -5px;
+  box-shadow: inset 5px 5px 15px -5px black;
   color: rgb(0, 0, 0);
   padding: clamp(0.2rem, 1dvw + 0.2rem, 0.5rem);
   font-size: clamp(1rem, 1dvw + 0.2rem, 3rem);
@@ -34,11 +34,49 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 label {
   font-size: clamp(1.2rem, 1dvw + 0.5rem, 2rem);
   font-weight: 700;
   text-shadow: 0 0 10px rgb(0, 0, 0);
+}
+table {
+  table-layout: auto;
+  border-collapse: collapse;
+}
+.score-table tr td {
+  text-align: center;
+}
+th {
+  border-right: 1px solid turquoise;
+  border-bottom: 5px solid turquoise;
+}
+th:nth-of-type(2) {
+  border-right: none;
+}
+td{
+  border-right: 1px solid turquoise;
+  border-bottom: 1px solid turquoise;
+}
+td:nth-of-type(2){
+  border-right: none;
+}
+tr:nth-of-type(5) td{
+  border-bottom: none;
+}
+.score-table tr th,
+.score-table tr td {
+  text-align: center;
+  padding: 0.5rem 3dvw;
+}
+.min-text {
+  font-size: clamp(1.2rem, 1dvw + 0.5rem, 2rem);
+  font-weight: 700;
+}
+.max-text {
+  font-size: clamp(1.7rem, 1vw + 1.5rem, 3rem);
+  font-weight: 900;
 }
 .headers {
   text-align: center;
@@ -47,6 +85,9 @@ label {
 }
 .radio {
   scale: 2;
+}
+.star {
+  color: gold;
 }
 .container {
   background-color: #203240;
@@ -73,7 +114,7 @@ label {
 .alert-box {
   max-width: 25%;
   background-color: #203240;
-  border-radius: 15px 15px 0  0;
+  border-radius: 15px 15px 0 0;
   border: 5px solid #203240;
   border-bottom: none;
   color: white;
@@ -83,7 +124,7 @@ label {
   z-index: 1;
   transition: all linear 0.2s;
 }
-.alert-box p{
+.alert-box p {
   overflow-wrap: break-word;
   font-size: clamp(0.7rem, 3dvw + 0.5rem, 1.1rem);
   font-weight: 900;
@@ -123,7 +164,18 @@ label {
   gap: 5dvw;
   align-items: center;
 }
+.player-cover {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #2032406b;
+  z-index: 4;
+  /* border-radius: 2rem; */
+  display: none;
+}
 .player {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -175,7 +227,7 @@ label {
 .pop-up {
   max-width: 75dvw;
   max-height: 80dvh;
-  padding: 1.5rem 5dvw;
+  padding: 1.5rem 3dvw;
   background-color: #203240;
   border-radius: 28px;
   border: 15px solid #203240;
@@ -208,16 +260,19 @@ label {
   font-size: clamp(2rem, 2vw + 1rem, 3rem);
   padding: 0.19rem 0.8rem;
 }
-
+.winner-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 3dvw;
+}
 .score-info {
   display: flex;
-  gap: 0.5rem;
   align-items: center;
+  gap: 3dvw;
 }
 .score-info p {
-  font-size: 2rem;
+  /* font-size: 2rem; */
   font-weight: 900;
-  color: white;
 }
 .score {
   font-size: 1.5rem;
@@ -232,7 +287,16 @@ label {
   align-items: center;
   position: relative;
 }
+.board-cover {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  background-color: #2032406b;
+  display: none;
+}
 .board {
+  position: relative;
   background-color: black;
   width: calc(100% - 10px);
   display: grid;
@@ -240,9 +304,7 @@ label {
   grid-template-columns: 2fr 1fr 2fr;
   gap: 2px;
   padding: 5px;
-  /* opacity: 0.5; */
   aspect-ratio: 1 / 1;
-  z-index: 4;
 }
 
 .green {
@@ -440,19 +502,33 @@ label {
     rgba(255, 255, 255, 0)
   );
 }
- .flash{
+.flash {
   animation-name: flash;
   animation-duration: 0.7s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: normal;
   animation-fill-mode: forwards;
- }
- @keyframes flash{
-  0%{opacity: 1;}
-  50%{opacity: 0.6}
-  100%{opacity: 1}
- }
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  display: none;
+  position: absolute;
+}
+.home {
+  position: relative;
+}
+@keyframes flash {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #20324091;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
 .hover-pin {
   animation-name: hover-pin;
   animation-duration: 1s;
