@@ -19,37 +19,10 @@
     <div class="container">
       <div class="pop-up-cover">
         <div class="pop-up" id="pop-up">
-          <!-- <div class="players">
+          <div class="players">
             <button onclick="NumberOfPlayers()">Play with AI</button>
             <button>Play with friends</button>
-          </div> -->
-          <table class="score-table">
-            <tr>
-              <th class="max-text">Player</th>
-              <th class="max-text">Score</th>
-            </tr>
-            <tr>
-              <td class="min-text">Olumide</td>
-              <td>
-                <i class="fas fa-star star"></i><i class="fas fa-star star"></i
-                ><i class="fas fa-star star"></i>
-              </td>
-            </tr>
-            <tr>
-              <td class="min-text">Olumide</td>
-              <td>
-                <i class="fas fa-star star"></i><i class="fas fa-star star"></i>
-              </td>
-            </tr>
-            <tr>
-              <td class="min-text">Olumide</td>
-              <td><i class="fas fa-star star"></i></td>
-            </tr>
-            <tr>
-              <td class="min-text">Olumide</td>
-              <td></td>
-            </tr>
-          </table>
+          </div>
         </div>
       </div>
       <div class="board-bg">
@@ -617,14 +590,17 @@
         </div>
       </div>
     </div>
+
     <script>
       let gameInfo = [];
+      gameInfo["positions"] = [];
       let roolDiceTimer = 0;
       let playerName = "";
       let playerColor = "";
       let numberOfPlayers = "";
       let pausedMove = false;
       let players = [];
+      let playAgainPlayers;
       let tracker = 0;
       let addClickEvent;
       let operating = false;
@@ -916,6 +892,18 @@
         }
 
         if (randomStarter.name == playerName) {
+          if (randomStarter.color1) {
+            document
+              .querySelector(`.${randomStarter.color1} .flash`)
+              .classList.add("flash2");
+            document
+              .querySelector(`.${randomStarter.color2} .flash`)
+              .classList.add("flash2");
+          } else {
+            document
+              .querySelector(`.${randomStarter.color} .flash`)
+              .classList.add("flash2");
+          }
           operating = false;
           let message = `You're starting the game`;
           const timeOut = message.length * 100;
@@ -933,6 +921,21 @@
           console.log(`You're starting the game`);
           console.log(randomStarter);
         } else {
+          const userPlayer = players.find(
+            (player) => player.name === playerName
+          );
+          if (userPlayer.hasOwnProperty("color2")) {
+            document
+              .querySelector(`.${userPlayer.color1} .flash`)
+              .classList.add("flash2");
+            document
+              .querySelector(`.${userPlayer.color2} .flash`)
+              .classList.add("flash2");
+          } else {
+            document
+              .querySelector(`.${userPlayer.color} .flash`)
+              .classList.add("flash2");
+          }
           operating = true;
           let message = `${randomStarter.name} is starting the game`;
           const timeOut = message.length * 100;
@@ -955,28 +958,23 @@
       function switchTurns(currentTurn, playAgain = false) {
         let currentPlayerInfo = "";
         let nextPlayerInfo = "";
+        console.log(players);
+        console.log(gameInfo["currentTurn"]);
+
         if (players.length == 2) {
-          if(players[gameInfo["currentTurn"]].color2){
-/////////////////////////////////////continue herer///////////////////////////////////////////
-          }
-          if (gameInfo["currentTurn"] == 1) {
-            if (playAgain == true) {
-              currentPlayerInfo = players[0];
-              nextPlayerInfo = players[1];
-            } else {
-              currentPlayerInfo = players[1];
-              nextPlayerInfo = players[0];
-              gameInfo["currentTurn"] = 0;
-            }
-          } else if (gameInfo["currentTurn"] == 0) {
-            if (playAgain == true) {
-              currentPlayerInfo = players[1];
-              nextPlayerInfo = players[0];
-            } else {
-              currentPlayerInfo = players[0];
-              nextPlayerInfo = players[1];
-              gameInfo["currentTurn"] = 1;
-            }
+          if (playAgain) {
+            currentPlayerInfo = players.find(
+              (player) => player.name !== players[gameInfo["currentTurn"]].name
+            );
+            nextPlayerInfo = players[gameInfo["currentTurn"]];
+          } else {
+            currentPlayerInfo = players[gameInfo["currentTurn"]];
+            nextPlayerInfo = players.find(
+              (player) => player.name !== players[gameInfo["currentTurn"]].name
+            );
+            gameInfo["currentTurn"] = players.findIndex(
+              (player) => player.name === nextPlayerInfo.name
+            );
           }
           if (currentPlayerInfo != "" && nextPlayerInfo != "") {
             const playerInfos = document.querySelectorAll(".player");
@@ -1030,6 +1028,22 @@
                 ).style.display = "block";
                 document.querySelector(
                   `.${nextPlayerInfo.color2} .flash`
+                ).style.display = "block";
+              }
+            } else {
+              if (
+                document.querySelector(`.${currentPlayerInfo.color} .flash`)
+                  .style.display == "block"
+              ) {
+                document.querySelector(
+                  `.${currentPlayerInfo.color} .flash`
+                ).style.display = "none";
+                document.querySelector(
+                  `.${nextPlayerInfo.color} .flash`
+                ).style.display = "block";
+              } else {
+                document.querySelector(
+                  `.${nextPlayerInfo.color} .flash`
                 ).style.display = "block";
               }
             }
@@ -1167,7 +1181,9 @@
                   (player) => player.color === "green"
                 );
               }
-              gameInfo["currentTurn"] = nextPlayerInfo.number - 1;
+              gameInfo["currentTurn"] = players.findIndex(
+                (player) => player.name === nextPlayerInfo.name
+              );
             }
           } else if (
             players[parseInt(gameInfo["currentTurn"])].color == "red"
@@ -1194,7 +1210,9 @@
                   (player) => player.color === "yellow"
                 );
               }
-              gameInfo["currentTurn"] = nextPlayerInfo.number - 1;
+              gameInfo["currentTurn"] = players.findIndex(
+                (player) => player.name === nextPlayerInfo.name
+              );
             }
           } else if (
             players[parseInt(gameInfo["currentTurn"])].color == "green"
@@ -1223,7 +1241,9 @@
                   (player) => player.color === "blue"
                 );
               }
-              gameInfo["currentTurn"] = nextPlayerInfo.number - 1;
+              gameInfo["currentTurn"] = players.findIndex(
+                (player) => player.name === nextPlayerInfo.name
+              );
             }
           } else if (
             players[parseInt(gameInfo["currentTurn"])].color == "yellow"
@@ -1252,7 +1272,9 @@
                   (player) => player.color === "red"
                 );
               }
-              gameInfo["currentTurn"] = nextPlayerInfo.number - 1;
+              gameInfo["currentTurn"] = players.findIndex(
+                (player) => player.name === nextPlayerInfo.name
+              );
             }
           }
           if (currentPlayerInfo != "" && nextPlayerInfo != "") {
@@ -1532,6 +1554,7 @@
                       ),
                       false
                     );
+                    operating = true;
                     resizePinForGoal(randomPin, eliminatingColor, number, turn);
                     movePinHome(eliminatingColor, 0, turn, randomPin);
                   } else {
@@ -1545,10 +1568,10 @@
                         }-step="1"]`
                       )
                       .append(randomPin);
+                    operating = true;
+                    switchTurns(turn, true);
                   }
                 }
-                operating = true;
-                switchTurns(turn, true);
               } else {
                 operating = true;
                 addClickEvent = (event) => {
@@ -1584,6 +1607,7 @@
                         false
                       )
                     ) {
+                      operating = true;
                       resizePinForGoal(pin, color, number, turn);
                       movePinHome(color, 0, turn, pin);
                     } else {
@@ -1592,10 +1616,10 @@
                       document
                         .querySelector(`.box[data-${color}-step="1"]`)
                         .append(pin);
+                      operating = true;
+                      switchTurns(turn, true);
                     }
                   }
-                  operating = true;
-                  switchTurns(turn, true);
                 }
               }
             } else if (number < 6) {
@@ -1625,6 +1649,7 @@
                         false
                       )
                     ) {
+                      operating = true;
                       resizePinForGoal(randomPin, color, number, turn);
                       movePinHome(color, 0, turn, randomPin);
                     } else {
@@ -1647,14 +1672,12 @@
                           }-step="1"]`
                         )
                         .append(randomPin);
+                      operating = true;
+                      switchTurns(turn, true);
                     }
-                    operating = true;
-                    switchTurns(turn, true);
                   } else {
                     pausedMove = false;
                     aiAlgorithm(number, color, turn);
-                    operating = true;
-                    switchTurns(turn, true);
                   }
                 } else {
                   if (!morePinsLeftHome(color) && pinPlayed(color, 1)) {
@@ -1696,11 +1719,14 @@
                           )
                           .append(lastPin);
                         // operating = false;
+                        switchTurns(turn, true);
                       }
                     } else if (
                       CheakBoxesLeft(color, number, lastPin) === "Goal"
                     ) {
                       resizePinForGoal(lastPin, color, number, turn);
+                    } else {
+                      switchTurns(turn, true);
                     }
                   } else {
                     pausedMove = true;
@@ -1741,8 +1767,8 @@
                           });
                         });
                     }
+                    switchTurns(turn, true);
                   }
-                  switchTurns(turn, true);
                 }
               }
             } else if (number < 6) {
@@ -1751,7 +1777,7 @@
                 console.log(number);
 
                 aiAlgorithm(number, color, turn);
-                switchTurns(turn, false);
+                // switchTurns(turn, false);
               } else {
                 console.log(pausedMove);
 
@@ -1776,6 +1802,7 @@
                       false
                     )
                   ) {
+                    operating = true;
                     resizePinForGoal(pin, color, number, turn);
                     movePinHome(
                       color,
@@ -1792,12 +1819,16 @@
                           }"]`
                         )
                         .append(pin);
+                      operating = true;
+                      switchTurns(turn, false);
                     } else if (CheakBoxesLeft(color, number, pin) === "Goal") {
+                      operating = true;
                       resizePinForGoal(pin, color, number, turn);
+                    } else {
+                      operating = true;
+                      switchTurns(turn, false);
                     }
                   }
-                  operating = true;
-                  switchTurns(turn, false);
                 } else {
                   pausedMove = true;
                   operating = true;
@@ -1913,6 +1944,7 @@
                     false
                   )
                 ) {
+                  operating = true;
                   resizePinForGoal(element, pickedColor, number, currentTurn);
                   movePinHome(pickedColor, 0, currentTurn, element);
                 } else {
@@ -1925,9 +1957,9 @@
                   document
                     .querySelector(`.box[data-${color}-step="1"]`)
                     .appendChild(element);
+                  operating = true;
+                  switchTurns(currentTurn, true);
                 }
-                operating = true;
-                switchTurns(currentTurn, true);
               } else {
                 let currentColorStep = parseInt(
                   element.parentElement.getAttribute(`data-${color}-step`)
@@ -1947,6 +1979,7 @@
                     false
                   )
                 ) {
+                  operating = true;
                   resizePinForGoal(element, pickedColor, number, currentTurn);
                   movePinHome(
                     pickedColor,
@@ -1970,9 +2003,9 @@
                       `.box[data-${color}-step="${currentColorStep + number}"]`
                     )
                     .append(element);
+                  operating = true;
+                  switchTurns(currentTurn, true);
                 }
-                operating = true;
-                switchTurns(currentTurn, true);
               }
             }
           } else {
@@ -1993,6 +2026,7 @@
                 false
               )
             ) {
+              operating = true;
               resizePinForGoal(element, pickedColor, number, currentTurn);
               movePinHome(
                 pickedColor,
@@ -2016,17 +2050,17 @@
                   `.box[data-${color}-step="${currentColorStep + number}"]`
                 )
                 .append(element);
+              operating = true;
+              switchTurns(currentTurn, false);
             }
-            operating = true;
-            switchTurns(currentTurn, false);
           }
         } else if (CheakBoxesLeft(pickedColor, number, element) == false) {
           operating = true;
           switchTurns(currentTurn, false);
         } else if (CheakBoxesLeft(pickedColor, number, element) == "Goal") {
-          resizePinForGoal(element, pickedColor, number, currentTurn);
           operating = true;
-          switchTurns(currentTurn, false);
+          resizePinForGoal(element, pickedColor, number, currentTurn);
+          // switchTurns(currentTurn, false);
         }
       }
       function resizePinForGoal(element, color, number, turn) {
@@ -2045,6 +2079,11 @@
           `.winning-pins .win-${playedColor}-pin:not(.${playedColor}-bg)`
         );
         if (Array.isArray(color)) {
+          if (gameInfo["currentTurn"] == 0) {
+            gameInfo["currentTurn"] = 1;
+          } else if (gameInfo["currentTurn"] == 1) {
+            gameInfo["currentTurn"] = 0;
+          }
           if (
             (document.querySelectorAll(`.winning-pins .${color[0]}-bg`)
               .length == 3 &&
@@ -2061,7 +2100,118 @@
           if (
             document.querySelectorAll(`.winning-pins .${color}-bg`).length == 3
           ) {
-            declearWinner(turn);
+            if (turn.color == "blue") {
+              gameInfo["currentTurn"] = `${players.findIndex(
+                (player) => player.color === "red"
+              )}`;
+              if (
+                players.findIndex((player) => player.color === "red") >
+                players.findIndex((player) => player.name === turn.name)
+              ) {
+                gameInfo["currentTurn"] = gameInfo["currentTurn"] - 1;
+              }
+            } else if (turn.color == "red") {
+              gameInfo["currentTurn"] = `${players.findIndex(
+                (player) => player.color === "green"
+              )}`;
+              if (
+                players.findIndex((player) => player.color === "green") >
+                players.findIndex((player) => player.name === turn.name)
+              ) {
+                gameInfo["currentTurn"] = gameInfo["currentTurn"] - 1;
+              }
+            } else if (turn.color == "green") {
+              gameInfo["currentTurn"] = `${players.findIndex(
+                (player) => player.color === "yellow"
+              )}`;
+              if (
+                players.findIndex((player) => player.color === "yellow") >
+                players.findIndex((player) => player.name === turn.name)
+              ) {
+                gameInfo["currentTurn"] = gameInfo["currentTurn"] - 1;
+              }
+            } else if (turn.color == "yellow") {
+              gameInfo["currentTurn"] = `${players.findIndex(
+                (player) => player.color === "blue"
+              )}`;
+              if (
+                players.findIndex((player) => player.color === "blue") >
+                players.findIndex((player) => player.name === turn.name)
+              ) {
+                gameInfo["currentTurn"] = gameInfo["currentTurn"] - 1;
+              }
+            }
+            if ("positions" in gameInfo) {
+              console.log(gameInfo["positions"]);
+
+              if (gameInfo["positions"].length == 0) {
+                gameInfo["positions"].push({ name: turn.name, position: 1 });
+              } else if (gameInfo["positions"].length < 4) {
+                let formerPlayerScore =
+                  gameInfo["positions"][gameInfo["positions"].length - 1]
+                    .position;
+                if (gameInfo["positions"].length == 3) {
+                  gameInfo["positions"].push({
+                    name: turn.name,
+                    position: formerPlayerScore + 1,
+                  });
+                } else {
+                  if(players.length === 2){
+                    gameInfo["positions"].push({
+                      name: turn.name,
+                      position: formerPlayerScore + 1,
+                    });
+                    const lastPlayer = players.find(player => player.name !== turn.name);
+                    gameInfo["positions"].push({
+                      name: lastPlayer.name,
+                      position: 4,
+                    });
+                    declearWinner(turn)
+                    return;
+                  }else{
+                    gameInfo["positions"].push({
+                      name: turn.name,
+                      position: formerPlayerScore + 1,
+                    });
+                  }
+                }
+              } else if (gameInfo["positions"].length == 4) {
+                console.log(gameInfo["positions"]);
+              }
+            } else {
+              console.log(gameInfo["positions"]);
+            }
+            if(players.length === 4){
+              playAgainPlayers = JSON.parse(JSON.stringify(players));
+            }
+            players = players.filter((player) => player.name !== turn.name);
+            if (playedColor == "yellow" || playedColor == "blue") {
+              losingPins[losingPins.length - 1].classList.add(
+                `${playedColor}-bg`
+              );
+            } else {
+              for (let i = 0; i < winningPins.length; i++) {
+                const element = winningPins[i];
+                if (!element.classList.contains(`${playedColor}-bg`)) {
+                  element.classList.add(`${playedColor}-bg`);
+                  break;
+                }
+              }
+            }
+            element.remove();
+            document.querySelector(`.player-${turn.number}-cover`).style
+              .display == "block";
+            document
+              .querySelector(`.${turn.color}`)
+              .classList.add("removed-player");
+            document.querySelector(`.${turn.color} .flash`).style.display =
+              "none";
+            if (players.length == 1) {
+              declearWinner(turn);
+            }
+            switchTurns(players[gameInfo["currentTurn"]], true);
+            return;
+            // declearWinner(turn);
           }
         }
 
@@ -2077,6 +2227,13 @@
           }
         }
         element.remove();
+        if (number == 6) {
+          operating = true;
+          switchTurns(turn, true);
+        } else {
+          operating = true;
+          switchTurns(turn, false);
+        }
       }
       function declearWinner(winner) {
         displayMenu();
@@ -2086,44 +2243,77 @@
         }
         operating = true;
         pausedMove = true;
-        if (players.length == 2) {
-          let winnnerScore = "1";
-          let looserScore = "0";
-          const opponentInfo = players.find(
-            (opponent) => opponent.name !== winner.name
-          );
-          const indexOfWinner = players.findIndex(
-            (Winner) => Winner.name === winner.name
-          );
-          const indexOfOpponent = players.findIndex(
-            (Opponent) => Opponent.name === opponentInfo.name
-          );
-          if (winner.score) {
-            winnnerScore = winner.score;
-            winnnerScore += 1;
-          }
-          if (opponentInfo.score) {
-            looserScore = opponentInfo.score;
-          }
-          players[indexOfWinner].score = winnnerScore;
+        if (gameInfo["positions"].length > 0) {
+          console.log(gameInfo["positions"]);
           document.getElementById("pop-up").innerHTML = `
-          <div class="winner-menu">
-            <div class="score-info">
-              <div class="player-info">
-                <p>${winner.name}</p>
+            <table class="score-table">
+            <tr>
+              <th class="max-text">Player</th>
+              <th class="max-text">Score</th>
+            </tr>
+            <tr>
+              <td class="min-text">${gameInfo["positions"][0].name}</td>
+              <td>
+                <i class="fas fa-star star"></i><i class="fas fa-star star"></i
+                ><i class="fas fa-star star"></i>
+              </td>
+            </tr>
+            <tr>
+              <td class="min-text">${gameInfo["positions"][1].name}</td>
+              <td>
+                <i class="fas fa-star star"></i><i class="fas fa-star star"></i>
+              </td>
+            </tr>
+            <tr>
+              <td class="min-text">${gameInfo["positions"][2].name}</td>
+              <td><i class="fas fa-star star"></i></td>
+            </tr>
+            <tr>
+              <td class="min-text">${gameInfo["positions"][3].name}</td>
+              <td></td>
+            </tr>
+          </table>`;
+        } else {
+          if (players.length == 2) {
+            let winnnerScore = "1";
+            let looserScore = "0";
+            const opponentInfo = players.find(
+              (opponent) => opponent.name !== winner.name
+            );
+            const indexOfWinner = players.findIndex(
+              (Winner) => Winner.name === winner.name
+            );
+            const indexOfOpponent = players.findIndex(
+              (Opponent) => Opponent.name === opponentInfo.name
+            );
+            if (winner.score) {
+              winnnerScore = winner.score;
+              winnnerScore += 1;
+            }
+            if (opponentInfo.score) {
+              looserScore = opponentInfo.score;
+            }
+            players[indexOfWinner].score = winnnerScore;
+            document.getElementById("pop-up").innerHTML = `
+            <div class="winner-menu">
+              <div class="score-info">
+                <div class="player-info">
+                  <p>${winner.name}</p>
+                </div>
+                <div class="score">${winnnerScore} - ${looserScore}</div>
+                <div class="player-info">
+                  <p>${opponentInfo.name}</p>
+                </div>
               </div>
-              <div class="score">${winnnerScore} - ${looserScore}</div>
-              <div class="player-info">
-                <p>${opponentInfo.name}</p>
-              </div>
-            </div>
-            <button id="play-again" onclick='playAgain(${JSON.stringify(
-              players
-            ).replace(/"/g, "&quot;")})'>play again</button>
-          </div>`;
+              <button id="play-again" onclick='playAgain(${JSON.stringify(
+                players
+              ).replace(/"/g, "&quot;")})'>play again</button>
+            </div>`;
+          }
         }
       }
       function playAgain(Players) {
+        gameInfo["positions"] = [];
         if (Players) {
           Players = JSON.parse(Players);
           if (Array.isArray(Players)) {
@@ -2539,6 +2729,7 @@
                 );
                 if (CheakBoxesLeft(color, number, boxPin) == true) {
                   if (checkOpponentPin(color, entryBox, false)) {
+                    operating = true;
                     resizePinForGoal(boxPin, color, number, turn);
                     movePinHome(
                       color,
@@ -2553,6 +2744,7 @@
                     randomPick = true;
                   }
                 } else if (CheakBoxesLeft(color, number, boxPin) == "Goal") {
+                  operating = true;
                   resizePinForGoal(boxPin, color, number, turn);
                   randomPick = false;
                   return;
@@ -2569,6 +2761,7 @@
                 );
                 if (CheakBoxesLeft(color, number, boxPin) == true) {
                   if (checkOpponentPin(color, entryBox, false)) {
+                    operating = true;
                     resizePinForGoal(boxPin, color, number, turn);
                     movePinHome(
                       color,
@@ -2583,9 +2776,13 @@
                     randomPick = true;
                   }
                 } else if (CheakBoxesLeft(color, number, boxPin) == "Goal") {
+                  operating = true;
                   resizePinForGoal(boxPin, color, number, turn);
                   randomPick = false;
                   return;
+                } else {
+                  operating = true;
+                  switchTurns(turn, false);
                 }
               }
             }
@@ -2663,6 +2860,7 @@
               false
             )
           ) {
+            operating = true;
             resizePinForGoal(
               randomBox.querySelector(`.${randomPinColor}-bg-lighter`),
               color,
@@ -2693,6 +2891,8 @@
                 }"]`
               )
               .append(randomBox.querySelector(`.${randomPinColor}-bg-lighter`));
+            operating = true;
+            switchTurns(turn, false);
           }
         }
       }
@@ -2792,6 +2992,8 @@
           } else {
             resetTransformation = 0;
           }
+          console.log(resetTransformation);
+
           let number = Math.floor(Math.random() * 6) + 1;
           setTimeout(() => {
             diceAnimation(cube, number);

@@ -515,6 +515,16 @@ tr:nth-of-type(5) td{
   display: none;
   position: absolute;
 }
+.flash2 {
+  animation-name: flash2 !important;
+}
+.removed-player::after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #2032406b;
+}
 .home {
   position: relative;
 }
@@ -523,7 +533,18 @@ tr:nth-of-type(5) td{
     background-color: transparent;
   }
   50% {
-    background-color: #20324091;
+    background-color: #ffffff8e;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@keyframes flash2 {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #2032408e;
   }
   100% {
     background-color: transparent;

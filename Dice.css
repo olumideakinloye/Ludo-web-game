@@ -1,4 +1,4 @@
-.hover{
+.hover {
   animation-name: hover;
   animation-duration: 1s;
   animation-timing-function: ease-in-out;
@@ -23,14 +23,14 @@
   aspect-ratio: 1 / 1;
   width: 90%;
   height: 90%;
-  transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
   scale: 0.8;
   transform: rotateX(0deg) rotateY(0deg);
   transition: all 1.5s ease-in-out;
   display: none;
 }
-.scale-dice-face{
+.scale-dice-face {
   scale: 1;
   animation-name: scale-dice;
   animation-duration: 1.5s;
@@ -69,7 +69,6 @@
   }
 }
 .dice {
-  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
@@ -79,6 +78,7 @@
   height: calc(2rem + 1dvw);
   width: calc(2rem + 1dvw);
   padding: 5%;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
