@@ -909,6 +909,7 @@
           const timeOut = message.length * 100;
           alertPlayer("block", message);
           setTimeout(() => {
+            pausedMove = false
             roolDice(randomStarter);
             operating = true;
             document
@@ -944,6 +945,7 @@
             (player) => player.name === playerName
           );
           setTimeout(() => {
+            pausedMove = false;
             roolDice(randomStarter);
             document
               .getElementById("rool-dice")
@@ -2079,11 +2081,11 @@
           `.winning-pins .win-${playedColor}-pin:not(.${playedColor}-bg)`
         );
         if (Array.isArray(color)) {
-          if (gameInfo["currentTurn"] == 0) {
-            gameInfo["currentTurn"] = 1;
-          } else if (gameInfo["currentTurn"] == 1) {
-            gameInfo["currentTurn"] = 0;
-          }
+          // if (gameInfo["currentTurn"] == 0) {
+          //   gameInfo["currentTurn"] = 1;
+          // } else if (gameInfo["currentTurn"] == 1) {
+          //   gameInfo["currentTurn"] = 0;
+          // }
           if (
             (document.querySelectorAll(`.winning-pins .${color[0]}-bg`)
               .length == 3 &&
@@ -2094,8 +2096,15 @@
               document.querySelectorAll(`.winning-pins .${color[1]}-bg`)
                 .length == 3)
           ) {
+            playAgainPlayers = JSON.parse(JSON.stringify(players));
             declearWinner(turn);
+            return;
           }
+          // if (number === 6) {
+          //   switchTurns(players[gameInfo["currentTurn"]], true);
+          // } else {
+          //   switchTurns(players[gameInfo["currentTurn"]], false);
+          // }
         } else {
           if (
             document.querySelectorAll(`.winning-pins .${color}-bg`).length == 3
@@ -2156,19 +2165,21 @@
                     position: formerPlayerScore + 1,
                   });
                 } else {
-                  if(players.length === 2){
+                  if (players.length === 2) {
                     gameInfo["positions"].push({
                       name: turn.name,
                       position: formerPlayerScore + 1,
                     });
-                    const lastPlayer = players.find(player => player.name !== turn.name);
+                    const lastPlayer = players.find(
+                      (player) => player.name !== turn.name
+                    );
                     gameInfo["positions"].push({
                       name: lastPlayer.name,
                       position: 4,
                     });
-                    declearWinner(turn)
+                    declearWinner(turn);
                     return;
-                  }else{
+                  } else {
                     gameInfo["positions"].push({
                       name: turn.name,
                       position: formerPlayerScore + 1,
@@ -2181,7 +2192,7 @@
             } else {
               console.log(gameInfo["positions"]);
             }
-            if(players.length === 4){
+            if (players.length === 4) {
               playAgainPlayers = JSON.parse(JSON.stringify(players));
             }
             players = players.filter((player) => player.name !== turn.name);
@@ -2237,6 +2248,9 @@
       }
       function declearWinner(winner) {
         displayMenu();
+        const clickPlayAgain = (event) => {
+          playAgain(playAgainPlayers);
+        };
         const cube = document.getElementById("rool-dice");
         if (cube.style.display == "block" || cube.style.display) {
           cube.style.display = "none";
@@ -2272,7 +2286,15 @@
               <td class="min-text">${gameInfo["positions"][3].name}</td>
               <td></td>
             </tr>
-          </table>`;
+          </table>
+          <div class="score-menu">
+            <button onclick="backToPlayOption()">
+              Main menu
+            </button>
+            <button id="play-again">
+              Play again
+            </button>
+          </div>`;
         } else {
           if (players.length == 2) {
             let winnnerScore = "1";
@@ -2305,24 +2327,92 @@
                   <p>${opponentInfo.name}</p>
                 </div>
               </div>
-              <button id="play-again" onclick='playAgain(${JSON.stringify(
-                players
-              ).replace(/"/g, "&quot;")})'>play again</button>
+              <div class="score-menu">
+                <button onclick="backToPlayOption()">
+                  Main menu
+                </button>
+                <button id="play-again">
+                  Play again
+                </button>
+              </div>
             </div>`;
           }
+        }
+        if (document.getElementById("play-again")) {
+          document
+            .getElementById("play-again")
+            .addEventListener("click", clickPlayAgain, { once: true });
         }
       }
       function playAgain(Players) {
         gameInfo["positions"] = [];
+        players.length = 0;
         if (Players) {
-          Players = JSON.parse(Players);
           if (Array.isArray(Players)) {
             Players.forEach((player) => {
               players.push(player);
             });
           }
+          resetBoard();
           randomStartGame("with-Ai", numberOfPlayers);
         }
+      }
+      function resetBoard() {
+        document.querySelectorAll(".board .pin").forEach((pin) => {
+          pin.remove();
+        });
+        document.querySelectorAll(".win-pin").forEach((winPin) => {
+          if (winPin.classList.length > 3) {
+            Array.from(winPin.classList).forEach((cls, i) => {
+              if (i > 2) {
+                winPin.classList.remove(cls);
+              }
+            });
+          }
+        });
+        document.querySelectorAll(".home").forEach((home) => {
+          let firstPin = document.createElement("div");
+          firstPin.classList.add(
+            "pin",
+            `${home.classList[0]}-bg-lighter`,
+            `${home.classList[0]}-pin-1`,
+            "pin-in-parent-1"
+          );
+          let secondPin = document.createElement("div");
+          secondPin.classList.add(
+            "pin",
+            `${home.classList[0]}-bg-lighter`,
+            `${home.classList[0]}-pin-2`,
+            "pin-in-parent-2"
+          );
+          let thirdPin = document.createElement("div");
+          thirdPin.classList.add(
+            "pin",
+            `${home.classList[0]}-bg-lighter`,
+            `${home.classList[0]}-pin-3`,
+            "pin-in-parent-3"
+          );
+          let forthPin = document.createElement("div");
+          forthPin.classList.add(
+            "pin",
+            `${home.classList[0]}-bg-lighter`,
+            `${home.classList[0]}-pin-4`,
+            "pin-in-parent-4"
+          );
+          home.querySelector(".pins").appendChild(firstPin);
+          home.querySelector(".pins").appendChild(secondPin);
+          home.querySelector(".pins").appendChild(thirdPin);
+          home.querySelector(".pins").appendChild(forthPin);
+        });
+        document.querySelectorAll(".pin").forEach((element) => {
+          element.style.height = `${
+            document.querySelector(".box").clientHeight
+          }px`;
+          element.style.width = `${
+            document.querySelector(".box").clientWidth
+          }px`;
+        });
+        removeMenu();
       }
       function resetPinSizes(color, currentBox, entryBox, playedPin) {
         if (entryBox) {
@@ -2748,6 +2838,13 @@
                   resizePinForGoal(boxPin, color, number, turn);
                   randomPick = false;
                   return;
+                } else {
+                  operating = true;
+                  // if (number === 6) {
+                  //   switchTurns(turn, true);
+                  // } else {
+                  //   switchTurns(turn, false);
+                  // }
                 }
               }
             } else {
@@ -2782,7 +2879,11 @@
                   return;
                 } else {
                   operating = true;
-                  switchTurns(turn, false);
+                  // if (number === 6) {
+                  //   switchTurns(turn, true);
+                  // } else {
+                  //   switchTurns(turn, false);
+                  // }
                 }
               }
             }
@@ -2809,6 +2910,13 @@
         }
         if (randomPick && pinBoxes.length > 0) {
           randomPinPick(color, number, pinBoxes, turn);
+        }else{
+          operating = true;
+                  if (number === 6) {
+                    switchTurns(turn, true);
+                  } else {
+                    switchTurns(turn, false);
+                  }
         }
       }
       function randomPinPick(color, number, pinBoxes, turn) {
@@ -2892,7 +3000,11 @@
               )
               .append(randomBox.querySelector(`.${randomPinColor}-bg-lighter`));
             operating = true;
-            switchTurns(turn, false);
+            if (number === 6) {
+              switchTurns(turn, true);
+            } else {
+              switchTurns(turn, false);
+            }
           }
         }
       }

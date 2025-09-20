@@ -70,6 +70,11 @@ tr:nth-of-type(5) td{
   text-align: center;
   padding: 0.5rem 3dvw;
 }
+.score-menu{
+  display: flex;
+  justify-content: space-around;
+  padding-top: 2rem;
+}
 .min-text {
   font-size: clamp(1.2rem, 1dvw + 0.5rem, 2rem);
   font-weight: 700;
