@@ -685,6 +685,11 @@
       }
 
       function backToPlayOption() {
+        if (players.length > 0) {
+          players.lengthv = 0;
+
+          resetBoard();
+        }
         document.getElementById("pop-up").innerHTML = `<div class="players">
               <button onclick="NumberOfPlayers()">Play with AI</button>
               <button>Play with friends</button>
@@ -1358,6 +1363,7 @@
             currentPlayerInfo.name != playerName &&
             nextPlayerInfo.name == playerName
           ) {
+            operating = true;
             document
               .getElementById("rool-dice")
               .setAttribute("data-turn", nextPlayerInfo.name);
@@ -1705,6 +1711,7 @@
                           false
                         )
                       ) {
+                        operating = true;
                         resizePinForGoal(lastPin, color, number, turn);
                         movePinHome(
                           color,
@@ -1720,14 +1727,16 @@
                             }-step="${currentColorStep + number}"]`
                           )
                           .append(lastPin);
-                        // operating = false;
+                        operating = true;
                         switchTurns(turn, true);
                       }
                     } else if (
                       CheakBoxesLeft(color, number, lastPin) === "Goal"
                     ) {
+                      operating = true;
                       resizePinForGoal(lastPin, color, number, turn);
                     } else {
+                      operating = true;
                       switchTurns(turn, true);
                     }
                   } else {
@@ -1769,7 +1778,7 @@
                           });
                         });
                     }
-                    switchTurns(turn, true);
+                    // switchTurns(turn, true);
                   }
                 }
               }
@@ -2110,24 +2119,38 @@
             document.querySelectorAll(`.winning-pins .${color}-bg`).length == 3
           ) {
             if (turn.color == "blue") {
-              gameInfo["currentTurn"] = `${players.findIndex(
-                (player) => player.color === "red"
-              )}`;
-              if (
-                players.findIndex((player) => player.color === "red") >
-                players.findIndex((player) => player.name === turn.name)
-              ) {
-                gameInfo["currentTurn"] = gameInfo["currentTurn"] - 1;
+              if (players.findIndex((player) => player.color === "red") >= 0) {
+                gameInfo["currentTurn"] = `${players.findIndex(
+                  (player) => player.color === "red"
+                )}`;
+              } else {
+                if (
+                  players.findIndex((player) => player.color === "red") >
+                  players.findIndex((player) => player.name === turn.name)
+                ) {
+                  gameInfo["currentTurn"] = gameInfo["currentTurn"] - 1;
+                } else {
+                  gameInfo["currentTurn"] = `${players.findIndex(
+                    (player) => player.color === "green"
+                  )}`;
+                }
               }
             } else if (turn.color == "red") {
-              gameInfo["currentTurn"] = `${players.findIndex(
-                (player) => player.color === "green"
-              )}`;
-              if (
-                players.findIndex((player) => player.color === "green") >
-                players.findIndex((player) => player.name === turn.name)
-              ) {
-                gameInfo["currentTurn"] = gameInfo["currentTurn"] - 1;
+              if (players.findIndex((player) => player.color === "green") < 0) {
+                if (
+                  players.findIndex((player) => player.color === "green") >
+                  players.findIndex((player) => player.name === turn.name)
+                ) {
+                  gameInfo["currentTurn"] = gameInfo["currentTurn"] - 1;
+                } else {
+                  gameInfo["currentTurn"] = `${players.findIndex(
+                    (player) => player.color === "yellow"
+                  )}`;
+                }
+              } else {
+                gameInfo["currentTurn"] = `${players.findIndex(
+                  (player) => player.color === "green"
+                )}`;
               }
             } else if (turn.color == "green") {
               gameInfo["currentTurn"] = `${players.findIndex(
@@ -2219,6 +2242,7 @@
               "none";
             if (players.length == 1) {
               declearWinner(turn);
+              return;
             }
             switchTurns(players[gameInfo["currentTurn"]], true);
             return;
@@ -2255,7 +2279,10 @@
         }
         operating = true;
         pausedMove = true;
-        if (gameInfo["positions"].length > 0 && !players[0].hasOwnProperty("color2")) {
+        if (
+          gameInfo["positions"].length > 0 &&
+          !players[0].hasOwnProperty("color2")
+        ) {
           clickPlayAgain = (event) => {
             playAgain(playAgainPlayers);
           };
@@ -2341,7 +2368,6 @@
                 </button>
               </div>
             </div>`;
-            
           }
         }
         if (document.getElementById("play-again")) {
@@ -2353,7 +2379,7 @@
       function playAgain(Players) {
         console.log(Players);
         if (Players) {
-          if(gameInfo["positions"].length > 0){
+          if (gameInfo["positions"].length > 0) {
             gameInfo["positions"] = [];
             players.length = 0;
             if (Array.isArray(Players)) {
@@ -3014,6 +3040,13 @@
             } else {
               switchTurns(turn, false);
             }
+          }
+        } else {
+          operating = true;
+          if (number === 6) {
+            switchTurns(turn, true);
+          } else {
+            switchTurns(turn, false);
           }
         }
       }
