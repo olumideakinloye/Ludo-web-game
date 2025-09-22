@@ -593,6 +593,7 @@
 
     <script>
       let gameInfo = [];
+      let listenerAdded = false;
       gameInfo["positions"] = [];
       let roolDiceTimer = 0;
       let playerName = "";
@@ -605,6 +606,7 @@
       let addClickEvent;
       let operating = false;
       let resetTransformation = 0;
+      let clickRoolDice;
       const colorToPlayerNumber = [
         { color: "green", number: 1 },
         { color: "yellow", number: 2 },
@@ -686,8 +688,13 @@
 
       function backToPlayOption() {
         if (players.length > 0) {
-          players.lengthv = 0;
-
+          players.length = 0;
+          console.log(players);
+          if (listenerAdded) {
+            document
+              .getElementById("rool-dice")
+              .removeEventListener("click", clickRoolDice);
+          }
           resetBoard();
         }
         document.getElementById("pop-up").innerHTML = `<div class="players">
@@ -915,13 +922,15 @@
           alertPlayer("block", message);
           setTimeout(() => {
             pausedMove = false;
+            listenerAdded = true;
             roolDice(randomStarter);
             operating = true;
+            clickRoolDice = () => {
+              roolDice(randomStarter);
+            };
             document
               .getElementById("rool-dice")
-              .addEventListener("click", () => {
-                roolDice(randomStarter);
-              });
+              .addEventListener("click", clickRoolDice);
           }, timeOut);
 
           console.log(`You're starting the game`);
@@ -952,11 +961,14 @@
           setTimeout(() => {
             pausedMove = false;
             roolDice(randomStarter);
+            listenerAdded = true;
+
+            clickRoolDice = () => {
+              roolDice(playerInfo);
+            };
             document
               .getElementById("rool-dice")
-              .addEventListener("click", () => {
-                roolDice(playerInfo);
-              });
+              .addEventListener("click", clickRoolDice);
           }, timeOut);
 
           console.log(playerInfo);
@@ -2389,6 +2401,12 @@
             }
           }
           resetBoard();
+          removeMenu();
+          if (listenerAdded) {
+            document
+              .getElementById("rool-dice")
+              .removeEventListener("click", clickRoolDice);
+          }
           randomStartGame("with-Ai", numberOfPlayers);
         }
       }
@@ -2434,6 +2452,9 @@
             `${home.classList[0]}-pin-4`,
             "pin-in-parent-4"
           );
+          if(home.classList.contains("removed-player")){
+            home.classList.remove("removed-player")
+          }
           home.querySelector(".pins").appendChild(firstPin);
           home.querySelector(".pins").appendChild(secondPin);
           home.querySelector(".pins").appendChild(thirdPin);
@@ -2447,7 +2468,19 @@
             document.querySelector(".box").clientWidth
           }px`;
         });
-        removeMenu();
+        document
+          .querySelectorAll(".player-cover")
+          .forEach((playerInfoCover) => {
+            playerInfoCover.style.display = "none";
+          });
+        document.querySelector(".board-cover").style.display = "none";
+        document.querySelectorAll(`.flash`).forEach((flash) => {
+          flash.style.display = "none";
+          if (flash.classList.contains("flash2")) {
+            flash.classList.remove("flash2");
+          }
+        });
+        document.querySelector(".board-cover").style.display = "none";
       }
       function resetPinSizes(color, currentBox, entryBox, playedPin) {
         if (entryBox) {
