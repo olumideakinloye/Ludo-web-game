@@ -1,0 +1,116 @@
+.radio-color {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 4;
+}
+.color-pic {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  /* width: 60dvw; */
+}
+.colors {
+  display: grid;
+  grid-template-columns: repeat(3, 3fr);
+  gap: 1.5rem 1rem;
+}
+.input-color {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+.input {
+  position: relative;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  opacity: 1;
+  padding: 1.5rem;
+}
+
+/* .input input {
+  position: absolute;
+  width: 80%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+} */
+.color-pic .controles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+}
+
+.blue-green:has(input:checked)::after {
+  background-image: radial-gradient(
+    circle at bottom right,
+    blue 0% 20%,
+    green 80%
+  );
+}
+.blue-green {
+  background-image: radial-gradient(circle at bottom right,blue 0% 20%,green 80%);
+}
+/* .blue-green {
+  background-image: radial-gradient(circle at bottom right,blue 0% 20%,green 80%);
+} */
+.red-yellow {
+  background-image: radial-gradient(circle at bottom left,red 0% 20%,yellow 80%);
+}
+.red-yellow:has(input:checked)::after {
+  background-image: radial-gradient(circle at bottom left,red 0% 20%,yellow 80%);
+}
+.green-yellow {
+  background-image: radial-gradient(circle at right, yellow 0% 20%, green 80%);
+}
+.green-yellow:has(input:checked)::after {
+  background-image: radial-gradient(circle at right, yellow 0% 20%, green 80%);
+}
+
+.green-red {
+  background-image: radial-gradient(circle at bottom, red 0% 20%, green 80%);
+}
+.green-red:has(input:checked)::after {
+  background-image: radial-gradient(circle at bottom, red 0% 20%, green 80%);
+}
+.red-blue {
+  background-image: radial-gradient(circle at left, red 0% 20%, blue 80%);
+}
+.red-blue:has(input:checked)::after {
+  background-image: radial-gradient(circle at left, red 0% 20%, blue 80%);
+}
+.blue-yellow {
+  background-image: radial-gradient(circle at top, yellow 0% 20%, blue 80%);
+}
+.blue-yellow:has(input:checked)::after {
+  background-image: radial-gradient(circle at top, yellow 0% 20%, blue 80%);
+}
+.input::after {
+  content: "";
+  position: absolute;
+  height: 50%;
+  aspect-ratio: 1 / 1;
+  background-color: white;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid white;
+}
+@media only screen and (min-width: 1200px) {
+  .colors {
+    display: flex;
+    gap: 2rem 2rem;
+  }
+}
