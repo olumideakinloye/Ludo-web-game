@@ -631,66 +631,70 @@
         if (numberOfPlayers == 4) {
           document.getElementById("pop-up").innerHTML = `<div class="color-pic">
               <p class="headers">Select your color</p>
-              <div class="colors">
+              <div class="colors four-colors">
                 <div class="input-color">
                   <label style="color: blue" for="blue">Blue</label>
-                  <input
-                  class="radio"
-                    type="radio"
-                    style="
-                      accent-color: blue;
-                      color: blue;
-                      background-color: blue;
-                    "
-                    required
-                    name="color"
-                    value="blue"
-                    id="blue"
-                  />
+                    <div class="input blue">
+                      <input
+                      class="radio-color"
+                        type="radio"
+                        style="
+                          opacity: 0;
+                        "
+                        required
+                        name="color"
+                        value="blue"
+                        id="blue"
+                      />
+                    </div>
                 </div>
                 <div class="input-color">
                   <label style="color: red" for="red">Red</label>
-                  <input
-                  class="radio"
-                    type="radio"
-                    style="accent-color: red; color: red; background-color: red"
-                    required
-                    name="color"
-                    value="red"
-                    id="red"
-                  />
+                    <div class="input red">
+                      <input
+                      class="radio-color"
+                        type="radio"
+                        style="
+                          opacity: 0;
+                        "
+                        required
+                        name="color"
+                        value="red"
+                        id="red"
+                      />
+                    </div>
                 </div>
                 <div class="input-color">
                   <label style="color: yellow" for="yellow">Yellow</label>
-                  <input
-                  class="radio"
-                    type="radio"
-                    style="
-                      accent-color: yellow;
-                      color: yellow;
-                      background-color: yellow;
-                    "
-                    required
-                    name="color"
-                    value="yellow"
-                    id="yellow"
-                  />
+                    <div class="input yellow">
+                      <input
+                      class="radio-color"
+                        type="radio"
+                        style="
+                          opacity: 0;
+                        "
+                        required
+                        name="color"
+                        value="yellow"
+                        id="yellow"
+                      />
+                    </div>
                 </div>
                 <div class="input-color">
                   <label style="color: green" for="green">Green</label>
-                  <input
-                  class="radio"
-                    type="radio"
-                    style="
-                      accent-color: green;
-                      color: green;
-                      background-color: green;
-                    "
-                    required
-                    name="color"
-                    value="green"
-                    id="green"
-                  />
+                    <div class="input green">
+                      <input
+                      class="radio-color"
+                        type="radio"
+                        style="
+                          opacity: 0;
+                        "
+                        required
+                        name="color"
+                        value="green"
+                        id="green"
+                      />
+                    </div>
                 </div>
               </div>
               <div class="controles">
@@ -729,62 +733,6 @@
                         name="color"
                         value="red-yellow"
                         id="red-yellow"
-                    />
-                    </div>
-                  </div>
-                  <div class="input-color">
-                    <label style="display: flex; gap: 4px" for="green-yellow"><p style="color: green">Green </p><p> - </p><p style="color: Yellow"> Yellow</p></label>
-                    <div class="input green-yellow">
-                      <input
-                        class="radio-color"
-                        type="radio"
-                        style="opacity: 0;"
-                        required
-                        name="color"
-                        value="green-yellow"
-                        id="green-yellow"
-                    />
-                    </div>
-                  </div>
-                  <div class="input-color">
-                    <label style="display: flex; gap: 4px" for="green-red"><p style="color: green">Green </p><p> - </p><p style="color: red"> Red</p></label>
-                    <div class="input green-red">
-                      <input
-                    class="radio-color"
-                      type="radio"
-                      style="opacity: 0"
-                      required
-                      name="color"
-                      value="green-red"
-                      id="green-red"
-                    />
-                    </div>
-                  </div>
-                  <div class="input-color">
-                    <label style="display: flex; gap: 4px" for="red-blue"><p style="color: red">Red </p><p> - </p><p style="color: blue"> Blue</p></label>
-                    <div class="input red-blue">
-                      <input
-                    class="radio-color"
-                      type="radio"
-                      style="opacity: 0"
-                      required
-                      name="color"
-                      value="red-blue"
-                      id="red-blue"
-                    />
-                    </div>
-                  </div>
-                  <div class="input-color">
-                    <label style="display: flex; gap: 4px" for="blue-yellow"><p style="color: blue">Blue </p><p> - </p><p style="color: yellow"> Yellow</p></label>
-                    <div class="input blue-yellow">
-                      <input
-                    class="radio-color"
-                      type="radio"
-                      style="opacity: 0"
-                      required
-                      name="color"
-                      value="blue-yellow"
-                      id="blue-yellow"
                     />
                     </div>
                   </div>
@@ -1723,6 +1671,7 @@
                       "move-out"
                     );
                     operating = true;
+
                     setTimeout(() => {
                       movePinHome(eliminatingColor, 0, turn, randomPin);
                       resizePinForGoal(
@@ -1731,7 +1680,7 @@
                         number,
                         turn
                       );
-                    }, 600);
+                    }, 700);
                   } else {
                     console.log("new entry");
                     pinAnimation(
@@ -1747,7 +1696,7 @@
                       randomPin.classList.add("pin-in-box");
                       operating = true;
                       switchTurns(turn, true);
-                    }, 600);
+                    }, 700);
                   }
                 }
               } else {
@@ -1797,7 +1746,11 @@
                         operating = true;
                         movePinHome(color, 0, turn, pin);
                         resizePinForGoal(pin, color, number, turn);
-                      }, 600);
+                        // let stoppingBox = document.querySelector(`.box[data-${pin.classList[1].split("-")[0]}-step="${parseInt(pin.parentElement.getAttribute(`data-${pin.classList[1].split("-")[0]}-step`)) + number}"]`);
+                        // console.log(stoppingBox);
+
+                        // resetPinSizes(color, stoppingBox, mull, null)
+                      }, 700);
                     } else {
                       pinAnimation(
                         turn,
@@ -1814,7 +1767,7 @@
 
                         operating = true;
                         switchTurns(turn, true);
-                      }, 600);
+                      }, 700);
                     }
                   }
                 }
@@ -1858,6 +1811,10 @@
                         operating = true;
                         movePinHome(color, 0, turn, randomPin);
                         resizePinForGoal(randomPin, color, number, turn);
+                        // let stoppingBox = document.querySelector(`.box[data-${randomPin.classList[1].split("-")[0]}-step="${parseInt(randomPin.parentElement.getAttribute(`data-${randomPin.classList[1].split("-")[0]}-step`)) + number}"]`);
+                        // console.log(stoppingBox);
+
+                        // resetPinSizes(color, stoppingBox, null, null)
                       }, 400);
                     } else {
                       // movePinHome(color, 0, turn, randomPin);
@@ -1869,7 +1826,8 @@
                             randomPin.classList[1].split("-")[0]
                           }-step="1"]`
                         ),
-                        randomPin
+                        randomPin,
+                        200
                       );
                       pinAnimation(
                         turn,
@@ -1884,7 +1842,7 @@
                         randomPin.classList.add("pin-in-box");
                         operating = true;
                         switchTurns(turn, true);
-                      }, 600);
+                      }, 700);
                     }
                   } else {
                     pausedMove = false;
@@ -1930,6 +1888,10 @@
                             lastPin
                           );
                           resizePinForGoal(lastPin, color, number, turn);
+                          // let stoppingBox = document.querySelector(`.box[data-${lastPin.classList[1].split("-")[0]}-step="${parseInt(lastPin.parentElement.getAttribute(`data-${lastPin.classList[1].split("-")[0]}-step`)) + number}"]`);
+                          // console.log(stoppingBox);
+
+                          // resetPinSizes(color, stoppingBox, null, null)
                         }, timeOut);
                       } else {
                         pinAnimation(
@@ -2053,6 +2015,10 @@
                         pin
                       );
                       resizePinForGoal(pin, color, number, turn);
+                      // let stoppingBox = document.querySelector(`.box[data-${pin.classList[1].split("-")[0]}-step="${parseInt(pin.parentElement.getAttribute(`data-${pin.classList[1].split("-")[0]}-step`)) + number}"]`);
+                      // console.log(stoppingBox);
+
+                      // resetPinSizes(color, stoppingBox, null, null)
                     }, timeOut);
                   } else {
                     if (CheakBoxesLeft(color, number, pin) === true) {
@@ -2213,14 +2179,20 @@
                     operating = true;
                     movePinHome(pickedColor, 0, currentTurn, element);
                     resizePinForGoal(element, pickedColor, number, currentTurn);
-                  }, 600);
+                    // let stoppingBox = document.querySelector(`.box[data-${element.classList[1].split("-")[0]}-step="${parseInt(element.parentElement.getAttribute(`data-${element.classList[1].split("-")[0]}-step`)) + number}"]`);
+                    // console.log(stoppingBox);
+
+                    // resetPinSizes(color, stoppingBox, null, null)
+                  }, 700);
                 } else {
-                  adjustPinSize(
-                    pickedColor,
-                    null,
-                    document.querySelector(`.box[data-${color}-step="1"]`),
-                    element
-                  );
+                  setTimeout(() => {
+                    adjustPinSize(
+                      pickedColor,
+                      null,
+                      document.querySelector(`.box[data-${color}-step="1"]`),
+                      element
+                    );
+                  }, 200);
                   pinAnimation(
                     currentTurn,
                     element,
@@ -2233,7 +2205,7 @@
                   setTimeout(() => {
                     operating = true;
                     switchTurns(currentTurn, true);
-                  }, 600);
+                  }, 700);
                 }
               } else {
                 let currentColorStep = parseInt(
@@ -2270,7 +2242,11 @@
                       element
                     );
                     resizePinForGoal(element, pickedColor, number, currentTurn);
-                  }, 600);
+                    // let stoppingBox = document.querySelector(`.box[data-${element.classList[1].split("-")[0]}-step="${parseInt(element.parentElement.getAttribute(`data-${element.classList[1].split("-")[0]}-step`)) + number}"]`);
+                    // console.log(stoppingBox);
+
+                    // resetPinSizes(color, stoppingBox, null, null)
+                  }, 700);
                 } else {
                   // adjustPinSize(
                   //   pickedColor,
@@ -2332,6 +2308,9 @@
                   element
                 );
                 resizePinForGoal(element, pickedColor, number, currentTurn);
+                // let stoppingBox = document.querySelector(`.box[data-${element.classList[1].split("-")[0]}-step="${parseInt(element.parentElement.getAttribute(`data-${element.classList[1].split("-")[0]}-step`)) + number}"]`);
+                // console.log(stoppingBox);
+                // resetPinSizes(color, stoppingBox, null, null)
               }, timeOut);
             } else {
               // adjustPinSize(
@@ -2361,7 +2340,11 @@
           }
         } else if (CheakBoxesLeft(pickedColor, number, element) == false) {
           operating = true;
-          switchTurns(currentTurn, false);
+          if (number == 6) {
+            switchTurns(currentTurn, true);
+          } else {
+            switchTurns(currentTurn, false);
+          }
         } else if (CheakBoxesLeft(pickedColor, number, element) == "Goal") {
           pinAnimation(
             currentTurn,
@@ -2379,12 +2362,6 @@
       }
       function resizePinForGoal(element, color, number, turn) {
         let box = element.parentElement;
-        if (box.classList.contains("box")) {
-          if (box.querySelectorAll(".pin").length > 1) {
-            resetPinSizes(color, box, null, element);
-          }
-        }
-
         const playedColor = element.classList[1].split("-")[0];
         const winningPins = document.querySelectorAll(
           `.winning-pins .win-${playedColor}-pin`
@@ -2536,6 +2513,11 @@
               }
             }
             element.remove();
+            if (box.classList.contains("box")) {
+              if (box.querySelectorAll(".pin").length > 1) {
+                // resetPinSizes(color, box, null, element);
+              }
+            }
             document.querySelector(`.player-${turn.number}-cover`).style
               .display == "block";
             document
@@ -2548,6 +2530,7 @@
               return;
             }
             switchTurns(players[gameInfo["currentTurn"]], true);
+            // resetPinSizes(color, box, null, element)
             return;
             // declearWinner(turn);
           }
@@ -2565,6 +2548,11 @@
           }
         }
         element.remove();
+        if (box.classList.contains("box")) {
+          if (box.querySelectorAll(".pin").length > 1) {
+            // resetPinSizes(color, box, null, element);
+          }
+        }
         if (number == 6) {
           operating = true;
           switchTurns(turn, true);
@@ -2572,6 +2560,12 @@
           operating = true;
           switchTurns(turn, false);
         }
+        console.log(box);
+        console.log(`data-${element.classList[1].split("-")[0]}-step`);
+
+        // let stoppingBox = document.querySelector(`.box[data-${element.classList[1].split("-")[0]}-step="${parseInt(box.getAttribute(`data-${element.classList[1].split("-")[0]}-step`)) + number}"]`);
+        // console.log(stoppingBox);
+        // resetPinSizes(color, box, null, null)
       }
       function declearWinner(winner) {
         displayMenu();
@@ -2618,7 +2612,7 @@
             </tr>
           </table>
           <div class="score-menu">
-            <button onclick="backToPlayOption()">
+            <button onclick="mainMenu()">
               Main menu
             </button>
             <button id="play-again">
@@ -2662,7 +2656,7 @@
                 </div>
               </div>
               <div class="score-menu">
-                <button onclick="backToPlayOption()">
+                <button onclick="mainMenu()">
                   Main menu
                 </button>
                 <button id="play-again">
@@ -2789,13 +2783,18 @@
         }
         console.log(currentBox);
         if (currentBox) {
-          let indexToRemove = Array.from(
-            currentBox.querySelectorAll(".pin")
-          ).indexOf(playedPin);
-          let pins = Array.from(currentBox.querySelectorAll(".pin")).filter(
-            (_, index) => index !== indexToRemove
-          );
+          let pins = currentBox.querySelectorAll(".pin");
+          if (playedPin) {
+            let indexToRemove = Array.from(
+              currentBox.querySelectorAll(".pin")
+            ).indexOf(playedPin);
+            pins = Array.from(currentBox.querySelectorAll(".pin")).filter(
+              (_, index) => index !== indexToRemove
+            );
+          }
           let pinNumber = 1;
+          console.log(pins);
+
           if (pins.length > 1) {
             for (let i = 0; i < pins.length; i++) {
               let pin = pins[i];
@@ -2806,13 +2805,13 @@
                   }
                 });
               }
-              pin.style.width = `${currentBox.clientWidth / 2}px`;
-              pin.style.height = `${currentBox.clientHeight / 2}px`;
+              pin.style.width = `${currentBox.clientWidth / 2 - 1.5}px`;
+              pin.style.height = `${currentBox.clientHeight / 2 - 1.5}px`;
               pin.classList.add(`pin-in-box-${pinNumber}`);
               console.log(`pin-in-box-${pinNumber}`);
               pinNumber += 1;
             }
-          } else {
+          } else if (pins.length == 1) {
             console.log(playedPin);
 
             if (pins[0].classList.length > 4) {
@@ -2824,15 +2823,17 @@
             }
             pins[0].style.width = `${currentBox.clientWidth}px`;
             pins[0].style.height = `${currentBox.clientHeight}px`;
-            if (playedPin.classList.length > 4) {
-              Array.from(playedPin.classList).forEach((cls, index) => {
-                if (index > 3) {
-                  playedPin.classList.remove(`${cls}`);
-                }
-              });
+            if (playedPin) {
+              if (playedPin.classList.length > 4) {
+                Array.from(playedPin.classList).forEach((cls, index) => {
+                  if (index > 3) {
+                    playedPin.classList.remove(`${cls}`);
+                  }
+                });
+              }
+              playedPin.style.width = `${currentBox.clientWidth}px`;
+              playedPin.style.height = `${currentBox.clientHeight}px`;
             }
-            playedPin.style.width = `${currentBox.clientWidth}px`;
-            playedPin.style.height = `${currentBox.clientHeight}px`;
           }
         }
       }
@@ -2917,29 +2918,30 @@
           }
           if (entryBox.querySelector(".pin")) {
             let pins = entryBox.querySelectorAll(".pin");
-            if (pins.length - 1 == 0) {
-              if (playedPin.classList.length > 4) {
-                Array.from(playedPin.classList).forEach((cls, i) => {
-                  if (i > 3) {
-                    playedPin.classList.remove(cls);
-                  }
-                });
-              }
-              if (pins[0].classList.length > 4) {
-                Array.from(pins[0].classList).forEach((cls, i) => {
-                  if (i > 3) {
-                    pins[0].classList.remove(cls);
-                  }
-                });
-              }
-              if (
-                entryBox
-                  .querySelector(".pin")
-                  .classList.contains(`${color}-bg-lighter`) ||
-                entryBox
-                  .querySelector(".pin")
-                  .classList.contains(`${color2}-bg-lighter`)
-              ) {
+            if (
+              entryBox
+                .querySelector(".pin")
+                .classList.contains(`${color}-bg-lighter`) ||
+              entryBox
+                .querySelector(".pin")
+                .classList.contains(`${color2}-bg-lighter`)
+            ) {
+              if (pins.length - 1 == 0) {
+                if (playedPin.classList.length > 4) {
+                  Array.from(playedPin.classList).forEach((cls, i) => {
+                    if (i > 3) {
+                      playedPin.classList.remove(cls);
+                    }
+                  });
+                }
+                if (pins[0].classList.length > 4) {
+                  Array.from(pins[0].classList).forEach((cls, i) => {
+                    if (i > 3) {
+                      pins[0].classList.remove(cls);
+                    }
+                  });
+                }
+
                 console.log("pin number:");
                 setTimeout(() => {
                   pins[0].classList.add(`pin-in-box-1`);
@@ -2950,47 +2952,51 @@
                   playedPin.style.height = `${entryBox.clientHeight / 2}px`;
                   console.log(timeOut);
                 }, timeOut);
-              }
-            } else if (pins.length - 1 > 0) {
-              if (pins[pins.length - 1].classList.contains("pin-in-box-2")) {
-                setTimeout(() => {
-                  for (let i = 0; i < pins.length; i++) {
-                    let pin = pins[i];
-                    pin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
-                    pin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
-                  }
-                  playedPin.classList.add(`pin-in-box-3`);
-                  playedPin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
-                  playedPin.style.height = `${
-                    entryBox.clientHeight / 2 - 1.5
-                  }px`;
-                }, timeOut);
-              } else if (
-                pins[pins.length - 1].classList.contains("pin-in-box-3")
-              ) {
-                setTimeout(() => {
-                  for (let i = 0; i < pins.length; i++) {
-                    let pin = pins[i];
-                    pin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
-                    pin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
-                  }
-                  playedPin.classList.add(`pin-in-box-4`);
-                  playedPin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
-                  playedPin.style.height = `${
-                    entryBox.clientHeight / 2 - 1.5
-                  }px`;
-                }, timeOut);
-              }
-            } else {
-              console.log("0 pin in current box");
-              playedPin.style.width = `${entryBox.clientWidth}px`;
-              playedPin.style.height = `${entryBox.clientHeight}px`;
-              if (playedPin.classList.length > 3) {
-                Array.from(playedPin.classList).forEach((cls, i) => {
-                  if (i > 3) {
-                    playedPin.classList.remove(cls);
-                  }
-                });
+              } else if (pins.length - 1 > 0) {
+                if (pins[pins.length - 1].classList.contains("pin-in-box-2")) {
+                  setTimeout(() => {
+                    for (let i = 0; i < pins.length; i++) {
+                      let pin = pins[i];
+                      pin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
+                      pin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
+                    }
+                    playedPin.classList.add(`pin-in-box-3`);
+                    playedPin.style.width = `${
+                      entryBox.clientWidth / 2 - 1.5
+                    }px`;
+                    playedPin.style.height = `${
+                      entryBox.clientHeight / 2 - 1.5
+                    }px`;
+                  }, timeOut);
+                } else if (
+                  pins[pins.length - 1].classList.contains("pin-in-box-3")
+                ) {
+                  setTimeout(() => {
+                    for (let i = 0; i < pins.length; i++) {
+                      let pin = pins[i];
+                      pin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
+                      pin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
+                    }
+                    playedPin.classList.add(`pin-in-box-4`);
+                    playedPin.style.width = `${
+                      entryBox.clientWidth / 2 - 1.5
+                    }px`;
+                    playedPin.style.height = `${
+                      entryBox.clientHeight / 2 - 1.5
+                    }px`;
+                  }, timeOut);
+                }
+              } else {
+                console.log("0 pin in current box");
+                playedPin.style.width = `${entryBox.clientWidth}px`;
+                playedPin.style.height = `${entryBox.clientHeight}px`;
+                if (playedPin.classList.length > 3) {
+                  Array.from(playedPin.classList).forEach((cls, i) => {
+                    if (i > 3) {
+                      playedPin.classList.remove(cls);
+                    }
+                  });
+                }
               }
             }
           } else {
@@ -3031,14 +3037,6 @@
                 entryBoxPin.classList[1] != `${pinColor2}-bg-lighter`
               ) {
                 let opponentColor = entryBoxPin.classList[1].split("-")[0];
-                pinAnimation(
-                  currentTurn,
-                  entryBoxPin,
-                  entryBoxPin.parentElement,
-                  number,
-                  opponentColor,
-                  "move-home"
-                );
                 Array.from(entryBoxPin.classList).forEach((cls, i) => {
                   if (i > 3) {
                     entryBoxPin.classList.remove(cls);
@@ -3046,7 +3044,7 @@
                 });
                 entryBoxPin.style.width = `${entryBox.clientWidth}px`;
                 entryBoxPin.style.height = `${entryBox.clientHeight}px`;
-
+                console.log(entryBox.clientHeight);
                 if (
                   entryBoxPin.classList.contains(
                     `pin-in-box-${entryBoxPin.classList[2].split("-")[2]}`
@@ -3056,10 +3054,17 @@
                     `pin-in-box-${entryBoxPin.classList[2].split("-")[2]}`
                   );
                 }
+                pinAnimation(
+                  currentTurn,
+                  entryBoxPin,
+                  entryBoxPin.parentElement,
+                  number,
+                  opponentColor,
+                  "move-home"
+                );
               }
             } else {
               let pins = entryBox.querySelectorAll(".pin");
-              // resetPinSizes(opponentColor, entryBox, null, movingPin);
               for (let i = 0; i < pins.length; i++) {
                 let pin = pins[i];
                 if (
@@ -3092,13 +3097,16 @@
                     opponentColor,
                     "move-home"
                   );
-                  // resetPinSizes(opponentColor, null, entryBox, movingPin);
+                  setTimeout(() => {
+                    resetPinSizes(opponentColor, entryBox, null, playedPin);
+                  }, 200);
                   return;
                 }
               }
             }
           }
         }
+        resetPinSizes(color, entryBox, null, playedPin);
       }
       function checkOpponentPin(color, entryBox, currentBox) {
         if (entryBox) {
@@ -3216,6 +3224,10 @@
                         boxPin
                       );
                       resizePinForGoal(boxPin, color, number, turn);
+                      // let stoppingBox = document.querySelector(`.box[data-${boxPin.classList[1].split("-")[0]}-step="${parseInt(box.getAttribute(`data-${boxPin.classList[1].split("-")[0]}-step`)) + number}"]`);
+                      // console.log(stoppingBox);
+
+                      // resetPinSizes(color, stoppingBox, null, null)
                     }, timeOut);
                     randomPick = false;
                     return;
@@ -3273,6 +3285,10 @@
                         boxPin
                       );
                       resizePinForGoal(boxPin, color, number, turn);
+                      // let stoppingBox = document.querySelector(`.box[data-${boxPin.classList[1].split("-")[0]}-step="${parseInt(box.getAttribute(`data-${boxPin.classList[1].split("-")[0]}-step`)) + number}"]`);
+                      // console.log(stoppingBox);
+
+                      // resetPinSizes(color, stoppingBox, null, null)
                     }, timeOut);
                     randomPick = false;
                     return;
@@ -3407,6 +3423,10 @@
                 number,
                 turn
               );
+              // let stoppingBox = document.querySelector(`.box[data-${randomBox.querySelector(`.${randomPinColor}-bg-lighter`).classList[1].split("-")[0]}-step="${parseInt(randomBox.getAttribute(`data-${randomBox.querySelector(`.${randomPinColor}-bg-lighter`).classList[1].split("-")[0]}-step`)) + number}"]`);
+              // console.log(stoppingBox);
+
+              // resetPinSizes(color, stoppingBox, null, null)
             }, timeOut);
           } else {
             // adjustPinSize(
@@ -3520,7 +3540,18 @@
         if (operation === "move-home") {
           pin.classList.add("shrink");
           await delay(200);
+          let stoppingBox = document.querySelector(
+            `.box[data-${pin.classList[1].split("-")[0]}-step="${
+              parseInt(
+                pin.parentElement.getAttribute(
+                  `data-${pin.classList[1].split("-")[0]}-step`
+                )
+              ) + number
+            }"]`
+          );
           document.querySelector(`.${color} .pins`).append(pin);
+          console.log(stoppingBox);
+          resetPinSizes(color, stoppingBox, null, pin);
           pin.classList.remove("shrink");
           pin.classList.add("grow");
           await delay(200);

@@ -12,13 +12,12 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-
-  /* width: 60dvw; */
 }
 .colors {
-  display: grid;
-  grid-template-columns: repeat(3, 3fr);
-  gap: 1.5rem 1rem;
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  padding: 0 1rem;
 }
 .input-color {
   display: flex;
@@ -26,12 +25,21 @@
   gap: 1rem;
   align-items: center;
 }
+.four-colors{
+  padding: 0 1rem;
+  gap: 1rem;
+}
+.four-colors .input-color{
+  width: 25%;
+}
 .input {
   position: relative;
   border-radius: 50%;
   aspect-ratio: 1 / 1;
   opacity: 1;
   padding: 1.5rem;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.651);
+
 }
 
 /* .input input {
@@ -57,25 +65,44 @@
     green 80%
   );
 }
+.blue:has(input:checked)::after {
+    background-color: blue;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.651);
+}
 .blue-green {
   background-image: radial-gradient(circle at bottom right,blue 0% 20%,green 80%);
 }
-/* .blue-green {
-  background-image: radial-gradient(circle at bottom right,blue 0% 20%,green 80%);
-} */
+.blue {
+  background-color: blue;
+}
 .red-yellow {
   background-image: radial-gradient(circle at bottom left,red 0% 20%,yellow 80%);
+}
+.red {
+  background-color: red;
 }
 .red-yellow:has(input:checked)::after {
   background-image: radial-gradient(circle at bottom left,red 0% 20%,yellow 80%);
 }
+.red:has(input:checked)::after {
+  background-color: red;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.651);
+
+}
 .green-yellow {
   background-image: radial-gradient(circle at right, yellow 0% 20%, green 80%);
+}
+.green {
+  background-color: green;
 }
 .green-yellow:has(input:checked)::after {
   background-image: radial-gradient(circle at right, yellow 0% 20%, green 80%);
 }
+.green:has(input:checked)::after {
+  background-color: green;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.651);
 
+}
 .green-red {
   background-image: radial-gradient(circle at bottom, red 0% 20%, green 80%);
 }
@@ -91,13 +118,21 @@
 .blue-yellow {
   background-image: radial-gradient(circle at top, yellow 0% 20%, blue 80%);
 }
+.yellow {
+  background-color: yellow;
+}
 .blue-yellow:has(input:checked)::after {
   background-image: radial-gradient(circle at top, yellow 0% 20%, blue 80%);
+}
+.yellow:has(input:checked)::after {
+  background-color: yellow;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.651);
 }
 .input::after {
   content: "";
   position: absolute;
   height: 50%;
+  width: 50%;
   aspect-ratio: 1 / 1;
   background-color: white;
   border-radius: 50%;
@@ -108,9 +143,19 @@
   margin: auto;
   border: 3px solid white;
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (max-width: 320px) {
   .colors {
-    display: flex;
-    gap: 2rem 2rem;
+    flex-direction: column;
+    gap: 2rem;
   }
+}
+@media only screen and (max-width: 600px) {
+  .four-colors {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 1rem;
+  }
+  .four-colors .input-color{
+  width: auto;
+}
 }

@@ -26,8 +26,8 @@ button {
   background-color: #40e0d0;
   box-shadow: inset 5px 5px 15px -5px black;
   color: rgb(0, 0, 0);
-  padding: clamp(0.2rem, 1dvw + 0.2rem, 0.5rem);
-  font-size: clamp(1rem, 1dvw + 0.2rem, 3rem);
+  padding: clamp(0.2rem, calc(1dvw + 0.2rem), 0.5rem);
+  font-size: clamp(1rem, calc(1dvw + 1rem), 1.5rem);
   border-radius: 10px;
   line-height: 1;
   font-weight: 900;
@@ -37,7 +37,7 @@ button {
   cursor: pointer;
 }
 label {
-  font-size: clamp(1.2rem, 1dvw + 0.5rem, 2rem);
+  font-size: clamp(1rem, calc( 1dvw + 1rem), 1.5rem);
   font-weight: 700;
   text-shadow: 0 0 10px rgb(0, 0, 0);
 }
@@ -76,16 +76,16 @@ tr:nth-of-type(5) td{
   padding-top: 2rem;
 }
 .min-text {
-  font-size: clamp(1.2rem, 1dvw + 0.5rem, 2rem);
+  font-size: clamp(1.2rem, calc(1dvw + 0.5rem), 2rem);
   font-weight: 700;
 }
 .max-text {
-  font-size: clamp(1.7rem, 1vw + 1.5rem, 3rem);
+  font-size: clamp(1.7rem, calc(1vw + 1.5rem), 3rem);
   font-weight: 900;
 }
 .headers {
   text-align: center;
-  font-size: clamp(1.7rem, 1vw + 1.5rem, 3rem);
+  font-size: clamp(1.7rem, calc(1vw + 1.5rem), 3rem);
   font-weight: 900;
 }
 .radio-number {
@@ -131,7 +131,7 @@ tr:nth-of-type(5) td{
 }
 .alert-box p {
   overflow-wrap: break-word;
-  font-size: clamp(0.7rem, 3dvw + 0.5rem, 1.1rem);
+  font-size: clamp(0.7rem, calc(3dvw + 0.5rem), 1.1rem);
   font-weight: 900;
   text-align: center;
 }
@@ -190,12 +190,12 @@ tr:nth-of-type(5) td{
   margin-left: auto;
 }
 .player-info p {
-  padding: 0.2rem clamp(0.2rem, 1dvw + 0.2rem, 0.5rem);
+  padding: 0.2rem clamp(0.2rem, calc(1dvw + 0.2rem), 0.5rem);
   background-color: turquoise;
   color: black;
   box-shadow: inset 5px 5px 15px -5px;
   border-radius: 7px;
-  font-size: clamp(1rem, 1dvw + 0.2rem, 3rem);
+  font-size: clamp(1rem, calc(1dvw + 0.2rem), 3rem);
   font-weight: 900;
   max-width: 20dvw;
   overflow: hidden;
@@ -242,7 +242,7 @@ tr:nth-of-type(5) td{
 
 .back-btn {
   font-weight: 900;
-  font-size: clamp(2rem, 2vw + 1rem, 3rem);
+  font-size: clamp(2rem, calc(2vw + 1rem), 3rem);
   padding: 0.19rem 0.8rem;
 }
 .winner-menu {

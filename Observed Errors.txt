@@ -1,0 +1,1 @@
+4: Update AI algorithm for more than 1 pin in box to eliminate opponent pin
