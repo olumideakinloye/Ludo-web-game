@@ -2120,7 +2120,7 @@
         operating = true;
         pausedMove = false;
         e.stopPropagation();
-        const timeOut = (200 + 200) * number;
+        const timeOut = 400 * number;
         const color = element.classList[1].split("-")[0];
         if (Array.isArray(pickedColor)) {
           document
@@ -2246,7 +2246,7 @@
                     // console.log(stoppingBox);
 
                     // resetPinSizes(color, stoppingBox, null, null)
-                  }, 700);
+                  }, timeOut);
                 } else {
                   // adjustPinSize(
                   //   pickedColor,
