@@ -143,19 +143,4 @@
   margin: auto;
   border: 3px solid white;
 }
-@media only screen and (max-width: 320px) {
-  .colors {
-    flex-direction: column;
-    gap: 2rem;
-  }
-}
-@media only screen and (max-width: 600px) {
-  .four-colors {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem 1rem;
-  }
-  .four-colors .input-color{
-  width: auto;
-}
-}
+

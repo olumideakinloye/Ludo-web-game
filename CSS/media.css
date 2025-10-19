@@ -1,0 +1,72 @@
+@media only screen and (min-width: 800px) and (max-height: 1000px) {
+  .board-bg {
+    height: 80vh;
+    aspect-ratio: 0;
+    flex-direction: row;
+    align-items: normal;
+    justify-content: center;
+  }
+  .board {
+    width: auto;
+    height: calc(100% - 10px);
+    aspect-ratio: 1 / 1;
+  }
+  .player-game-info {
+    width: min-content;
+    padding: 0;
+    flex-direction: column;
+    padding: 1.2rem 0;
+  }
+  .player {
+    flex-direction: row;
+    width: 100%;
+  }
+  .player-cover{
+        padding: 0;
+  }
+  .player .winning-pins {
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+  .player-game-info .player:nth-of-type(2) {
+    margin-left: 0;
+  }
+  .player-game-info:nth-of-type(1) .player:nth-of-type(1) {
+    justify-content: end;
+  }
+  .player-game-info:nth-of-type(1) .player:nth-of-type(2) {
+    justify-content: end;
+  }
+}
+@media only screen and (min-width: 600px) and (max-height: 1000px) {
+  .board-bg {
+    /* width: auto; */
+    height: 80vh;
+    aspect-ratio: 0;
+  }
+}
+@media only screen and (max-width: 550px) {
+  .single-player-info {
+    flex-direction: column;
+    align-items: center;
+  }
+  .single-player-info input {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .colors {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .four-colors {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 1rem;
+  }
+  .four-colors .input-color {
+    width: auto;
+  }
+}
