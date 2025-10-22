@@ -107,7 +107,6 @@ tr:nth-of-type(5) td{
 .container {
   background-color: #203240;
   width: 100dvw;
-  height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -126,7 +125,6 @@ tr:nth-of-type(5) td{
   align-items: start;
   z-index: 0;
   height: 2rem;
-  background-color: antiquewhite;
 }
 .alert-box {
   max-width: 25%;
@@ -149,8 +147,8 @@ tr:nth-of-type(5) td{
   padding-bottom: 0.2rem;
 }
 .player-game-info {
-  width: calc(97% - 10px);
-  padding: 0.5rem 3%;
+  width: calc(90dvw - 10px);
+  padding: 0.5rem 5dvw;
   display: flex;
   justify-content: space-between;
   align-items: start;
@@ -186,7 +184,7 @@ tr:nth-of-type(5) td{
   position: absolute;
   height: 100%;
   width: 100%;
-  background-color: #2032406b;
+  background-color: #20324088;
   z-index: 4;
   display: none;
 }
@@ -286,7 +284,6 @@ tr:nth-of-type(5) td{
   width: 100%;
   display: inline-flex;
   flex-direction: column;
-  align-items: center;
   position: relative;
 }
 .board-cover {
@@ -366,7 +363,7 @@ tr:nth-of-type(5) td{
   gap: 2px;
 }
 .yellow-bg {
-  background-color: rgb(218, 218, 0);
+  background-color: rgb(218, 218, 0) !important;
 }
 .yellow-bg-lighter {
   background-color: rgb(255, 252, 102);

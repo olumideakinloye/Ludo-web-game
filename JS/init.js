@@ -19,3 +19,4 @@ const colorToPlayerNumber = [
   { color: "red", number: 3 },
   { color: "blue", number: 4 },
 ];
+let initFlexDirection = window.getComputedStyle(document.querySelector(".board-bg")).flexDirection

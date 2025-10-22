@@ -11,18 +11,6 @@ function offlineVersion(version) {
     NumberOfPlayers();
   }
 }
-window.addEventListener("resize", () => {
-  document.querySelectorAll(".pin").forEach((element) => {
-    element.style.height = `${document.querySelector(".box").clientHeight}px`;
-    element.style.width = `${document.querySelector(".box").clientWidth}px`;
-  });
-});
-window.addEventListener("load", () => {
-  document.querySelectorAll(".pin").forEach((element) => {
-    element.style.height = `${document.querySelector(".box").clientHeight}px`;
-    element.style.width = `${document.querySelector(".box").clientWidth}px`;
-  });
-});
 function startGame(playerName) {
   if (numberOfPlayers == 2) {
     let playerANumber = 0;
@@ -72,8 +60,23 @@ function startGame(playerName) {
           color: element.color,
           number: element.number,
         });
-        document.querySelector(`.player-${element.number}-info p`).innerText =
-          playerName;
+        if (
+          window.getComputedStyle(document.querySelector(".board-bg"))
+            .flexDirection == "row"
+        ) {
+          if (element.number == 3) {
+            document.querySelector(`.player-2-info p`).innerText = playerName;
+          } else if (element.number == 2) {
+            document.querySelector(`.player-3-info p`).innerText = playerName;
+          } else {
+            document.querySelector(
+              `.player-${element.number}-info p`
+            ).innerText = playerName;
+          }
+        } else {
+          document.querySelector(`.player-${element.number}-info p`).innerText =
+            playerName;
+        }
       } else {
         botNumber += 1;
         players.push({
@@ -81,9 +84,28 @@ function startGame(playerName) {
           color: element.color,
           number: element.number,
         });
-        document.querySelector(
-          `.player-${element.number}-info p`
-        ).innerText = `Bot${botNumber}`;
+        if (
+          window.getComputedStyle(document.querySelector(".board-bg"))
+            .flexDirection == "row"
+        ) {
+          if (element.number == 3) {
+            document.querySelector(
+              `.player-2-info p`
+            ).innerText = `Bot${botNumber}`;
+          } else if (element.number == 2) {
+            document.querySelector(
+              `.player-3-info p`
+            ).innerText = `Bot${botNumber}`;
+          } else {
+            document.querySelector(
+              `.player-${element.number}-info p`
+            ).innerText = `Bot${botNumber}`;
+          }
+        } else {
+          document.querySelector(
+            `.player-${element.number}-info p`
+          ).innerText = `Bot${botNumber}`;
+        }
       }
     }
   }
@@ -327,11 +349,51 @@ function switchTurns(currentTurn, playAgain = false) {
           nextPlayerInfo.name
         ) {
           if (
-            playerInfo.querySelector(".player-cover").style.display == "block"
+            window.getComputedStyle(document.querySelector(".board-bg"))
+              .flexDirection == "row"
           ) {
-            playerInfo.querySelector(".player-cover").style.display = "none";
+            if (nextPlayerInfo.color == "yellow") {
+              if (
+                playerInfos[2].querySelector(".player-cover").style.display ==
+                "block"
+              ) {
+                playerInfos[2].querySelector(".player-cover").style.display =
+                  "none";
+              } else {
+                playerInfos[2].querySelector(".player-cover").style.display =
+                  "none";
+              }
+            } else if (nextPlayerInfo.color == "red") {
+              if (
+                playerInfos[1].querySelector(".player-cover").style.display ==
+                "block"
+              ) {
+                playerInfos[1].querySelector(".player-cover").style.display =
+                  "none";
+              } else {
+                playerInfos[1].querySelector(".player-cover").style.display =
+                  "none";
+              }
+            } else {
+              if (
+                playerInfo.querySelector(".player-cover").style.display ==
+                "block"
+              ) {
+                playerInfo.querySelector(".player-cover").style.display =
+                  "none";
+              } else {
+                playerInfo.querySelector(".player-cover").style.display =
+                  "none";
+              }
+            }
           } else {
-            playerInfo.querySelector(".player-cover").style.display = "none";
+            if (
+              playerInfo.querySelector(".player-cover").style.display == "block"
+            ) {
+              playerInfo.querySelector(".player-cover").style.display = "none";
+            } else {
+              playerInfo.querySelector(".player-cover").style.display = "none";
+            }
           }
           continue;
         }
@@ -453,11 +515,51 @@ function switchTurns(currentTurn, playAgain = false) {
           nextPlayerInfo.name
         ) {
           if (
-            playerInfo.querySelector(".player-cover").style.display == "block"
+            window.getComputedStyle(document.querySelector(".board-bg"))
+              .flexDirection == "row"
           ) {
-            playerInfo.querySelector(".player-cover").style.display = "none";
+            if (nextPlayerInfo.color == "yellow") {
+              if (
+                playerInfos[2].querySelector(".player-cover").style.display ==
+                "block"
+              ) {
+                playerInfos[2].querySelector(".player-cover").style.display =
+                  "none";
+              } else {
+                playerInfos[2].querySelector(".player-cover").style.display =
+                  "none";
+              }
+            } else if (nextPlayerInfo.color == "red") {
+              if (
+                playerInfos[1].querySelector(".player-cover").style.display ==
+                "block"
+              ) {
+                playerInfos[1].querySelector(".player-cover").style.display =
+                  "none";
+              } else {
+                playerInfos[1].querySelector(".player-cover").style.display =
+                  "none";
+              }
+            } else {
+              if (
+                playerInfo.querySelector(".player-cover").style.display ==
+                "block"
+              ) {
+                playerInfo.querySelector(".player-cover").style.display =
+                  "none";
+              } else {
+                playerInfo.querySelector(".player-cover").style.display =
+                  "none";
+              }
+            }
           } else {
-            playerInfo.querySelector(".player-cover").style.display = "none";
+            if (
+              playerInfo.querySelector(".player-cover").style.display == "block"
+            ) {
+              playerInfo.querySelector(".player-cover").style.display = "none";
+            } else {
+              playerInfo.querySelector(".player-cover").style.display = "none";
+            }
           }
           continue;
         }
@@ -1096,33 +1198,33 @@ function resizePinForGoal(element, color, number, turn) {
       }
       players = players.filter((player) => player.name !== turn.name);
       if (
-    window.getComputedStyle(document.querySelector(".board-bg"))
-      .flexDirection == "row"
-  ) {
-    if (playedColor == "red" || playedColor == "blue") {
-        losingPins[losingPins.length - 1].classList.add(`${playedColor}-bg`);
+        window.getComputedStyle(document.querySelector(".board-bg"))
+          .flexDirection == "row"
+      ) {
+        if (playedColor == "red" || playedColor == "blue") {
+          losingPins[losingPins.length - 1].classList.add(`${playedColor}-bg`);
+        } else {
+          for (let i = 0; i < winningPins.length; i++) {
+            const element = winningPins[i];
+            if (!element.classList.contains(`${playedColor}-bg`)) {
+              element.classList.add(`${playedColor}-bg`);
+              break;
+            }
+          }
+        }
       } else {
-        for (let i = 0; i < winningPins.length; i++) {
-          const element = winningPins[i];
-          if (!element.classList.contains(`${playedColor}-bg`)) {
-            element.classList.add(`${playedColor}-bg`);
-            break;
+        if (playedColor == "yellow" || playedColor == "blue") {
+          losingPins[losingPins.length - 1].classList.add(`${playedColor}-bg`);
+        } else {
+          for (let i = 0; i < winningPins.length; i++) {
+            const element = winningPins[i];
+            if (!element.classList.contains(`${playedColor}-bg`)) {
+              element.classList.add(`${playedColor}-bg`);
+              break;
+            }
           }
         }
       }
-  }else{
-    if (playedColor == "yellow" || playedColor == "blue") {
-      losingPins[losingPins.length - 1].classList.add(`${playedColor}-bg`);
-    } else {
-      for (let i = 0; i < winningPins.length; i++) {
-        const element = winningPins[i];
-        if (!element.classList.contains(`${playedColor}-bg`)) {
-          element.classList.add(`${playedColor}-bg`);
-          break;
-        }
-      }
-    }
-  }
       element.remove();
       if (box.classList.contains("box")) {
         if (box.querySelectorAll(".pin").length > 1) {
@@ -1158,7 +1260,7 @@ function resizePinForGoal(element, color, number, turn) {
         }
       }
     }
-  }else{
+  } else {
     if (playedColor == "yellow" || playedColor == "blue") {
       losingPins[losingPins.length - 1].classList.add(`${playedColor}-bg`);
     } else {
@@ -1318,8 +1420,8 @@ function resetPinSizes(color, currentBox, entryBox, playedPin) {
             }
           });
         }
-        pin.style.width = `${currentBox.clientWidth / 2 - 1.5}px`;
-        pin.style.height = `${currentBox.clientHeight / 2 - 1.5}px`;
+        pin.style.width = `${currentBox.clientWidth / 2}px`;
+        pin.style.height = `${currentBox.clientHeight / 2}px`;
         pin.classList.add(`pin-in-box-${pinNumber}`);
         console.log(`pin-in-box-${pinNumber}`);
         pinNumber += 1;
@@ -1433,23 +1535,23 @@ function adjustPinSize(colorArray, currentBox, entryBox, playedPin, timeOut) {
             setTimeout(() => {
               for (let i = 0; i < pins.length; i++) {
                 let pin = pins[i];
-                pin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
-                pin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
+                pin.style.width = `${entryBox.clientWidth / 2}px`;
+                pin.style.height = `${entryBox.clientHeight / 2}px`;
               }
               playedPin.classList.add(`pin-in-box-3`);
-              playedPin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
-              playedPin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
+              playedPin.style.width = `${entryBox.clientWidth / 2}px`;
+              playedPin.style.height = `${entryBox.clientHeight / 2}px`;
             }, timeOut);
           } else if (pins[pins.length - 1].classList.contains("pin-in-box-3")) {
             setTimeout(() => {
               for (let i = 0; i < pins.length; i++) {
                 let pin = pins[i];
-                pin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
-                pin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
+                pin.style.width = `${entryBox.clientWidth / 2}px`;
+                pin.style.height = `${entryBox.clientHeight / 2}px`;
               }
               playedPin.classList.add(`pin-in-box-4`);
-              playedPin.style.width = `${entryBox.clientWidth / 2 - 1.5}px`;
-              playedPin.style.height = `${entryBox.clientHeight / 2 - 1.5}px`;
+              playedPin.style.width = `${entryBox.clientWidth / 2}px`;
+              playedPin.style.height = `${entryBox.clientHeight / 2}px`;
             }, timeOut);
           }
         } else {
