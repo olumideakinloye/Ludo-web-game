@@ -490,10 +490,6 @@ function aiAlgorithm(number, color, turn) {
                 operating = true;
                 movePinHome(color, currentColorStep + number - 1, turn, boxPin);
                 resizePinForGoal(boxPin, color, number, turn);
-                // let stoppingBox = document.querySelector(`.box[data-${boxPin.classList[1].split("-")[0]}-step="${parseInt(box.getAttribute(`data-${boxPin.classList[1].split("-")[0]}-step`)) + number}"]`);
-                // console.log(stoppingBox);
-
-                // resetPinSizes(color, stoppingBox, null, null)
               }, timeOut);
               randomPick = false;
               return;
@@ -517,11 +513,6 @@ function aiAlgorithm(number, color, turn) {
             return;
           } else {
             operating = true;
-            // if (number === 6) {
-            //   switchTurns(turn, true);
-            // } else {
-            //   switchTurns(turn, false);
-            // }
           }
         }
       } else {
@@ -546,10 +537,6 @@ function aiAlgorithm(number, color, turn) {
                 operating = true;
                 movePinHome(color, currentColorStep + number - 1, turn, boxPin);
                 resizePinForGoal(boxPin, color, number, turn);
-                // let stoppingBox = document.querySelector(`.box[data-${boxPin.classList[1].split("-")[0]}-step="${parseInt(box.getAttribute(`data-${boxPin.classList[1].split("-")[0]}-step`)) + number}"]`);
-                // console.log(stoppingBox);
-
-                // resetPinSizes(color, stoppingBox, null, null)
               }, timeOut);
               randomPick = false;
               return;
@@ -573,16 +560,10 @@ function aiAlgorithm(number, color, turn) {
             return;
           } else {
             operating = true;
-            // if (number === 6) {
-            //   switchTurns(turn, true);
-            // } else {
-            //   switchTurns(turn, false);
-            // }
           }
         }
       }
     } else if (box.querySelectorAll(".pin").length >= 2) {
-      randomPick = true;
       const pins = box.querySelectorAll(".pin");
       for (let i = 0; i < pins.length; i++) {
         let pin = pins[i];
@@ -591,15 +572,120 @@ function aiAlgorithm(number, color, turn) {
             pin.classList.contains(`${color[0]}-bg-lighter`) ||
             pin.classList.contains(`${color[1]}-bg-lighter`)
           ) {
-            pinBoxes.push(box);
+            let currentColorStep;
+            let pinColor;
+            if (
+              pin.classList.contains(`${color[0]}-bg-lighter`) &&
+              !pin.classList.contains(`${color[1]}-bg-lighter`)
+            ) {
+              pinColor = color[0];
+              currentColorStep = parseInt(
+                box.getAttribute(`data-${color[0]}-step`)
+              );
+            } else if (
+              !pin.classList.contains(`${color[0]}-bg-lighter`) &&
+              pin.classList.contains(`${color[1]}-bg-lighter`)
+            ) {
+              pinColor = color[1];
+
+              currentColorStep = parseInt(
+                box.getAttribute(`data-${color[1]}-step`)
+              );
+            } else {
+              currentColorStep = 0;
+            }
+            const entryBox = document.querySelector(
+              `.box[data-${pinColor}-step="${currentColorStep + number}"]`
+            );
+            if (CheakBoxesLeft(color, number, pin) == true) {
+              if (checkOpponentPin(color, entryBox, false)) {
+                pinAnimation(
+                  turn,
+                  pin,
+                  box,
+                  number,
+                  pin.classList[1].split("-")[0]
+                );
+                setTimeout(() => {
+                  operating = true;
+                  movePinHome(color, currentColorStep + number - 1, turn, pin);
+                  resizePinForGoal(pin, color, number, turn);
+                }, timeOut);
+                randomPick = false;
+                return;
+              } else {
+                randomPick = true;
+                pinBoxes.push(box);
+                break;
+              }
+            } else if (CheakBoxesLeft(color, number, pin) == "Goal") {
+              pinAnimation(
+                turn,
+                pin,
+                box,
+                number,
+                pin.classList[1].split("-")[0]
+              );
+              setTimeout(() => {
+                operating = true;
+                resizePinForGoal(pin, color, number, turn);
+              }, timeOut);
+              randomPick = false;
+              return;
+            } else {
+              operating = true;
+            }
           }
         } else {
           if (pin.classList.contains(`${color}-bg-lighter`)) {
-            pinBoxes.push(box);
+            const pin = box.querySelector(".pin");
+            const currentColorStep = parseInt(
+              box.getAttribute(`data-${color}-step`)
+            );
+            const entryBox = document.querySelector(
+              `.box[data-${color}-step="${currentColorStep + number}"]`
+            );
+            if (CheakBoxesLeft(color, number, pin) == true) {
+              if (checkOpponentPin(color, entryBox, false)) {
+                pinAnimation(
+                  turn,
+                  pin,
+                  box,
+                  number,
+                  pin.classList[1].split("-")[0]
+                );
+                setTimeout(() => {
+                  operating = true;
+                  movePinHome(color, currentColorStep + number - 1, turn, pin);
+                  resizePinForGoal(pin, color, number, turn);
+                }, timeOut);
+                randomPick = false;
+                return;
+              } else {
+                pinBoxes.push(box);
+                randomPick = true;
+                break;
+              }
+            } else if (CheakBoxesLeft(color, number, pin) == "Goal") {
+              pinAnimation(
+                turn,
+                pin,
+                box,
+                number,
+                pin.classList[1].split("-")[0]
+              );
+              setTimeout(() => {
+                operating = true;
+                resizePinForGoal(pin, color, number, turn);
+              }, timeOut);
+              randomPick = false;
+              return;
+            } else {
+              operating = true;
+            }
           }
         }
       }
-      console.log(pinBoxes);
     }
   }
   if (randomPick && pinBoxes.length > 0) {

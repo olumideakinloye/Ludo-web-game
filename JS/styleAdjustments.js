@@ -28,45 +28,6 @@ window.addEventListener("resize", () => {
       continue;
     }
   }
-  // let newSize;
-  // let pin;
-  // let diff;
-  // if (document.querySelector(".home .pin")) {
-  //   pin = document.querySelector(".home .pin");
-  // } else {
-  //   for (let i = 0; i < document.querySelectorAll(".box").length; i++) {
-  //     const box = document.querySelectorAll(".box")[i];
-  //     if (box.querySelectorAll(".pin").length < 2) {
-  //       pin = box.querySelector(".pin");
-  //       break;
-  //     } else {
-  //       continue;
-  //     }
-  //   }
-  // }
-  // newSize = Math.abs(
-  //   document.querySelector(".box").clientHeight - pin.clientHeight
-  // );
-  // if (document.querySelector(".box").clientHeight > pin.clientHeight) {
-  //   diff = "greater";
-  // } else if (document.querySelector(".box").clientHeight < pin.clientHeight) {
-  //   diff = "less";
-  // }
-  // document.querySelectorAll(".pin").forEach((element) => {
-  //   console.log(
-  //     `Box width: ${document.querySelector(".box").clientWidth}, Pin width: ${
-  //       element.clientWidth
-  //     }`
-  //   );
-
-  //   if (diff == "greater") {
-  //     element.style.height = `${newSize + element.clientHeight}px`;
-  //     element.style.width = `${newSize + element.clientWidth}px`;
-  //   } else {
-  //     element.style.height = `${element.clientHeight - newSize}px`;
-  //     element.style.width = `${element.clientWidth - newSize}px`;
-  //   }
-  // });
   if (
     window.getComputedStyle(document.querySelector(".board-bg"))
       .flexDirection == "column" &&
@@ -103,15 +64,13 @@ function transferScores(changedFlexDirection) {
   const player3InfoScore = document.querySelector(".player-3-info .winning-pins");
   player2InfoName.innerText = player3InfoName.innerText
   player2InfoScore.innerHTML = player3InfoScore.innerHTML
+  Array.from(player2InfoScore.children).reverse().forEach((pin)=>{
+    player2InfoScore.appendChild(pin)
+  })
   player3InfoName.innerText = temp1
   player3InfoScore.innerHTML = temp2
-  // player
-  if(changedFlexDirection == "column"){
 
-  // }else if(changedFlexDirection == "row"){
-  //   player3InfoName.innerHTML = player2InfoName.innerHTML
-  //   player3InfoScore.innerHTML = player2InfoScore.innerHTML
-  //   player3InfoName.innerHTML = temp1
-  //   player3InfoScore.innerHTML = temp2
-  }
+  Array.from(player3InfoScore.children).reverse().forEach((pin)=>{
+    player3InfoScore.appendChild(pin)
+  })
 }

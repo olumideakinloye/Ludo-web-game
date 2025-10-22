@@ -1,2 +1,0 @@
-1: Update AI algorithm for more than 1 pin in box to eliminate opponent pin
-2: Invert scores when switching yellow with red
