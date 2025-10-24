@@ -81,7 +81,7 @@ function gameAlgorithm(number, color, turn) {
               });
           } else {
             console.log("no color array");
-
+            cancelTimer()
             let pin = pickRandomPin(color);
             if (!pin.parentElement.getAttribute(`data-${color}-step`)) {
               if (
@@ -229,6 +229,7 @@ function gameAlgorithm(number, color, turn) {
                     false
                   )
                 ) {
+                  cancelTimer()
                   pinAnimation(
                     turn,
                     lastPin,
@@ -251,6 +252,7 @@ function gameAlgorithm(number, color, turn) {
                     // resetPinSizes(color, stoppingBox, null, null)
                   }, timeOut);
                 } else {
+                  cancelTimer()
                   pinAnimation(
                     turn,
                     lastPin,
@@ -265,6 +267,7 @@ function gameAlgorithm(number, color, turn) {
                   }, timeOut);
                 }
               } else if (CheakBoxesLeft(color, number, lastPin) === "Goal") {
+                cancelTimer()
                 pinAnimation(
                   turn,
                   lastPin,
@@ -346,6 +349,7 @@ function gameAlgorithm(number, color, turn) {
                 false
               )
             ) {
+              cancelTimer()
               pinAnimation(
                 turn,
                 pin,
@@ -364,6 +368,7 @@ function gameAlgorithm(number, color, turn) {
               }, timeOut);
             } else {
               if (CheakBoxesLeft(color, number, pin) === true) {
+                cancelTimer()
                 pinAnimation(
                   turn,
                   pin,
@@ -377,6 +382,7 @@ function gameAlgorithm(number, color, turn) {
                   switchTurns(turn, false);
                 }, timeOut);
               } else if (CheakBoxesLeft(color, number, pin) === "Goal") {
+                cancelTimer()
                 pinAnimation(
                   turn,
                   pin,

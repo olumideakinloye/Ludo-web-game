@@ -20,3 +20,9 @@ const colorToPlayerNumber = [
   { color: "blue", number: 4 },
 ];
 let initFlexDirection = window.getComputedStyle(document.querySelector(".board-bg")).flexDirection
+let timeoutId;
+const switchTurnsTimeout = (turn)=>{
+  timeoutId = setTimeout(() => {
+    switchTurns(turn, false)
+  }, 10000);
+}

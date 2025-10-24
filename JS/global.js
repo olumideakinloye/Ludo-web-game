@@ -173,6 +173,14 @@ function randomStartGame(playering, amount) {
       document
         .getElementById("rool-dice")
         .addEventListener("click", clickRoolDice);
+      if (randomStarter.hasOwnProperty("color2")) {
+        playerTimer(
+          [randomStarter.color1, randomStarter.color2],
+          randomStarter
+        );
+      } else {
+        playerTimer(randomStarter.color, randomStarter);
+      }
     }, timeOut);
 
     console.log(`You're starting the game`);
@@ -213,6 +221,7 @@ function randomStartGame(playering, amount) {
   }
 }
 function switchTurns(currentTurn, playAgain = false) {
+  cancelTimer();
   let currentPlayerInfo = "";
   let nextPlayerInfo = "";
   console.log(players);
@@ -634,6 +643,14 @@ function switchTurns(currentTurn, playAgain = false) {
       alertPlayer("block", message);
       setTimeout(() => {
         operating = false;
+        if (nextPlayerInfo.hasOwnProperty("color2")) {
+          playerTimer(
+            [nextPlayerInfo.color1, nextPlayerInfo.color2],
+            nextPlayerInfo
+          );
+        } else {
+          playerTimer(nextPlayerInfo.color, nextPlayerInfo);
+        }
       }, timeOut);
     }
   }
@@ -802,6 +819,7 @@ function pickRandomPin(color) {
   }
 }
 function pickedPin(element, pickedColor, number, currentTurn, e) {
+  cancelTimer();
   operating = true;
   pausedMove = false;
   e.stopPropagation();
@@ -862,10 +880,6 @@ function pickedPin(element, pickedColor, number, currentTurn, e) {
               operating = true;
               movePinHome(pickedColor, 0, currentTurn, element);
               resizePinForGoal(element, pickedColor, number, currentTurn);
-              // let stoppingBox = document.querySelector(`.box[data-${element.classList[1].split("-")[0]}-step="${parseInt(element.parentElement.getAttribute(`data-${element.classList[1].split("-")[0]}-step`)) + number}"]`);
-              // console.log(stoppingBox);
-
-              // resetPinSizes(color, stoppingBox, null, null)
             }, 700);
           } else {
             setTimeout(() => {
@@ -922,23 +936,8 @@ function pickedPin(element, pickedColor, number, currentTurn, e) {
                 element
               );
               resizePinForGoal(element, pickedColor, number, currentTurn);
-              // let stoppingBox = document.querySelector(`.box[data-${element.classList[1].split("-")[0]}-step="${parseInt(element.parentElement.getAttribute(`data-${element.classList[1].split("-")[0]}-step`)) + number}"]`);
-              // console.log(stoppingBox);
-
-              // resetPinSizes(color, stoppingBox, null, null)
             }, timeOut);
           } else {
-            // adjustPinSize(
-            //   pickedColor,
-            //   document.querySelector(
-            //     `.box[data-${color}-step="${currentColorStep}"]`
-            //   ),
-            //   document.querySelector(
-            //     `.box[data-${color}-step="${currentColorStep + number}"]`
-            //   ),
-            //   element,
-            //   timeOut
-            // );
             pinAnimation(
               currentTurn,
               element,
@@ -988,22 +987,8 @@ function pickedPin(element, pickedColor, number, currentTurn, e) {
             element
           );
           resizePinForGoal(element, pickedColor, number, currentTurn);
-          // let stoppingBox = document.querySelector(`.box[data-${element.classList[1].split("-")[0]}-step="${parseInt(element.parentElement.getAttribute(`data-${element.classList[1].split("-")[0]}-step`)) + number}"]`);
-          // console.log(stoppingBox);
-          // resetPinSizes(color, stoppingBox, null, null)
         }, timeOut);
       } else {
-        // adjustPinSize(
-        //   pickedColor,
-        //   document.querySelector(
-        //     `.box[data-${color}-step="${currentColorStep}"]`
-        //   ),
-        //   document.querySelector(
-        //     `.box[data-${color}-step="${currentColorStep + number}"]`
-        //   ),
-        //   element,
-        //   timeOut
-        // );
         pinAnimation(
           currentTurn,
           element,
@@ -1031,7 +1016,6 @@ function pickedPin(element, pickedColor, number, currentTurn, e) {
       operating = true;
       resizePinForGoal(element, pickedColor, number, currentTurn);
     }, timeOut);
-    // switchTurns(currentTurn, false);
   }
 }
 function resizePinForGoal(element, color, number, turn) {

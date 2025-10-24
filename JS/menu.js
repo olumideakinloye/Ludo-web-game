@@ -20,7 +20,7 @@ function displayColors() {
       <div class="colors four-colors">
         <div class="input-color">
           <label style="color: blue" for="blue">Blue</label>
-            <div class="input blue">
+            <div class="input blue-input">
               <input
               class="radio-color"
                 type="radio"
@@ -36,7 +36,7 @@ function displayColors() {
         </div>
         <div class="input-color">
           <label style="color: red" for="red">Red</label>
-            <div class="input red">
+            <div class="input red-input">
               <input
               class="radio-color"
                 type="radio"
@@ -52,7 +52,7 @@ function displayColors() {
         </div>
         <div class="input-color">
           <label style="color: yellow" for="yellow">Yellow</label>
-            <div class="input yellow">
+            <div class="input yellow-input">
               <input
               class="radio-color"
                 type="radio"
@@ -68,7 +68,7 @@ function displayColors() {
         </div>
         <div class="input-color">
           <label style="color: green" for="green">Green</label>
-            <div class="input green">
+            <div class="input green-input">
               <input
               class="radio-color"
                 type="radio"

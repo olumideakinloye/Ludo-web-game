@@ -57,20 +57,60 @@ window.addEventListener("load", () => {
 });
 function transferScores(changedFlexDirection) {
   const player2InfoName = document.querySelector(".player-2-info p");
-  const player2InfoScore = document.querySelector(".player-2-info .winning-pins");
+  const player2InfoScore = document.querySelector(
+    ".player-2-info .winning-pins"
+  );
   const temp1 = player2InfoName.innerText;
   const temp2 = player2InfoScore.innerHTML;
   const player3InfoName = document.querySelector(".player-3-info p");
-  const player3InfoScore = document.querySelector(".player-3-info .winning-pins");
-  player2InfoName.innerText = player3InfoName.innerText
-  player2InfoScore.innerHTML = player3InfoScore.innerHTML
-  Array.from(player2InfoScore.children).reverse().forEach((pin)=>{
-    player2InfoScore.appendChild(pin)
-  })
-  player3InfoName.innerText = temp1
-  player3InfoScore.innerHTML = temp2
+  const player3InfoScore = document.querySelector(
+    ".player-3-info .winning-pins"
+  );
+  player2InfoName.innerText = player3InfoName.innerText;
+  player2InfoScore.innerHTML = player3InfoScore.innerHTML;
+  Array.from(player2InfoScore.children)
+    .reverse()
+    .forEach((pin) => {
+      player2InfoScore.appendChild(pin);
+    });
+  player3InfoName.innerText = temp1;
+  player3InfoScore.innerHTML = temp2;
 
-  Array.from(player3InfoScore.children).reverse().forEach((pin)=>{
-    player3InfoScore.appendChild(pin)
-  })
+  Array.from(player3InfoScore.children)
+    .reverse()
+    .forEach((pin) => {
+      player3InfoScore.appendChild(pin);
+    });
+}
+function playerTimer(color, currentTurn) {
+  if (Array.isArray(color)) {
+    for (let i = 0; i < color.length; i++) {
+      const Color = color[i];
+      document
+        .querySelector(`.${Color}`)
+        .style.setProperty("--after-opacity", "1");
+      document
+        .querySelector(`.${Color}`)
+        .style.setProperty("--after-width", "100%");
+    }
+  } else {
+    document
+      .querySelector(`.${color}`)
+      .style.setProperty("--after-opacity", "1");
+    document
+      .querySelector(`.${color}`)
+      .style.setProperty("--after-width", "100%");
+  }
+  switchTurnsTimeout(currentTurn);
+}
+function cancelTimer() {
+  document.querySelectorAll(".home").forEach((home) => {
+    home.style.setProperty("--after-opacity", "0");
+    home.style.setProperty("--after-transition", "none");
+    home.style.setProperty("--after-width", "0%");
+    setTimeout(() => {
+      home.style.removeProperty("--after-transition");
+    }, 50);
+  });
+  clearTimeout(timeoutId);
 }

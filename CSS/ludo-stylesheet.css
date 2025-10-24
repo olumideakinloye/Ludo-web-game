@@ -30,23 +30,22 @@ button {
   font-size: clamp(1rem, calc(1dvw + 1rem), 1.3rem);
   border-radius: 10px;
   line-height: 1;
-    border: 1.5px solid #203240;
+  border: 1.5px solid #203240;
   font-weight: 900;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: 0.2s ease-in-out;
-
 }
-button:hover{
-border: 1.5px solid turquoise;
-color: turquoise;
-background-color: transparent;
-transform: translateY(-0.3rem);
+button:hover {
+  border: 1.5px solid turquoise;
+  color: turquoise;
+  background-color: transparent;
+  transform: translateY(-0.3rem);
 }
 label {
-  font-size: clamp(1rem, calc( 1dvw + 1rem), 1.5rem);
+  font-size: clamp(1rem, calc(1dvw + 1rem), 1.5rem);
   font-weight: 700;
   text-shadow: 0 0 10px rgb(0, 0, 0);
 }
@@ -64,14 +63,14 @@ th {
 th:nth-of-type(2) {
   border-right: none;
 }
-td{
+td {
   border-right: 1px solid turquoise;
   border-bottom: 1px solid turquoise;
 }
-td:nth-of-type(2){
+td:nth-of-type(2) {
   border-right: none;
 }
-tr:nth-of-type(5) td{
+tr:nth-of-type(5) td {
   border-bottom: none;
 }
 .score-table tr th,
@@ -79,7 +78,7 @@ tr:nth-of-type(5) td{
   text-align: center;
   padding: 0.5rem 3dvw;
 }
-.score-menu{
+.score-menu {
   display: flex;
   justify-content: space-around;
   padding-top: 2rem;
@@ -268,7 +267,7 @@ tr:nth-of-type(5) td{
   padding: 1rem 0;
   border-radius: 20px;
 }
-.score-info .player-info{
+.score-info .player-info {
   width: 40%;
 }
 .score-info p {
@@ -307,16 +306,28 @@ tr:nth-of-type(5) td{
   padding: 5px;
   aspect-ratio: 1 / 1;
 }
-
-.green {
+.home {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 1;
+  /* border-top: 5px solid white; */
 }
-.yellow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.home::after {
+  content: "";
+  height: 5px;
+  width: var(--after-width, 0%);
+  opacity: var(--after-opacity, 1);
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  z-index: 0;
+  top: -5px;
+  left: 0;
+  transition: var(--after-transition, width linear 10s) ;
+}
+.shrink::after{
+  transition: none !important;
 }
 .middle {
   background-color: white;
@@ -335,15 +346,23 @@ tr:nth-of-type(5) td{
     rgb(218, 218, 0) 315deg
   );
 }
+.red::after {
+  content: "";
+  top: auto;
+  bottom: -5px;
+}
+.blue::after {
+  content: "";
+  top: auto;
+  bottom: -5px;
+}
 .red {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-top: none;
+  /* border-bottom: 5px solid white; */
 }
 .blue {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-top: none;
+  /* border-bottom: 5px solid white; */
 }
 .boxes {
   display: grid;
@@ -493,7 +512,7 @@ tr:nth-of-type(5) td{
   margin: auto;
 }
 .pin {
-  transition: transform 0.2s ease-in-out; /* smooth scale */;
+  transition: transform 0.2s ease-in-out; /* smooth scale */
   z-index: 3;
   border-radius: 50%;
   box-shadow: inset -5px -5px 10px -5px rgba(255, 255, 255, 0.5),
@@ -505,12 +524,12 @@ tr:nth-of-type(5) td{
   );
 }
 .shrink {
-    transform: scale(0.3);
-  }
+  transform: scale(0.3);
+}
 
-  .grow {
-    transform: scale(1);
-  }
+.grow {
+  transform: scale(1);
+}
 .flash {
   animation-name: flash;
   animation-duration: 0.7s;
@@ -527,16 +546,14 @@ tr:nth-of-type(5) td{
 .flash2 {
   animation-name: flash2 !important;
 }
-.removed-player::after{
-  content: '';
+.removed-player::after {
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: #2032406b;
 }
-.home {
-  position: relative;
-}
+
 @keyframes flash {
   0% {
     background-color: transparent;
