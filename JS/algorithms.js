@@ -81,7 +81,7 @@ function gameAlgorithm(number, color, turn) {
               });
           } else {
             console.log("no color array");
-            cancelTimer()
+            cancelTimer();
             let pin = pickRandomPin(color);
             if (!pin.parentElement.getAttribute(`data-${color}-step`)) {
               if (
@@ -229,7 +229,7 @@ function gameAlgorithm(number, color, turn) {
                     false
                   )
                 ) {
-                  cancelTimer()
+                  cancelTimer();
                   pinAnimation(
                     turn,
                     lastPin,
@@ -252,7 +252,7 @@ function gameAlgorithm(number, color, turn) {
                     // resetPinSizes(color, stoppingBox, null, null)
                   }, timeOut);
                 } else {
-                  cancelTimer()
+                  cancelTimer();
                   pinAnimation(
                     turn,
                     lastPin,
@@ -267,7 +267,7 @@ function gameAlgorithm(number, color, turn) {
                   }, timeOut);
                 }
               } else if (CheakBoxesLeft(color, number, lastPin) === "Goal") {
-                cancelTimer()
+                cancelTimer();
                 pinAnimation(
                   turn,
                   lastPin,
@@ -349,7 +349,7 @@ function gameAlgorithm(number, color, turn) {
                 false
               )
             ) {
-              cancelTimer()
+              cancelTimer();
               pinAnimation(
                 turn,
                 pin,
@@ -368,7 +368,7 @@ function gameAlgorithm(number, color, turn) {
               }, timeOut);
             } else {
               if (CheakBoxesLeft(color, number, pin) === true) {
-                cancelTimer()
+                cancelTimer();
                 pinAnimation(
                   turn,
                   pin,
@@ -382,7 +382,7 @@ function gameAlgorithm(number, color, turn) {
                   switchTurns(turn, false);
                 }, timeOut);
               } else if (CheakBoxesLeft(color, number, pin) === "Goal") {
-                cancelTimer()
+                cancelTimer();
                 pinAnimation(
                   turn,
                   pin,
@@ -702,6 +702,50 @@ function aiAlgorithm(number, color, turn) {
       switchTurns(turn, true);
     } else {
       switchTurns(turn, false);
+    }
+  }
+}
+function latePlayerAlgorithm(number, color, turn) {
+  if (pinPlayed(color)) {
+    //-----------------Pin exists outside the home-----------------//
+    if (pinPlayed(color, "1")) {
+      //------------------Only one pin exists outside the home--------------//
+      if (number == 6) {
+      } else {
+      }
+    } else {
+      //--More than one pin exists outside the home therefore pick random pin to move outside or around the outside of the the home--//
+      let boxes = [];
+      if(Array.isArray(color)){
+        document.querySelectorAll(`.box:has(.${color[0]}-bg-lighter)`).forEach((box)=>{
+          boxes.push(box)
+        })
+        document.querySelectorAll(`.box:has(.${color[1]}-bg-lighter)`).forEach((box)=>{
+          boxes.push(box)
+        })
+      }else{
+        document.querySelectorAll(`.box:has(.${color}-bg-lighter)`).forEach((box)=>{
+          boxes.push(box)
+        })
+      }
+      if (morePinsLeftHome(color)) {
+        //-There are more pins in the home so bring new pin outside home or move random pin from ouside the home-//
+        if (number == 6) {
+        } else {
+        }
+      } else {
+        //-There are no more pins in the home so pick random pin outside home to move-//
+      }
+    }
+  } else {
+    // --------------No pin exists outside the home--------------//
+    if (Array.isArray(color)) {
+      //-------Loop through the color array for two player game to move outside the home-------//
+      for (let i = 0; i < color.length; i++) {
+        const Color = color[i];
+      }
+    } else {
+      //-------Only one color in for player game to move outside the home-------//
     }
   }
 }

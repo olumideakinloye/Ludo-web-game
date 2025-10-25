@@ -221,7 +221,11 @@ function randomStartGame(playering, amount) {
   }
 }
 function switchTurns(currentTurn, playAgain = false) {
-  cancelTimer();
+  if (currentTurn.hasOwnProperty("color2")) {
+    cancelTimer([currentTurn.color1, currentTurn.color2]);
+  } else {
+    cancelTimer(currentTurn.color);
+  }
   let currentPlayerInfo = "";
   let nextPlayerInfo = "";
   console.log(players);
@@ -819,7 +823,11 @@ function pickRandomPin(color) {
   }
 }
 function pickedPin(element, pickedColor, number, currentTurn, e) {
-  cancelTimer();
+  if (currentTurn.hasOwnProperty("color2")) {
+    cancelTimer([currentTurn.color1, currentTurn.color2]);
+  } else {
+    cancelTimer(pickedColor);
+  }
   operating = true;
   pausedMove = false;
   e.stopPropagation();
@@ -1835,30 +1843,53 @@ function roolDice(turn) {
       resetTransformation = 0;
     }
     console.log(resetTransformation);
-
     let number = Math.floor(Math.random() * 6) + 1;
     setTimeout(() => {
       diceAnimation(cube, number);
     }, 100);
-    setTimeout(() => {
-      if (
-        document.getElementById("rool-dice").getAttribute("data-turn") ==
-        turn.name
-      ) {
-        gameAlgorithm(number, color, turn);
-        document
-          .getElementById("rool-dice")
-          .setAttribute("data-turn", turn.name);
-      } else {
+    if (turn.name == playerName) {
+      if (adjustTimer(turn) == true) {
+        setTimeout(() => {
+          if (
+            document.getElementById("rool-dice").getAttribute("data-turn") ==
+            turn.name
+          ) {
+            gameAlgorithm(number, color, turn);
+            document
+              .getElementById("rool-dice")
+              .setAttribute("data-turn", turn.name);
+          } else {
+            if (
+              turn.name != playerName ||
+              document.getElementById("rool-dice").getAttribute("data-turn") !=
+                playerName
+            ) {
+              gameAlgorithm(number, color, turn);
+            }
+          }
+        }, 1700);
+      }
+    }else{
+      setTimeout(() => {
         if (
-          turn.name != playerName ||
-          document.getElementById("rool-dice").getAttribute("data-turn") !=
-            playerName
+          document.getElementById("rool-dice").getAttribute("data-turn") ==
+          turn.name
         ) {
           gameAlgorithm(number, color, turn);
+          document
+            .getElementById("rool-dice")
+            .setAttribute("data-turn", turn.name);
+        } else {
+          if (
+            turn.name != playerName ||
+            document.getElementById("rool-dice").getAttribute("data-turn") !=
+              playerName
+          ) {
+            gameAlgorithm(number, color, turn);
+          }
         }
-      }
-    }, 1700);
+      }, 1700);
+    }
   } else {
     console.log("bad");
     console.log(pausedMove);

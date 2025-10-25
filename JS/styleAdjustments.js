@@ -83,6 +83,7 @@ function transferScores(changedFlexDirection) {
     });
 }
 function playerTimer(color, currentTurn) {
+  initiatedtime = Date.now();
   if (Array.isArray(color)) {
     for (let i = 0; i < color.length; i++) {
       const Color = color[i];
@@ -103,7 +104,7 @@ function playerTimer(color, currentTurn) {
   }
   switchTurnsTimeout(currentTurn);
 }
-function cancelTimer() {
+function cancelTimer(color) {
   document.querySelectorAll(".home").forEach((home) => {
     home.style.setProperty("--after-opacity", "0");
     home.style.setProperty("--after-transition", "none");
@@ -112,5 +113,38 @@ function cancelTimer() {
       home.style.removeProperty("--after-transition");
     }, 50);
   });
+  if (color) {
+    operating = true;
+    pausedMove = false;
+
+    if (Array.isArray(color)) {
+      document
+        .querySelectorAll(`.${color[0]}-bg-lighter`)
+        .forEach((element) => {
+          element.classList.remove("hover-pin");
+          element.removeEventListener("click", addClickEvent, {
+            once: true,
+          });
+          console.log("removed Event listeener and hover pin class");
+        });
+      document
+        .querySelectorAll(`.${color[1]}-bg-lighter`)
+        .forEach((element) => {
+          element.classList.remove("hover-pin");
+          element.removeEventListener("click", addClickEvent, {
+            once: true,
+          });
+          console.log("removed Event listeener and hover pin class");
+        });
+    } else {
+      document.querySelectorAll(`.${color}-bg-lighter`).forEach((element) => {
+        element.classList.remove("hover-pin");
+        element.removeEventListener("click", addClickEvent, {
+          once: true,
+        });
+        console.log("removed Event listeener and hover pin class");
+      });
+    }
+  }
   clearTimeout(timeoutId);
 }
