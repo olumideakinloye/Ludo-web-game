@@ -1848,7 +1848,7 @@ function roolDice(turn) {
       diceAnimation(cube, number);
     }, 100);
     if (turn.name == playerName) {
-      if (adjustTimer(turn) == true) {
+      if (adjustTimer(turn, color, number) == true) {
         setTimeout(() => {
           if (
             document.getElementById("rool-dice").getAttribute("data-turn") ==

@@ -24,12 +24,11 @@ let initFlexDirection = window.getComputedStyle(
 ).flexDirection;
 let timeoutId;
 let initiatedtime;
-const adjustTimer = (turn) => {
+const adjustTimer = (turn, color, number) => {
   let timeOut;
   if (initiatedtime != undefined) {
     const timeLeft = 10000 - Math.abs(initiatedtime - Date.now());
     console.log(`Time left: ${timeLeft}`);
-
     if (timeLeft < 1700) {
       clearTimeout(timeoutId);
       timeOut = 10000 + (1700 - timeLeft);
@@ -66,6 +65,7 @@ const adjustTimer = (turn) => {
       }
       
       timeoutId = setTimeout(() => {
+        latePlayerAlgorithm(number, color, turn)
         switchTurns(turn, false);
       }, 1700);
     }else{

@@ -706,46 +706,225 @@ function aiAlgorithm(number, color, turn) {
   }
 }
 function latePlayerAlgorithm(number, color, turn) {
-  if (pinPlayed(color)) {
-    //-----------------Pin exists outside the home-----------------//
-    if (pinPlayed(color, "1")) {
-      //------------------Only one pin exists outside the home--------------//
-      if (number == 6) {
-      } else {
-      }
+  const randomMoveOut = Boolean(Math.round(Math.random()));
+  const timeOut = (200 + 200) * number;
+  let randomBoxes = [];
+  let randomPlayingColor = color;
+  if (Array.isArray(color)) {
+    randomPlayingColor = color[Math.floor(Math.random() * color.length)];
+  }
+  const randomPin = pickRandomPin(randomPlayingColor);
+  if (number == 6 && morePinsLeftHome(color)) {
+    adjustPinSize(
+      color,
+      null,
+      document.querySelector(
+        `.box[data-${randomPin.classList[1].split("-")[0]}-step="1"]`
+      ),
+      randomPin,
+      200
+    );
+    pinAnimation(
+      turn,
+      randomPin,
+      randomPin.parentElement,
+      number,
+      randomPlayingColor,
+      "move-out"
+    );
+    if (
+      checkOpponentPin(
+        randomPlayingColor,
+        document.querySelector(`.box[data-${randomPlayingColor}-step="1"]`),
+        false
+      )
+    ) {
+      //-----Opponent's pin is in landing box there for it can be eliminated-----//
+      const eliminatingColor = checkOpponentPin(
+        randomPlayingColor,
+        document.querySelector(`.box[data-${randomPlayingColor}-step="1"]`),
+        false
+      );
+      operating = true;
+      setTimeout(() => {
+        movePinHome(eliminatingColor, 0, turn, randomPin);
+        resizePinForGoal(randomPin, eliminatingColor, number, turn);
+      }, 700);
+      return;
     } else {
-      //--More than one pin exists outside the home therefore pick random pin to move outside or around the outside of the the home--//
-      let boxes = [];
-      if(Array.isArray(color)){
-        document.querySelectorAll(`.box:has(.${color[0]}-bg-lighter)`).forEach((box)=>{
-          boxes.push(box)
-        })
-        document.querySelectorAll(`.box:has(.${color[1]}-bg-lighter)`).forEach((box)=>{
-          boxes.push(box)
-        })
-      }else{
-        document.querySelectorAll(`.box:has(.${color}-bg-lighter)`).forEach((box)=>{
-          boxes.push(box)
-        })
-      }
-      if (morePinsLeftHome(color)) {
-        //-There are more pins in the home so bring new pin outside home or move random pin from ouside the home-//
-        if (number == 6) {
-        } else {
-        }
-      } else {
-        //-There are no more pins in the home so pick random pin outside home to move-//
-      }
+      //---Opponent's pin not in landing box---//
+      operating = true;
+      setTimeout(() => {
+        randomPin.classList.add("pin-in-box");
+      }, 700);
+      return;
     }
   } else {
-    // --------------No pin exists outside the home--------------//
-    if (Array.isArray(color)) {
-      //-------Loop through the color array for two player game to move outside the home-------//
-      for (let i = 0; i < color.length; i++) {
-        const Color = color[i];
+    if (pinPlayed(color)) {
+      //-----------------Pin exists outside the home-----------------//
+      if (pinPlayed(color, "1")) {
+        //------------------Only one pin exists outside the home--------------//
+        const playedPin = getPlayedPin(color);
+        if (CheakBoxesLeft(color, number, playedPin) == true) {
+          //----------There are enough boxes to move the pin forwards----------//
+          const currentColorStep = parseInt(
+            playedPin.parentElement.getAttribute(
+              `data-${playedPin.classList[1].split("-")[0]}-step`
+            )
+          );
+          pinAnimation(
+            turn,
+            playedPin,
+            playedPin.parentElement,
+            number,
+            playedPin.classList[1].split("-")[0]
+          );
+          if (
+            checkOpponentPin(
+              color,
+              document.querySelector(
+                `.box[data-${playedPin.classList[1].split("-")[0]}-step="${
+                  currentColorStep + number
+                }"]`
+              ),
+              false
+            )
+          ) {
+            //-----Opponent's pin is in the landing box therefore aliminate opponent's pin-----//
+            const eliminatingColor = checkOpponentPin(
+              color,
+              document.querySelector(
+                `.box[data-${playedPin.classList[1].split("-")[0]}-step="${
+                  currentColorStep + number
+                }"]`
+              ),
+              false
+            );
+            setTimeout(() => {
+              movePinHome(eliminatingColor, currentColorStep + number - 1, turn, playedPin);
+              resizePinForGoal(playedPin, eliminatingColor, number, turn);
+            }, timeOut);
+            return;
+          }
+        } else if (CheakBoxesLeft(color, number, playedPin) == false) {
+        } else if (CheakBoxesLeft(color, number, playedPin) == "Goal") {
+          pinAnimation(
+            turn,
+            playedPin,
+            playedPin.parentElement,
+            number,
+            playedPin.classList[1].split("-")[0]
+          );
+          setTimeout(() => {
+            resizePinForGoal(playedPin, color, number, turn);
+          }, timeOut);
+          return;
+        }
+      } else {
+        //--More than one pin exists outside the home therefore pick random pin to move outside or around the outside of the the home--//
+        let boxes = [];
+        if (Array.isArray(color)) {
+          document
+            .querySelectorAll(`.box:has(.${color[0]}-bg-lighter)`)
+            .forEach((box) => {
+              boxes.push(box);
+            });
+          document
+            .querySelectorAll(`.box:has(.${color[1]}-bg-lighter)`)
+            .forEach((box) => {
+              boxes.push(box);
+            });
+        } else {
+          document
+            .querySelectorAll(`.box:has(.${color}-bg-lighter)`)
+            .forEach((box) => {
+              boxes.push(box);
+            });
+        }
+        for (let i = 0; i < boxes.length; i++) {
+          const box = boxes[i];
+          const pin = box.querySelector(".pin");
+          const currentColorStep = parseInt(
+            box.getAttribute(`data-${pin.classList[1].split("-")[0]}-step`)
+          );
+          if (
+            checkOpponentPin(
+              color,
+              document.querySelector(
+                `.box[data-${pin.classList[1].split("-")[0]}-step="${
+                  currentColorStep + number
+                }"]`
+              ),
+              false
+            )
+          ) {
+            pinAnimation(
+              turn,
+              pin,
+              box,
+              number,
+              pin.classList[1].split("-")[0]
+            );
+            const eliminatingColor = checkOpponentPin(
+              color,
+              document.querySelector(
+                `.box[data-${pin.classList[1].split("-")[0]}-step="${
+                  currentColorStep + number
+                }"]`
+              ),
+              false
+            );
+            setTimeout(() => {
+              movePinHome(eliminatingColor, currentColorStep + number - 1, turn, pin);
+              resizePinForGoal(pin, eliminatingColor, number, turn);
+            }, timeOut);
+          } else {
+            if (CheakBoxesLeft(color, number, pin)) {
+              randomBoxes.push(box);
+            } else if (CheakBoxesLeft(color, number, pin) == "Goal") {
+              pinAnimation(
+                turn,
+                pin,
+                box,
+                number,
+                pin.classList[1].split("-")[0]
+              );
+              setTimeout(() => {
+                resizePinForGoal(pin, color, number, turn);
+              }, timeOut);
+              return;
+            }
+          }
+        }
       }
-    } else {
-      //-------Only one color in for player game to move outside the home-------//
+    }
+    if (randomBoxes.length > 0) {
+      const randomBox =
+        randomBoxes[Math.floor(Math.random() * randomBoxes.length)];
+      if (randomBox.querySelectorAll(".pin").length > 1) {
+        const randomPin =
+          randomBox.querySelectorAll(".pin")[
+            Math.floor(
+              Math.random() * randomBox.querySelectorAll(".pin").length
+            )
+          ];
+        pinAnimation(
+          turn,
+          randomPin,
+          randomBox,
+          number,
+          randomPin.classList[1].split("-")[0]
+        );
+      } else {
+        const randomBoxPin = randomBox.querySelector(".pin");
+        pinAnimation(
+          turn,
+          randomBoxPin,
+          randomBox,
+          number,
+          randomBoxPin.classList[1].split("-")[0]
+        );
+      }
     }
   }
 }
