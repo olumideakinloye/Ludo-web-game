@@ -57,66 +57,148 @@ window.addEventListener("load", () => {
 });
 function transferScores(changedFlexDirection) {
   const player2InfoName = document.querySelector(".player-2-info p");
-  const player2InfoScore = document.querySelector(
-    ".player-2-info .winning-pins"
+  const player2InfoScore = document.querySelectorAll(
+    ".player-2-info .winning-pins .win-pin"
   );
   const temp1 = player2InfoName.innerText;
-  const temp2 = player2InfoScore.innerHTML;
   const player3InfoName = document.querySelector(".player-3-info p");
-  const player3InfoScore = document.querySelector(
-    ".player-3-info .winning-pins"
+  const player3InfoScore = document.querySelectorAll(
+    ".player-3-info .winning-pins .win-pin"
   );
   player2InfoName.innerText = player3InfoName.innerText;
   player2InfoScore.innerHTML = player3InfoScore.innerHTML;
-  Array.from(player2InfoScore.children)
-    .reverse()
-    .forEach((pin) => {
-      player2InfoScore.appendChild(pin);
-    });
   player3InfoName.innerText = temp1;
-  player3InfoScore.innerHTML = temp2;
-
-  Array.from(player3InfoScore.children)
-    .reverse()
-    .forEach((pin) => {
-      player3InfoScore.appendChild(pin);
-    });
+  if (changedFlexDirection == "row") {
+    for (let i = 0; i < player2InfoScore.length; i++) {
+      const winPin = player2InfoScore[i];
+      if (winPin.classList.contains("yellow-bg")) {
+        winPin.classList.remove("yellow-bg");
+        document
+          .querySelectorAll(".player-3-info .winning-pins .win-pin")
+          [player2InfoScore.length - (i + 1)].classList.add("yellow-bg");
+      }
+    }
+    for (let i = 0; i < player3InfoScore.length; i++) {
+      const winPin = player3InfoScore[i];
+      if (winPin.classList.contains("red-bg")) {
+        winPin.classList.remove("red-bg");
+        document
+          .querySelectorAll(".player-2-info .winning-pins .win-pin")
+          [player3InfoScore.length - (i + 1)].classList.add("red-bg");
+      }
+    }
+  } else if (changedFlexDirection == "column") {
+    for (let i = 0; i < player2InfoScore.length; i++) {
+      const winPin = player2InfoScore[i];
+      if (winPin.classList.contains("red-bg")) {
+        winPin.classList.remove("red-bg");
+        document
+          .querySelectorAll(".player-3-info .winning-pins .win-pin")
+          [player2InfoScore.length - (i + 1)].classList.add("red-bg");
+      }
+    }
+    for (let i = 0; i < player3InfoScore.length; i++) {
+      const winPin = player3InfoScore[i];
+      if (winPin.classList.contains("yellow-bg")) {
+        winPin.classList.remove("yellow-bg");
+        document
+          .querySelectorAll(".player-2-info .winning-pins .win-pin")
+          [player3InfoScore.length - (i + 1)].classList.add("yellow-bg");
+      }
+    }
+  }
 }
 function playerTimer(color, currentTurn) {
   initiatedtime = Date.now();
-  if (Array.isArray(color)) {
-    for (let i = 0; i < color.length; i++) {
-      const Color = color[i];
-      document
-        .querySelector(`.${Color}`)
-        .style.setProperty("--after-opacity", "1");
-      document
-        .querySelector(`.${Color}`)
-        .style.setProperty("--after-width", "100%");
+  if (gameInfo["mode"] == "offline" && gameInfo["offline-mode"] == "Bot") {
+    if (currentTurn.name == playerName) {
+      if (Array.isArray(color)) {
+        for (let i = 0; i < color.length; i++) {
+          const Color = color[i];
+          document
+            .querySelector(`.${Color}`)
+            .style.setProperty("--after-opacity", "1");
+          document
+            .querySelector(`.${Color}`)
+            .style.setProperty("--after-width", "100%");
+        }
+      } else {
+        document
+          .querySelector(`.${color}`)
+          .style.setProperty("--after-opacity", "1");
+        document
+          .querySelector(`.${color}`)
+          .style.setProperty("--after-width", "100%");
+      }
     }
   } else {
-    document
-      .querySelector(`.${color}`)
-      .style.setProperty("--after-opacity", "1");
-    document
-      .querySelector(`.${color}`)
-      .style.setProperty("--after-width", "100%");
+    if (Array.isArray(color)) {
+      for (let i = 0; i < color.length; i++) {
+        const Color = color[i];
+        document
+          .querySelector(`.${Color}`)
+          .style.setProperty("--after-opacity", "1");
+        document
+          .querySelector(`.${Color}`)
+          .style.setProperty("--after-width", "100%");
+      }
+    } else {
+      document
+        .querySelector(`.${color}`)
+        .style.setProperty("--after-opacity", "1");
+      document
+        .querySelector(`.${color}`)
+        .style.setProperty("--after-width", "100%");
+    }
   }
   switchTurnsTimeout(currentTurn);
 }
-function cancelTimer(color) {
-  document.querySelectorAll(".home").forEach((home) => {
-    home.style.setProperty("--after-opacity", "0");
-    home.style.setProperty("--after-transition", "none");
-    home.style.setProperty("--after-width", "0%");
-    setTimeout(() => {
-      home.style.removeProperty("--after-transition");
-    }, 50);
-  });
+function cancelTimer(color, turn) {
+  if (gameInfo["mode"] == "offline" && gameInfo["offline-mode"] == "Bot") {
+    const thisplayer = turn;
+    if (thisplayer.hasOwnProperty("color2")) {
+      const home1 = document.querySelector(`.${thisplayer.color1}`);
+      const home2 = document.querySelector(`.${thisplayer.color2}`);
+      if (home1.classList.contains("home")) {
+        home1.style.setProperty("--after-opacity", "0");
+        home1.style.setProperty("--after-transition", "none");
+        home1.style.setProperty("--after-width", "0%");
+        setTimeout(() => {
+          home1.style.removeProperty("--after-transition");
+        }, 50);
+      }
+      if (home2.classList.contains("home")) {
+        home2.style.setProperty("--after-opacity", "0");
+        home2.style.setProperty("--after-transition", "none");
+        home2.style.setProperty("--after-width", "0%");
+        setTimeout(() => {
+          home2.style.removeProperty("--after-transition");
+        }, 50);
+      }
+    } else {
+      const home = document.querySelector(`.${thisplayer.color}`);
+      if (home.classList.contains("home")) {
+        home.style.setProperty("--after-opacity", "0");
+        home.style.setProperty("--after-transition", "none");
+        home.style.setProperty("--after-width", "0%");
+        setTimeout(() => {
+          home.style.removeProperty("--after-transition");
+        }, 50);
+      }
+    }
+  } else {
+    document.querySelectorAll(".home").forEach((home) => {
+      home.style.setProperty("--after-opacity", "0");
+      home.style.setProperty("--after-transition", "none");
+      home.style.setProperty("--after-width", "0%");
+      setTimeout(() => {
+        home.style.removeProperty("--after-transition");
+      }, 50);
+    });
+  }
   if (color) {
     operating = true;
     pausedMove = false;
-
     if (Array.isArray(color)) {
       document
         .querySelectorAll(`.${color[0]}-bg-lighter`)

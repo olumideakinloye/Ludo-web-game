@@ -27,7 +27,7 @@ let initiatedtime;
 const adjustTimer = (turn, color, number) => {
   let timeOut;
   if (initiatedtime != undefined) {
-    const timeLeft = 10000 - Math.abs(initiatedtime - Date.now());
+    const timeLeft = 20000 - Math.abs(initiatedtime - Date.now());
     console.log(`Time left: ${timeLeft}`);
     if (timeLeft < 1700) {
       clearTimeout(timeoutId);
@@ -66,7 +66,9 @@ const adjustTimer = (turn, color, number) => {
       
       timeoutId = setTimeout(() => {
         latePlayerAlgorithm(number, color, turn)
-        switchTurns(turn, false);
+        setTimeout(() => {          
+          switchTurns(turn, false);
+        }, (200 + 200) * number);
       }, 1700);
     }else{
       return true
@@ -78,5 +80,5 @@ const adjustTimer = (turn, color, number) => {
 const switchTurnsTimeout = (turn) => {
   timeoutId = setTimeout(() => {
     switchTurns(turn, false);
-  }, 10000);
+  }, 20000);
 };

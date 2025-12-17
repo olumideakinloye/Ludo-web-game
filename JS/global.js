@@ -219,12 +219,14 @@ function randomStartGame(playering, amount) {
 
     console.log(playerInfo);
   }
+  console.log(gameInfo);
+  
 }
 function switchTurns(currentTurn, playAgain = false) {
   if (currentTurn.hasOwnProperty("color2")) {
-    cancelTimer([currentTurn.color1, currentTurn.color2]);
+    cancelTimer([currentTurn.color1, currentTurn.color2], currentTurn);
   } else {
-    cancelTimer(currentTurn.color);
+    cancelTimer(currentTurn.color, currentTurn);
   }
   let currentPlayerInfo = "";
   let nextPlayerInfo = "";
@@ -824,9 +826,9 @@ function pickRandomPin(color) {
 }
 function pickedPin(element, pickedColor, number, currentTurn, e) {
   if (currentTurn.hasOwnProperty("color2")) {
-    cancelTimer([currentTurn.color1, currentTurn.color2]);
+    cancelTimer([currentTurn.color1, currentTurn.color2], currentTurn);
   } else {
-    cancelTimer(pickedColor);
+    cancelTimer(pickedColor, currentTurn);
   }
   operating = true;
   pausedMove = false;
@@ -1028,6 +1030,7 @@ function pickedPin(element, pickedColor, number, currentTurn, e) {
 }
 function resizePinForGoal(element, color, number, turn) {
   let box = element.parentElement;
+  element.remove();
   const playedColor = element.classList[1].split("-")[0];
   let winningPins;
   let losingPins;
@@ -1066,11 +1069,6 @@ function resizePinForGoal(element, color, number, turn) {
     );
   }
   if (Array.isArray(color)) {
-    // if (gameInfo["currentTurn"] == 0) {
-    //   gameInfo["currentTurn"] = 1;
-    // } else if (gameInfo["currentTurn"] == 1) {
-    //   gameInfo["currentTurn"] = 0;
-    // }
     if (
       (document.querySelectorAll(`.winning-pins .${color[0]}-bg`).length == 3 &&
         document.querySelectorAll(`.winning-pins .${color[1]}-bg`).length ==
@@ -1082,11 +1080,6 @@ function resizePinForGoal(element, color, number, turn) {
       declearWinner(turn);
       return;
     }
-    // if (number === 6) {
-    //   switchTurns(players[gameInfo["currentTurn"]], true);
-    // } else {
-    //   switchTurns(players[gameInfo["currentTurn"]], false);
-    // }
   } else {
     if (document.querySelectorAll(`.winning-pins .${color}-bg`).length == 3) {
       if (turn.color == "blue") {
@@ -1146,7 +1139,6 @@ function resizePinForGoal(element, color, number, turn) {
       }
       if ("positions" in gameInfo) {
         console.log(gameInfo["positions"]);
-
         if (gameInfo["positions"].length == 0) {
           gameInfo["positions"].push({ name: turn.name, position: 1 });
         } else if (gameInfo["positions"].length < 4) {
@@ -1188,7 +1180,11 @@ function resizePinForGoal(element, color, number, turn) {
       if (players.length === 4) {
         playAgainPlayers = JSON.parse(JSON.stringify(players));
       }
+      console.log(turn);
+      
       players = players.filter((player) => player.name !== turn.name);
+      console.log(players);
+      
       if (
         window.getComputedStyle(document.querySelector(".board-bg"))
           .flexDirection == "row"
@@ -1217,10 +1213,8 @@ function resizePinForGoal(element, color, number, turn) {
           }
         }
       }
-      element.remove();
       if (box.classList.contains("box")) {
         if (box.querySelectorAll(".pin").length > 1) {
-          // resetPinSizes(color, box, null, element);
         }
       }
       document.querySelector(`.player-${turn.number}-cover`).style.display ==
@@ -1232,9 +1226,7 @@ function resizePinForGoal(element, color, number, turn) {
         return;
       }
       switchTurns(players[gameInfo["currentTurn"]], true);
-      // resetPinSizes(color, box, null, element)
       return;
-      // declearWinner(turn);
     }
   }
   if (
@@ -1265,10 +1257,8 @@ function resizePinForGoal(element, color, number, turn) {
       }
     }
   }
-  element.remove();
   if (box.classList.contains("box")) {
     if (box.querySelectorAll(".pin").length > 1) {
-      // resetPinSizes(color, box, null, element);
     }
   }
   if (number == 6) {
@@ -1280,15 +1270,14 @@ function resizePinForGoal(element, color, number, turn) {
   }
   console.log(box);
   console.log(`data-${element.classList[1].split("-")[0]}-step`);
-
-  // let stoppingBox = document.querySelector(`.box[data-${element.classList[1].split("-")[0]}-step="${parseInt(box.getAttribute(`data-${element.classList[1].split("-")[0]}-step`)) + number}"]`);
-  // console.log(stoppingBox);
-  // resetPinSizes(color, box, null, null)
 }
 function playAgain(Players) {
-  document
-    .getElementById("play-again")
-    .removeEventListener("click", clickPlayAgain);
+  if(document
+    .getElementById("play-again")){
+      document
+        .getElementById("play-again")
+        .removeEventListener("click", clickPlayAgain);
+    }
   console.log(Players);
   if (Players) {
     if (gameInfo["positions"].length > 0) {

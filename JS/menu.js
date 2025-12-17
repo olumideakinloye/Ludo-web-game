@@ -1,5 +1,6 @@
 
 function offlineMode() {
+  gameInfo["mode"] = "offline"
   document.getElementById("pop-up").innerHTML = `
   <div class="players">
     <button onclick="offlineVersion('Bot')">Play with Bot</button>
@@ -209,6 +210,8 @@ function displayMenu() {
 }
 function declearWinner(winner) {
   displayMenu();
+  console.log(gameInfo);
+  
   const cube = document.getElementById("rool-dice");
   if (cube.style.display == "block" || cube.style.display) {
     cube.style.display = "none";
@@ -326,4 +329,62 @@ function alertPlayer(display, message) {
     alert.style.paddingTop = "0";
     alert.querySelector("p").innerText = "";
   }
+}
+function displayInGameMenu(){
+  // Parent cover
+const menuCover = document.createElement("div");
+menuCover.className = "in-game-menu-cover";
+menuCover.id = "in-game-menu";
+
+// Inner menu
+const menu = document.createElement("div");
+menu.className = "in-game-menu";
+
+// Cancel button
+const cancelBtn = document.createElement("div");
+cancelBtn.className = "in-game-menu-btn cancel";
+cancelBtn.addEventListener("click", closeInGameMenu);
+
+// Icon
+const icon = document.createElement("i");
+icon.className = "fa-solid fa-xmark";
+
+// Assemble cancel button
+cancelBtn.appendChild(icon);
+
+// Action buttons
+const quitBtn = document.createElement("button");
+quitBtn.textContent = "Quit game";
+quitBtn.addEventListener("click", () => {
+  closeInGameMenu();
+  mainMenu();
+})
+
+const restartBtn = document.createElement("button");
+restartBtn.textContent = "Restart game";
+restartBtn.addEventListener("click", () => {
+  closeInGameMenu()
+  playAgain(players)
+})
+
+const muteBtn = document.createElement("button");
+muteBtn.textContent = "Mute game";
+
+// Assemble menu
+menu.append(
+  cancelBtn,
+  quitBtn,
+  restartBtn,
+  muteBtn
+);
+
+// Assemble cover
+menuCover.appendChild(menu);
+
+// Add to the page (e.g. end of <body>)
+  document.querySelector(".container").appendChild(menuCover)
+}
+function closeInGameMenu(){
+  document.getElementById("in-game-menu").style.display = "none";
+  document.getElementById("in-game-menu").remove();
 }

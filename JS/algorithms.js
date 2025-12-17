@@ -81,7 +81,7 @@ function gameAlgorithm(number, color, turn) {
               });
           } else {
             console.log("no color array");
-            cancelTimer();
+            cancelTimer(color, turn);
             let pin = pickRandomPin(color);
             if (!pin.parentElement.getAttribute(`data-${color}-step`)) {
               if (
@@ -229,7 +229,7 @@ function gameAlgorithm(number, color, turn) {
                     false
                   )
                 ) {
-                  cancelTimer();
+                  cancelTimer(color, turn);
                   pinAnimation(
                     turn,
                     lastPin,
@@ -252,7 +252,7 @@ function gameAlgorithm(number, color, turn) {
                     // resetPinSizes(color, stoppingBox, null, null)
                   }, timeOut);
                 } else {
-                  cancelTimer();
+                  cancelTimer(color, turn);
                   pinAnimation(
                     turn,
                     lastPin,
@@ -267,7 +267,7 @@ function gameAlgorithm(number, color, turn) {
                   }, timeOut);
                 }
               } else if (CheakBoxesLeft(color, number, lastPin) === "Goal") {
-                cancelTimer();
+                cancelTimer(color, turn);
                 pinAnimation(
                   turn,
                   lastPin,
@@ -349,7 +349,7 @@ function gameAlgorithm(number, color, turn) {
                 false
               )
             ) {
-              cancelTimer();
+              cancelTimer(color, turn);
               pinAnimation(
                 turn,
                 pin,
@@ -368,7 +368,7 @@ function gameAlgorithm(number, color, turn) {
               }, timeOut);
             } else {
               if (CheakBoxesLeft(color, number, pin) === true) {
-                cancelTimer();
+                cancelTimer(color, turn);
                 pinAnimation(
                   turn,
                   pin,
@@ -382,7 +382,7 @@ function gameAlgorithm(number, color, turn) {
                   switchTurns(turn, false);
                 }, timeOut);
               } else if (CheakBoxesLeft(color, number, pin) === "Goal") {
-                cancelTimer();
+                cancelTimer(color, turn);
                 pinAnimation(
                   turn,
                   pin,
@@ -764,61 +764,69 @@ function latePlayerAlgorithm(number, color, turn) {
       //-----------------Pin exists outside the home-----------------//
       if (pinPlayed(color, "1")) {
         //------------------Only one pin exists outside the home--------------//
-        const playedPin = getPlayedPin(color);
-        if (CheakBoxesLeft(color, number, playedPin) == true) {
-          //----------There are enough boxes to move the pin forwards----------//
-          const currentColorStep = parseInt(
-            playedPin.parentElement.getAttribute(
-              `data-${playedPin.classList[1].split("-")[0]}-step`
-            )
-          );
-          pinAnimation(
-            turn,
-            playedPin,
-            playedPin.parentElement,
-            number,
-            playedPin.classList[1].split("-")[0]
-          );
-          if (
-            checkOpponentPin(
-              color,
-              document.querySelector(
-                `.box[data-${playedPin.classList[1].split("-")[0]}-step="${
-                  currentColorStep + number
-                }"]`
-              ),
-              false
-            )
-          ) {
-            //-----Opponent's pin is in the landing box therefore aliminate opponent's pin-----//
-            const eliminatingColor = checkOpponentPin(
-              color,
-              document.querySelector(
-                `.box[data-${playedPin.classList[1].split("-")[0]}-step="${
-                  currentColorStep + number
-                }"]`
-              ),
-              false
+        const playedBox = getPlayedPin(color);
+        const playedPin = playedBox.querySelector(".pin");
+        if (playedPin) {
+          if (CheakBoxesLeft(color, number, playedPin) == true) {
+            //----------There are enough boxes to move the pin forwards----------//
+            const currentColorStep = parseInt(
+              playedBox.getAttribute(
+                `data-${playedPin.classList[1].split("-")[0]}-step`
+              )
+            );
+            pinAnimation(
+              turn,
+              playedPin,
+              playedBox,
+              number,
+              playedPin.classList[1].split("-")[0]
+            );
+            if (
+              checkOpponentPin(
+                color,
+                document.querySelector(
+                  `.box[data-${playedPin.classList[1].split("-")[0]}-step="${
+                    currentColorStep + number
+                  }"]`
+                ),
+                false
+              )
+            ) {
+              //-----Opponent's pin is in the landing box therefore aliminate opponent's pin-----//
+              const eliminatingColor = checkOpponentPin(
+                color,
+                document.querySelector(
+                  `.box[data-${playedPin.classList[1].split("-")[0]}-step="${
+                    currentColorStep + number
+                  }"]`
+                ),
+                false
+              );
+              setTimeout(() => {
+                movePinHome(
+                  eliminatingColor,
+                  currentColorStep + number - 1,
+                  turn,
+                  playedPin
+                );
+                resizePinForGoal(playedPin, eliminatingColor, number, turn);
+              }, timeOut);
+              return;
+            }
+          } else if (CheakBoxesLeft(color, number, playedPin) == false) {
+          } else if (CheakBoxesLeft(color, number, playedPin) == "Goal") {
+            pinAnimation(
+              turn,
+              playedPin,
+              playedBox,
+              number,
+              playedPin.classList[1].split("-")[0]
             );
             setTimeout(() => {
-              movePinHome(eliminatingColor, currentColorStep + number - 1, turn, playedPin);
-              resizePinForGoal(playedPin, eliminatingColor, number, turn);
+              resizePinForGoal(playedPin, color, number, turn);
             }, timeOut);
             return;
           }
-        } else if (CheakBoxesLeft(color, number, playedPin) == false) {
-        } else if (CheakBoxesLeft(color, number, playedPin) == "Goal") {
-          pinAnimation(
-            turn,
-            playedPin,
-            playedPin.parentElement,
-            number,
-            playedPin.classList[1].split("-")[0]
-          );
-          setTimeout(() => {
-            resizePinForGoal(playedPin, color, number, turn);
-          }, timeOut);
-          return;
         }
       } else {
         //--More than one pin exists outside the home therefore pick random pin to move outside or around the outside of the the home--//
@@ -875,7 +883,12 @@ function latePlayerAlgorithm(number, color, turn) {
               false
             );
             setTimeout(() => {
-              movePinHome(eliminatingColor, currentColorStep + number - 1, turn, pin);
+              movePinHome(
+                eliminatingColor,
+                currentColorStep + number - 1,
+                turn,
+                pin
+              );
               resizePinForGoal(pin, eliminatingColor, number, turn);
             }, timeOut);
           } else {

@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="CSS/Dice-stylesheet.css" />
+    <link rel="stylesheet" href="CSS/menu.css" />
     <link rel="stylesheet" href="CSS/Color-Pic-stylesheet.css" />
     <link rel="stylesheet" href="CSS/ludo-stylesheet.css" />
-    <link rel="stylesheet" href="./CSS/media.css">
-    <link rel="stylesheet" href="./CSS/Baloon-animation-stylesheet.css">
+    <link rel="stylesheet" href="./CSS/media.css" />
+    <link rel="stylesheet" href="./CSS/Baloon-animation-stylesheet.css" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
@@ -35,11 +36,14 @@
       </div>
     </div> -->
     <div class="container">
+      <div class="in-game-menu-btn" onclick="displayInGameMenu()">
+        <i class="fa-solid fa-ellipsis"></i>
+      </div>
       <div class="alert-player">
-            <div class="alert-box" id="alert">
-              <p></p>
-            </div>
-          </div>
+        <div class="alert-box" id="alert">
+          <p></p>
+        </div>
+      </div>
       <div class="pop-up-cover">
         <div class="pop-up" id="pop-up">
           <div class="players">
@@ -64,8 +68,8 @@
           </div>
           <div class="player player-2-info">
             <div class="player-cover player-2-cover"></div>
-             <div class="player-info">
-             <p></p>
+            <div class="player-info">
+              <p></p>
             </div>
             <div class="winning-pins">
               <div class="win-pin win-yellow-pin pin"></div>
@@ -74,9 +78,7 @@
               <div class="win-pin win-yellow-pin pin"></div>
             </div>
           </div>
-          
         </div>
-
         <div class="board">
           <div class="board-cover"></div>
           <div class="green green-bg home">
@@ -609,6 +611,6 @@
         </div>
       </div>
     </div>
-        <script src="./JS/init.js"></script>
+    <script src="./JS/init.js"></script>
   </body>
 </html>
