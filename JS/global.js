@@ -109,10 +109,12 @@ function startGame(playerName) {
       }
     }
   }
+  gameInfo["play-state"] = "play";
   removeMenu();
   randomStartGame("with-AI", numberOfPlayers);
 }
 function randomStartGame(playering, amount) {
+  gameInfo["play-state"] = "play";
   gameInfo["currentTurn"] = Math.floor(Math.random() * players.length);
   const randomStarter = players[gameInfo["currentTurn"]];
   const playerInfos = document.querySelectorAll(".player");
@@ -220,7 +222,6 @@ function randomStartGame(playering, amount) {
     console.log(playerInfo);
   }
   console.log(gameInfo);
-  
 }
 function switchTurns(currentTurn, playAgain = false) {
   if (currentTurn.hasOwnProperty("color2")) {
@@ -607,6 +608,10 @@ function switchTurns(currentTurn, playAgain = false) {
       currentPlayerInfo.name == playerName &&
       nextPlayerInfo.name != playerName
     ) {
+      if (document.getElementById("restart-btn")) {
+        restartBtn = document.getElementById("restart-btn");
+        restartBtn.disabled = true;
+      }
       operating = true;
       document.getElementById("rool-dice").removeAttribute("data-turn");
       let message = `${nextPlayerInfo.name}'s turn`;
@@ -622,6 +627,11 @@ function switchTurns(currentTurn, playAgain = false) {
       currentPlayerInfo.name != playerName &&
       nextPlayerInfo.name != playerName
     ) {
+      if (document.getElementById("restart-btn")) {
+        restartBtn = document.getElementById("restart-btn");
+        restartBtn.disabled = true;
+      }
+
       operating = true;
       document.getElementById("rool-dice").removeAttribute("data-turn");
       let message = `${nextPlayerInfo.name}'s turn`;
@@ -637,6 +647,11 @@ function switchTurns(currentTurn, playAgain = false) {
       currentPlayerInfo.name != playerName &&
       nextPlayerInfo.name == playerName
     ) {
+      if (document.getElementById("restart-btn")) {
+        restartBtn = document.getElementById("restart-btn");
+        restartBtn.disabled = true;
+      }
+
       operating = true;
       document
         .getElementById("rool-dice")
@@ -648,6 +663,11 @@ function switchTurns(currentTurn, playAgain = false) {
       const timeOut = message.length * 100;
       alertPlayer("block", message);
       setTimeout(() => {
+        if (document.getElementById("restart-btn")) {
+          restartBtn = document.getElementById("restart-btn");
+          restartBtn.disabled = false;
+        }
+
         operating = false;
         if (nextPlayerInfo.hasOwnProperty("color2")) {
           playerTimer(
@@ -1181,10 +1201,10 @@ function resizePinForGoal(element, color, number, turn) {
         playAgainPlayers = JSON.parse(JSON.stringify(players));
       }
       console.log(turn);
-      
+
       players = players.filter((player) => player.name !== turn.name);
       console.log(players);
-      
+
       if (
         window.getComputedStyle(document.querySelector(".board-bg"))
           .flexDirection == "row"
@@ -1272,14 +1292,20 @@ function resizePinForGoal(element, color, number, turn) {
   console.log(`data-${element.classList[1].split("-")[0]}-step`);
 }
 function playAgain(Players) {
-  if(document
-    .getElementById("play-again")){
-      document
-        .getElementById("play-again")
-        .removeEventListener("click", clickPlayAgain);
-    }
-  console.log(Players);
+  if (document.getElementById("play-again")) {
+    document
+      .getElementById("play-again")
+      .removeEventListener("click", clickPlayAgain);
+  }
   if (Players) {
+    document.querySelectorAll(".home").forEach((home) => {
+      home.style.setProperty("--after-opacity", "0");
+      home.style.setProperty("--after-transition", "none");
+      home.style.setProperty("--after-width", "0%");
+      setTimeout(() => {
+        home.style.removeProperty("--after-transition");
+      }, 50);
+    });
     if (gameInfo["positions"].length > 0) {
       gameInfo["positions"] = [];
       players.length = 0;
@@ -1300,6 +1326,15 @@ function playAgain(Players) {
   }
 }
 function resetBoard() {
+  gameInfo["play-state"] = "pause";
+  document.querySelectorAll(".home").forEach((home) => {
+    home.style.setProperty("--after-opacity", "0");
+    home.style.setProperty("--after-transition", "none");
+    home.style.setProperty("--after-width", "0%");
+    setTimeout(() => {
+      home.style.removeProperty("--after-transition");
+    }, 50);
+  });
   document.querySelectorAll(".board .pin").forEach((pin) => {
     pin.remove();
   });
@@ -1816,8 +1851,9 @@ function roolDice(turn) {
   }
   console.log(turn);
   if (
-    (operating == false && turn.name == playerName && pausedMove == false) ||
-    (operating == true && turn.name != playerName && pausedMove == false)
+    ((operating == false && turn.name == playerName && pausedMove == false) ||
+      (operating == true && turn.name != playerName && pausedMove == false)) &&
+    gameInfo["play-state"] === "play"
   ) {
     console.log("good");
 
@@ -1858,7 +1894,7 @@ function roolDice(turn) {
           }
         }, 1700);
       }
-    }else{
+    } else {
       setTimeout(() => {
         if (
           document.getElementById("rool-dice").getAttribute("data-turn") ==

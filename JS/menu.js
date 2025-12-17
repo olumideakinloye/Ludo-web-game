@@ -1,6 +1,5 @@
-
 function offlineMode() {
-  gameInfo["mode"] = "offline"
+  gameInfo["mode"] = "offline";
   document.getElementById("pop-up").innerHTML = `
   <div class="players">
     <button onclick="offlineVersion('Bot')">Play with Bot</button>
@@ -133,6 +132,9 @@ function displayColors() {
   }
 }
 function mainMenu() {
+  if (document.querySelector(".pop-up-cover").style.display === "none") {
+    document.querySelector(".pop-up-cover").style.display = "flex";
+  }
   if (players.length > 0) {
     players.length = 0;
     console.log(players);
@@ -211,7 +213,7 @@ function displayMenu() {
 function declearWinner(winner) {
   displayMenu();
   console.log(gameInfo);
-  
+
   const cube = document.getElementById("rool-dice");
   if (cube.style.display == "block" || cube.style.display) {
     cube.style.display = "none";
@@ -330,61 +332,63 @@ function alertPlayer(display, message) {
     alert.querySelector("p").innerText = "";
   }
 }
-function displayInGameMenu(){
+function displayInGameMenu() {
   // Parent cover
-const menuCover = document.createElement("div");
-menuCover.className = "in-game-menu-cover";
-menuCover.id = "in-game-menu";
+  const menuCover = document.createElement("div");
+  menuCover.className = "in-game-menu-cover";
+  menuCover.id = "in-game-menu";
 
-// Inner menu
-const menu = document.createElement("div");
-menu.className = "in-game-menu";
+  // Inner menu
+  const menu = document.createElement("div");
+  menu.className = "in-game-menu";
 
-// Cancel button
-const cancelBtn = document.createElement("div");
-cancelBtn.className = "in-game-menu-btn cancel";
-cancelBtn.addEventListener("click", closeInGameMenu);
+  // Cancel button
+  const cancelBtn = document.createElement("div");
+  cancelBtn.className = "in-game-menu-btn cancel";
+  cancelBtn.addEventListener("click", closeInGameMenu);
 
-// Icon
-const icon = document.createElement("i");
-icon.className = "fa-solid fa-xmark";
+  // Icon
+  const icon = document.createElement("i");
+  icon.className = "fa-solid fa-xmark";
 
-// Assemble cancel button
-cancelBtn.appendChild(icon);
+  // Assemble cancel button
+  cancelBtn.appendChild(icon);
 
-// Action buttons
-const quitBtn = document.createElement("button");
-quitBtn.textContent = "Quit game";
-quitBtn.addEventListener("click", () => {
-  closeInGameMenu();
-  mainMenu();
-})
+  // Action buttons
+  const quitBtn = document.createElement("button");
+  quitBtn.textContent = "Quit game";
+  quitBtn.addEventListener("click", () => {
+    closeInGameMenu();
+    mainMenu();
+    resetBoard();
+  });
 
-const restartBtn = document.createElement("button");
-restartBtn.textContent = "Restart game";
-restartBtn.addEventListener("click", () => {
-  closeInGameMenu()
-  playAgain(players)
-})
+  const restartBtn = document.createElement("button");
+  restartBtn.textContent = "Restart game";
+  restartBtn.id = "restart-btn";
+  restartBtn.addEventListener("click", () => {
+    closeInGameMenu();
+    playAgain(players);
+  });
+  if (operating === false) {
+    restartBtn.disabled = false;
+  } else {
+    restartBtn.disabled = true;
+  }
 
-const muteBtn = document.createElement("button");
-muteBtn.textContent = "Mute game";
+  const muteBtn = document.createElement("button");
+  muteBtn.textContent = "Mute game";
 
-// Assemble menu
-menu.append(
-  cancelBtn,
-  quitBtn,
-  restartBtn,
-  muteBtn
-);
+  // Assemble menu
+  menu.append(cancelBtn, quitBtn, restartBtn, muteBtn);
 
-// Assemble cover
-menuCover.appendChild(menu);
+  // Assemble cover
+  menuCover.appendChild(menu);
 
-// Add to the page (e.g. end of <body>)
-  document.querySelector(".container").appendChild(menuCover)
+  // Add to the page (e.g. end of <body>)
+  document.querySelector(".container").appendChild(menuCover);
 }
-function closeInGameMenu(){
+function closeInGameMenu() {
   document.getElementById("in-game-menu").style.display = "none";
   document.getElementById("in-game-menu").remove();
 }
