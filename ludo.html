@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="CSS/Dice-stylesheet.css" />
+    <link rel="stylesheet" href="CSS/menu.css" />
+    <link rel="stylesheet" href="CSS/Color-Pic-stylesheet.css" />
+    <link rel="stylesheet" href="CSS/ludo-stylesheet.css" />
+    <link rel="stylesheet" href="./CSS/media.css" />
+    <link rel="stylesheet" href="./CSS/Baloon-animation-stylesheet.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="./JS/modelConnection.js"></script>
+    <script src="./JS/algorithms.js"></script>
+    <script src="./JS/styleAdjustments.js"></script>
+    <script src="./JS/global.js"></script>
+    <script src="./JS/menu.js"></script>
+    <script src="./JS/animations.js"></script>
+    <script type="module" src="./JS/ludoModules.js"></script>
+    <title>Ludo</title>
+  </head>
+
+  <body>
+    <!-- <audio autoplay loop>
+      <source src="SINISTRA - Shonci x Hr.caf" type="audio/mpeg">
+    </audio> -->
+    <!-- <div class="bg-animation">
+      <div class="baloon-1">
+        <div class="baloon">
+        </div>
+        <div class="baloon baloon2">
+        </div>
+      </div>
+    </div> -->
+    <div class="container">
+      <div class="alert-player">
+        <div class="alert-box" id="alert">
+          <p></p>
+        </div>
+      </div>
+      <div class="pop-up-cover">
+        <div class="pop-up" id="pop-up">
+          <div class="players-num">
+            <p class="headers">Select players</p>
+            <div class="options">
+              <div class="option">
+                <input
+                  class="radio-number"
+                  required
+                  type="radio"
+                  name="number-of-players"
+                  id="2"
+                  value="2"
+                />
+                <label for="2">2 Players</label>
+              </div>
+              <div class="option">
+                <input
+                  class="radio-number"
+                  required
+                  type="radio"
+                  name="number-of-players"
+                  id="4"
+                  value="4"
+                />
+                <label for="4">4 Players</label>
+              </div>
+            </div>
+            <div class="single-player-info-buttons">
+              <button
+                onclick='moduleConnections("setPlayerNumber",document.querySelector(".options input[name=\"number-of-players\"]:checked").value)'
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="board-bg">
+        <div class="player-game-info">
+          <div class="player player-1-info">
+            <div class="player-cover player-1-cover"></div>
+            <div class="player-info">
+              <p></p>
+            </div>
+            <div class="winning-pins">
+              <div class="win-pin win-green-pin pin"></div>
+              <div class="win-pin win-green-pin pin"></div>
+              <div class="win-pin win-green-pin pin"></div>
+              <div class="win-pin win-green-pin pin"></div>
+            </div>
+          </div>
+          <div class="player player-2-info">
+            <div class="player-cover player-2-cover"></div>
+            <div class="player-info">
+              <p></p>
+            </div>
+            <div class="winning-pins">
+              <div class="win-pin win-yellow-pin pin"></div>
+              <div class="win-pin win-yellow-pin pin"></div>
+              <div class="win-pin win-yellow-pin pin"></div>
+              <div class="win-pin win-yellow-pin pin"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="board">
+          <div class="in-game-menu-btn" onclick="displayInGameMenu()">
+            <i class="fa-solid fa-ellipsis"></i>
+          </div>
+          <div class="board-cover"></div>
+          <div class="green green-bg home">
+            <div class="flash"></div>
+            <div class="pins">
+              <div
+                class="pin green-bg-lighter green-pin-1 pin-in-parent-1"
+              ></div>
+              <div
+                class="pin green-bg-lighter green-pin-2 pin-in-parent-2"
+              ></div>
+              <div
+                class="pin green-bg-lighter green-pin-3 pin-in-parent-3"
+              ></div>
+              <div
+                class="pin green-bg-lighter green-pin-4 pin-in-parent-4"
+              ></div>
+            </div>
+          </div>
+          <div class="boxes">
+            <div
+              class="box white-box-1-1 step-1"
+              data-blue-step="37"
+              data-red-step="24"
+              data-yellow-step="50"
+              data-green-step="11"
+            ></div>
+            <div
+              class="box white-box-1-2 step-2"
+              data-blue-step="38"
+              data-red-step="25"
+              data-yellow-step="51"
+              data-green-step="12"
+              style="position: relative"
+            >
+              <i
+                class="fa-solid fa-turn-down arrow-icon"
+                style="margin-bottom: -100%"
+              ></i>
+            </div>
+            <div
+              class="box white-box-1-3 step-3"
+              data-blue-step="39"
+              data-red-step="26"
+              data-green-step="13"
+            ></div>
+            <div
+              class="box white-box-1-4 step-52"
+              data-blue-step="36"
+              data-red-step="23"
+              data-yellow-step="49"
+              data-green-step="10"
+            ></div>
+            <div class="box yellow-bg" data-yellow-step="52"></div>
+            <div
+              class="box yellow-bg step-4"
+              data-blue-step="40"
+              data-red-step="27"
+              data-yellow-step="1"
+              data-green-step="14"
+            ></div>
+            <div
+              class="box white-box-1-5 step-51 grid"
+              data-blue-step="35"
+              data-red-step="22"
+              data-yellow-step="48"
+              data-green-step="9"
+            ></div>
+            <div class="box yellow-bg" data-yellow-step="53"></div>
+            <div
+              class="box white-box-1-6 step-5"
+              data-blue-step="41"
+              data-red-step="28"
+              data-yellow-step="2"
+              data-green-step="15"
+            ></div>
+            <div
+              class="box white-box-1-7 step-50"
+              data-blue-step="34"
+              data-red-step="21"
+              data-yellow-step="47"
+              data-green-step="8"
+            ></div>
+            <div class="box yellow-bg" data-yellow-step="54"></div>
+            <div
+              class="box white-box-1-8 step-6"
+              data-blue-step="42"
+              data-red-step="29"
+              data-yellow-step="3"
+              data-green-step="16"
+            ></div>
+            <div
+              class="box white-box-1-9 step-49"
+              data-blue-step="33"
+              data-red-step="20"
+              data-yellow-step="46"
+              data-green-step="7"
+            ></div>
+            <div class="box yellow-bg" data-yellow-step="55"></div>
+            <div
+              class="box white-box-1-10 step-7"
+              data-blue-step="43"
+              data-red-step="30"
+              data-yellow-step="4"
+              data-green-step="17"
+            ></div>
+            <div
+              class="box white-box-1-11 step-48"
+              data-blue-step="32"
+              data-red-step="19"
+              data-yellow-step="45"
+              data-green-step="6"
+            ></div>
+            <div class="box yellow-bg" data-yellow-step="56"></div>
+            <div
+              class="box white-box-1-12 step-8"
+              data-blue-step="44"
+              data-red-step="31"
+              data-yellow-step="5"
+              data-green-step="18"
+            ></div>
+          </div>
+          <div class="yellow yellow-bg home">
+            <div class="flash"></div>
+            <div class="pins">
+              <div
+                class="pin yellow-bg-lighter yellow-pin-1 pin-in-parent-1"
+              ></div>
+              <div
+                class="pin yellow-bg-lighter yellow-pin-2 pin-in-parent-2"
+              ></div>
+              <div
+                class="pin yellow-bg-lighter yellow-pin-3 pin-in-parent-3"
+              ></div>
+              <div
+                class="pin yellow-bg-lighter yellow-pin-4 pin-in-parent-4"
+              ></div>
+            </div>
+          </div>
+          <div class="middle-boxes 1">
+            <div
+              class="box white-box-2-1 step-42"
+              data-blue-step="26"
+              data-red-step="13"
+              data-yellow-step="39"
+            ></div>
+            <div
+              class="box green-bg step-43 green-startGame"
+              data-blue-step="27"
+              data-red-step="14"
+              data-yellow-step="40"
+              data-green-step="1"
+            ></div>
+            <div
+              class="box white-box-2-2 step-44"
+              data-blue-step="28"
+              data-red-step="15"
+              data-yellow-step="41"
+              data-green-step="2"
+            ></div>
+            <div
+              class="box white-box-2-3 step-45"
+              data-blue-step="29"
+              data-red-step="16"
+              data-yellow-step="42"
+              data-green-step="3"
+            ></div>
+            <div
+              class="box white-box-2-4 step-46"
+              data-blue-step="30"
+              data-red-step="17"
+              data-yellow-step="43"
+              data-green-step="4"
+            ></div>
+            <div
+              class="box white-box-2-5 step-47"
+              data-blue-step="31"
+              data-red-step="18"
+              data-yellow-step="44"
+              data-green-step="5"
+            ></div>
+            <div
+              class="box white-box-2-6 step-41"
+              data-blue-step="25"
+              data-red-step="12"
+              data-yellow-step="38"
+              data-green-step="51"
+              style="position: relative"
+            >
+              <i
+                class="fa-solid fa-turn-down arrow-icon"
+                style="margin-right: -100%; transform: rotateZ(-90deg)"
+              ></i>
+            </div>
+            <div class="box green-bg" data-green-step="52"></div>
+            <div class="box green-bg" data-green-step="53"></div>
+            <div class="box green-bg" data-green-step="54"></div>
+            <div class="box green-bg" data-green-step="55"></div>
+            <div class="box green-bg" data-green-step="56"></div>
+            <div
+              class="box white-box-2-7 step-40"
+              data-blue-step="24"
+              data-red-step="11"
+              data-yellow-step="37"
+              data-green-step="50"
+            ></div>
+            <div
+              class="box white-box-2-8 step-39"
+              data-blue-step="23"
+              data-red-step="10"
+              data-yellow-step="36"
+              data-green-step="49"
+            ></div>
+            <div
+              class="box white-box-2-9 step-38"
+              data-blue-step="22"
+              data-red-step="9"
+              data-yellow-step="35"
+              data-green-step="48"
+            ></div>
+            <div
+              class="box white-box-2-10 step-37"
+              data-blue-step="21"
+              data-red-step="8"
+              data-yellow-step="34"
+              data-green-step="47"
+            ></div>
+            <div
+              class="box white-box-2-11 step-36"
+              data-blue-step="20"
+              data-red-step="7"
+              data-yellow-step="33"
+              data-green-step="46"
+            ></div>
+            <div
+              class="box white-box-2-12 step-35"
+              data-blue-step="19"
+              data-red-step="6"
+              data-yellow-step="32"
+              data-green-step="45"
+            ></div>
+          </div>
+          <div class="middle">
+            <div class="dice-box" id="rool-dice" data-turn="">
+              <div class="dice face-1">
+                <div class="one dice-num"></div>
+              </div>
+              <div class="dice face-2">
+                <div class="two dice-num"></div>
+                <div class="two dice-num"></div>
+              </div>
+              <div class="dice face-3">
+                <div class="three dice-num"></div>
+                <div class="three dice-num"></div>
+                <div class="three dice-num"></div>
+              </div>
+              <div class="dice face-4">
+                <div class="four dice-num"></div>
+                <div class="four dice-num"></div>
+                <div class="four dice-num"></div>
+                <div class="four dice-num"></div>
+              </div>
+              <div class="dice face-5">
+                <div class="five dice-num"></div>
+                <div class="five dice-num"></div>
+                <div class="five dice-num"></div>
+                <div class="five dice-num"></div>
+                <div class="five dice-num"></div>
+              </div>
+              <div class="dice face-6">
+                <div class="six dice-num"></div>
+                <div class="six dice-num"></div>
+                <div class="six dice-num"></div>
+                <div class="six dice-num"></div>
+                <div class="six dice-num"></div>
+                <div class="six dice-num"></div>
+              </div>
+            </div>
+          </div>
+          <div class="middle-boxes 2">
+            <div
+              class="box white-box-3-1 step-9"
+              data-blue-step="45"
+              data-red-step="32"
+              data-yellow-step="6"
+              data-green-step="19"
+            ></div>
+            <div
+              class="box white-box-3-2 step-10"
+              data-blue-step="46"
+              data-red-step="33"
+              data-yellow-step="7"
+              data-green-step="20"
+            ></div>
+            <div
+              class="box white-box-3-3 step-11"
+              data-blue-step="47"
+              data-red-step="34"
+              data-yellow-step="8"
+              data-green-step="21"
+            ></div>
+            <div
+              class="box white-box-3-4 step-12"
+              data-blue-step="48"
+              data-red-step="35"
+              data-yellow-step="9"
+              data-green-step="22"
+            ></div>
+            <div
+              class="box white-box-3-5 step-13"
+              data-blue-step="49"
+              data-red-step="36"
+              data-yellow-step="10"
+              data-green-step="23"
+            ></div>
+            <div
+              class="box white-box-3-6 step-14"
+              data-blue-step="50"
+              data-red-step="37"
+              data-yellow-step="11"
+              data-green-step="24"
+            ></div>
+            <div class="box blue-bg" data-blue-step="56"></div>
+            <div class="box blue-bg" data-blue-step="55"></div>
+            <div class="box blue-bg" data-blue-step="54"></div>
+            <div class="box blue-bg" data-blue-step="53"></div>
+            <div class="box blue-bg" data-blue-step="52"></div>
+            <div
+              class="box white-box-3-7 step-15"
+              data-blue-step="51"
+              data-red-step="38"
+              data-yellow-step="12"
+              data-green-step="25"
+              style="position: relative"
+            >
+              <i
+                class="fa-solid fa-turn-down arrow-icon"
+                style="margin-left: -100%; transform: rotateZ(90deg)"
+              ></i>
+            </div>
+            <div
+              class="box white-box-3-8 step-21"
+              data-blue-step="5"
+              data-red-step="44"
+              data-yellow-step="18"
+              data-green-step="31"
+            ></div>
+            <div
+              class="box white-box-3-9 step-20"
+              data-blue-step="4"
+              data-red-step="43"
+              data-yellow-step="17"
+              data-green-step="30"
+            ></div>
+            <div
+              class="box white-box-3-10 step-19"
+              data-blue-step="3"
+              data-red-step="42"
+              data-yellow-step="16"
+              data-green-step="29"
+            ></div>
+            <div
+              class="box white-box-3-11 step-18"
+              data-blue-step="2"
+              data-red-step="41"
+              data-yellow-step="15"
+              data-green-step="28"
+            ></div>
+            <div
+              class="box blue-bg step-17"
+              data-blue-step="1"
+              data-red-step="40"
+              data-yellow-step="14"
+              data-green-step="27"
+            ></div>
+            <div
+              class="box white-box-3-12 step-16"
+              data-red-step="39"
+              data-yellow-step="13"
+              data-green-step="26"
+            ></div>
+          </div>
+          <div class="red red-bg home">
+            <div class="flash"></div>
+            <div class="pins">
+              <div class="pin red-bg-lighter red-pin-1 pin-in-parent-1"></div>
+              <div class="pin red-bg-lighter red-pin-2 pin-in-parent-2"></div>
+              <div class="pin red-bg-lighter red-pin-3 pin-in-parent-3"></div>
+              <div class="pin red-bg-lighter red-pin-4 pin-in-parent-4"></div>
+            </div>
+          </div>
+          <div class="boxes">
+            <div
+              class="box white-box-4-1 step-34"
+              data-blue-step="18"
+              data-red-step="5"
+              data-yellow-step="31"
+              data-green-step="44"
+            ></div>
+            <div class="box red-bg" data-red-step="56"></div>
+            <div
+              class="box white-box-4-2 step-22"
+              data-blue-step="6"
+              data-red-step="45"
+              data-yellow-step="19"
+              data-green-step="32"
+            ></div>
+            <div
+              class="box white-box-4-3 step-33"
+              data-blue-step="17"
+              data-red-step="4"
+              data-yellow-step="30"
+              data-green-step="43"
+            ></div>
+            <div class="box red-bg" data-red-step="55"></div>
+            <div
+              class="box white-box-4-4 step-23"
+              data-blue-step="7"
+              data-red-step="46"
+              data-yellow-step="20"
+              data-green-step="33"
+            ></div>
+            <div
+              class="box white-box-4-5 step-32"
+              data-blue-step="16"
+              data-red-step="3"
+              data-yellow-step="29"
+              data-green-step="42"
+            ></div>
+            <div class="box red-bg" data-red-step="54"></div>
+            <div
+              class="box white-box-4-6 step-24"
+              data-blue-step="8"
+              data-red-step="47"
+              data-yellow-step="21"
+              data-green-step="34"
+            ></div>
+            <div
+              class="box white-box-4-7 step-31"
+              data-blue-step="15"
+              data-red-step="2"
+              data-yellow-step="28"
+              data-green-step="41"
+            ></div>
+            <div class="box red-bg" data-red-step="53"></div>
+            <div
+              class="box white-box-4-8 step-25"
+              data-blue-step="9"
+              data-red-step="48"
+              data-yellow-step="22"
+              data-green-step="35"
+            ></div>
+            <div
+              class="box red-bg step-30"
+              data-blue-step="14"
+              data-red-step="1"
+              data-yellow-step="27"
+              data-green-step="40"
+            ></div>
+            <div class="box red-bg" data-red-step="52"></div>
+            <div
+              class="box white-box-4-9 step-26"
+              data-blue-step="10"
+              data-red-step="49"
+              data-yellow-step="23"
+              data-green-step="36"
+            ></div>
+            <div
+              class="box white-box-4-10 step-29"
+              data-blue-step="13"
+              data-yellow-step="26"
+              data-green-step="39"
+            ></div>
+            <div
+              class="box white-box-4-11 step-28"
+              data-blue-step="12"
+              data-red-step="51"
+              data-yellow-step="25"
+              data-green-step="38"
+              style="position: relative"
+            >
+              <i
+                class="fa-solid fa-turn-up arrow-icon"
+                style="margin-top: -100%; transform: rotateY(180deg)"
+              ></i>
+            </div>
+            <div
+              class="box white-box-4-12 step-27"
+              data-blue-step="11"
+              data-red-step="50"
+              data-yellow-step="24"
+              data-green-step="37"
+            ></div>
+          </div>
+          <div class="blue blue-bg home">
+            <div class="flash"></div>
+            <div class="pins">
+              <div class="pin blue-bg-lighter blue-pin-1 pin-in-parent-1"></div>
+              <div class="pin blue-bg-lighter blue-pin-2 pin-in-parent-2"></div>
+              <div class="pin blue-bg-lighter blue-pin-3 pin-in-parent-3"></div>
+              <div class="pin blue-bg-lighter blue-pin-4 pin-in-parent-4"></div>
+            </div>
+          </div>
+        </div>
+        <div class="player-game-info">
+          <div class="player player-3-info">
+            <div class="player-cover player-3-cover"></div>
+            <div class="winning-pins">
+              <div class="win-pin win-red-pin pin"></div>
+              <div class="win-pin win-red-pin pin"></div>
+              <div class="win-pin win-red-pin pin"></div>
+              <div class="win-pin win-red-pin pin"></div>
+            </div>
+            <div class="player-info">
+              <p></p>
+            </div>
+          </div>
+          <div class="player player-4-info">
+            <div class="player-cover player-4-cover"></div>
+            <div class="winning-pins">
+              <div class="win-pin win-blue-pin pin"></div>
+              <div class="win-pin win-blue-pin pin"></div>
+              <div class="win-pin win-blue-pin pin"></div>
+              <div class="win-pin win-blue-pin pin"></div>
+            </div>
+            <div class="player-info">
+              <p></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./JS/init.js"></script>
+  </body>
+</html>

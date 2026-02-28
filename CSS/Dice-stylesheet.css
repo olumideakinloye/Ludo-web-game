@@ -1,0 +1,201 @@
+.hover {
+  animation-name: hover;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+}
+@keyframes hover {
+  0% {
+    scale: 0.8;
+  }
+  50% {
+    scale: 1.15;
+  }
+  100% {
+    scale: 0.8;
+  }
+}
+.dice-box {
+  z-index: 5;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 90%;
+  height: 90%;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  scale: 0.8;
+  transform: rotateX(0deg) rotateY(0deg);
+  transition: all 1.5s ease-in-out;
+  display: none;
+}
+.scale-dice-face {
+  scale: 1;
+  animation-name: scale-dice;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-timing-function: ease-in-out;
+}
+.scale-dice {
+  scale: 0.8;
+  animation-name: roll-dice;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-timing-function: ease-in-out;
+}
+@keyframes roll-dice {
+  0% {
+    scale: 0.8;
+  }
+  50% {
+    scale: 1;
+  }
+  100% {
+    scale: 0.8;
+  }
+}
+@keyframes scale-dice {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.2;
+  }
+  100% {
+    scale: 1;
+  }
+}
+.dice {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  border-radius: 16px;
+  height: calc(2rem + 1dvw);
+  width: calc(2rem + 1dvw);
+  padding: 5%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.35);
+  border: 5px solid rgba(0, 0, 0, 0.35);
+}
+.dice-num {
+  aspect-ratio: 1 / 1;
+  width: 80%;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dice .one {
+  aspect-ratio: 1 / 1;
+  height: 50%;
+  width: auto;
+  background-color: black;
+  border-radius: 50%;
+}
+.dice .two {
+  justify-self: center;
+}
+.face-1 {
+  transform: translateZ(calc(1rem + 1dvw));
+}
+.face-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  transform: rotateY(90deg) translateZ(calc(1rem + 1dvw));
+}
+.dice .two:nth-of-type(2) {
+  grid-row-start: 2;
+  grid-column-start: 2;
+}
+.dice .three {
+  justify-self: end;
+  align-self: self-end;
+}
+.dice .three:nth-of-type(2) {
+  grid-row-start: 2;
+  grid-column-start: 2;
+  justify-self: center;
+  align-self: center;
+}
+.dice .three:nth-of-type(3) {
+  grid-row-start: 3;
+  grid-column-start: 3;
+  justify-self: start;
+  align-self: self-start;
+}
+.face-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  transform: rotateX(90deg) translateZ(calc(1rem + 1dvw));
+}
+.face-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  place-items: center;
+  transform: rotateX(-90deg) translateZ(calc(1rem + 1dvw));
+}
+.dice .five {
+  justify-self: end;
+  align-self: self-end;
+}
+.dice .five:nth-of-type(2) {
+  grid-row-start: 2;
+  grid-column-start: 2;
+  justify-self: center;
+  align-self: center;
+}
+.dice .five:nth-of-type(3) {
+  grid-row-start: 1;
+  grid-column-start: 3;
+  justify-self: start;
+  align-self: self-end;
+}
+.dice .five:nth-of-type(4) {
+  grid-row-start: 3;
+  grid-column-start: 1;
+  justify-self: end;
+  align-self: self-start;
+}
+.dice .five:nth-of-type(5) {
+  grid-row-start: 3;
+  grid-column-start: 3;
+  justify-self: start;
+  align-self: self-start;
+}
+.face-5 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  transform: rotateY(-90deg) translateZ(calc(1rem + 1dvw));
+}
+.face-6 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  place-items: center;
+  transform: rotateY(180deg) translateZ(calc(1rem + 1dvw));
+}
+/*//////////////////////////////Test////////////////////////////////////*/
+/* .pin-test{
+  height: 12.5px !important;
+  width: 12.5px !important;
+  background-color: aqua;
+  position: relative !important;
+}
+.grid{
+  background-color: aqua !important;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, 12.5px) !important;
+  overflow: visible !important;
+} */

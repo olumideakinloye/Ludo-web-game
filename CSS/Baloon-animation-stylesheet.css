@@ -1,0 +1,81 @@
+.bg-animation{
+
+    position: fixed;
+    height: 100%;
+    width: 100%;
+      z-index: 200;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+.baloon-1{
+  height: 20rem;
+  width: 20rem;
+
+    animation-name: rotate;
+    animation-timing-function: linear;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+  transition: all linear;
+  /* background-color: bisque; */
+}
+@keyframes rotate{
+    0%{
+        transform: rotateZ(0deg);
+    }
+    100%{
+        transform: rotateZ(360deg);
+    }
+}
+.baloon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  height: 20rem;
+  width: 20rem;
+  background-color: turquoise;
+  border-radius: 50%;
+  animation-name: baloon-transformation;
+  animation-timing-function: linear;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+  transition: all linear;
+}
+.baloon2{
+    animation-delay: 3.8s;
+    /* background-color: rgb(142, 226, 218); */
+}
+@keyframes baloon-transformation {
+  0% {
+    /* transform: rotateZ(0deg); */
+    width: 20rem;
+    height: 5rem;
+  }
+  25% {
+    /* transform: rotateZ(72deg); */
+    width: 5rem;
+    height: 20rem;
+  }
+  50% {
+    /* transform: rotateZ(180deg); */
+    width: 20rem;
+    height: 5rem;
+  }
+  75% {
+    /* transform: rotateZ(252deg); */
+    height: 20rem;
+    width: 5rem;
+  }
+  100% {
+    /* transform: rotate(360deg); */
+    width: 20rem;
+    height: 5rem;
+  }
+}
